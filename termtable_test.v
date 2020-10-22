@@ -1,5 +1,18 @@
 module termtable
 
+fn test_get_coldata() {
+	rowdata := [
+		['Name', 'Age'],
+		['Max', '13'],
+		['Moritz', '12'],
+	]
+	expected := [
+		['Name', 'Max', 'Moritz'],
+		['Age', '13', '12'],
+	]
+	assert get_coldata(rowdata) == expected
+}
+
 fn test_row_to_string() {
 	row := ['a', 'bc', 'def']
 	col_sizes := [3, 4, 3]

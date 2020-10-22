@@ -6,14 +6,10 @@ pub mut:
 }
 
 pub fn (t Table) show() {
-	cols := t.rowdata[0].len
-	mut col_sizes := []int{ len: cols, init: 0 }
-	for i in 0..cols {
-		mut col := []string{}
-		for r in t.rowdata {
-			col << r[i]
-		}
-		col_sizes[i] = colmax(col)
+	coldata := get_coldata(t.rowdata)
+	mut col_sizes := []int{}
+	for c in coldata {
+		col_sizes << colmax(c)
 	}
 	sepline := create_sepline(col_sizes)
 	mut rowstrings := []string{}
@@ -25,6 +21,19 @@ pub fn (t Table) show() {
 		println(row_str)
 	}
 	println(sepline)
+}
+
+fn get_coldata(rowdata [][]string) [][]string {
+	mut coldata := [][]string{}
+	col_count := rowdata[0].len
+	for i in 0..col_count {
+		mut c := []string{}
+		for r in rowdata {
+			c << r[i]
+		}
+		coldata << c
+	}
+	return coldata
 }
 
 fn row_to_string(row []string, col_sizes []int) string {
