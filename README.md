@@ -13,13 +13,15 @@ Simple but flexible module to display tables in the terminal.
 import termtable
 
 fn main() {
-	rowdata := [
+	data := [
 		['Name', 'Age', 'Sex'],
 		['Max', '13', 'male'],
 		['Moritz', '12', 'male'],
-    ['Lisa', '42', 'female'],
+		['Lisa', '42', 'female'],
 	]
-	t := termtable.Table{ rowdata }
+	t := termtable.Table{ 
+		rowdata: data
+	}
 	println(t)
 }
 
@@ -34,6 +36,20 @@ fn main() {
 | Lisa   | 42  | female |
 +--------+-----+--------+
 */
+```
+
+## Configuration Options
+
+### Alignment
+```v
+.left // (default)
+// | Max    | 13  | male   |
+
+.center
+// |  Max   | 13  |  male  |
+
+.right
+// |    Max |  13 |   male |
 ```
 
 

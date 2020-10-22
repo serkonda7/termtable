@@ -1,8 +1,15 @@
 module termtable
 
+pub enum Alignment {
+	left
+	center
+	right
+}
+
 pub struct Table {
 pub mut:
 	rowdata [][]string
+	align   Alignment = .left
 }
 
 pub fn (t Table) str() string {
@@ -14,7 +21,7 @@ pub fn (t Table) str() string {
 	sepline := create_sepline(col_sizes)
 	mut rowstrings := []string{}
 	for row in t.rowdata {
-		rowstrings << row_to_string(row, col_sizes)
+		rowstrings << row_to_string(row, col_sizes, t.align)
 	}
 	mut final_str := '$sepline\n'
 	for row_str in rowstrings {
@@ -37,13 +44,30 @@ fn get_coldata(rowdata [][]string) [][]string {
 	return coldata
 }
 
-fn row_to_string(row []string, col_sizes []int) string {
+fn row_to_string(row []string, col_sizes []int, align Alignment) string {
 	mut rstr := '| '
 	for i, cell in row {
-		rstr += cell + ' '.repeat(col_sizes[i] - cell.len)
+		lspace, rspace := calculate_spacing(col_sizes[i] - cell.len, align)
+		rstr += ' '.repeat(lspace) + cell + ' '.repeat(rspace)
 		rstr += ' | '
 	}
 	return rstr.trim_space()
+}
+
+fn calculate_spacing(total_space int, align Alignment) (int, int) {
+	match align {
+		.left {
+			return 0, total_space
+		}
+		.center {
+			half_space := total_space / 2
+			right_space := half_space + total_space % 2
+			return half_space, right_space
+		}
+		.right {
+			return total_space, 0
+		}
+	}
 }
 
 fn colmax(col []string) int {
