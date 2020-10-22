@@ -19,11 +19,7 @@ pub fn (t Table) show() {
 			}
 		}
 	}
-	mut sepline := '+'
-	for size in col_sizes {
-		sepline += '-'.repeat(size + 2)
-		sepline += '+'
-	}
+	sepline := create_sepline(col_sizes)
 	mut rowstrings := []string{}
 	for row in t.rowdata {
 		mut rstr := '| '
@@ -38,4 +34,13 @@ pub fn (t Table) show() {
 		println(row_str)
 	}
 	println(sepline)
+}
+
+fn create_sepline(col_sizes []int) string {
+	mut line := '+'
+	for cs in col_sizes {
+		line += '-'.repeat(cs + 2)
+		line += '+'
+	}
+	return line
 }
