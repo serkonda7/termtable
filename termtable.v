@@ -5,7 +5,7 @@ pub mut:
 	rowdata [][]string
 }
 
-pub fn (t Table) show() {
+pub fn (t Table) str() string {
 	coldata := get_coldata(t.rowdata)
 	mut col_sizes := []int{}
 	for c in coldata {
@@ -16,11 +16,12 @@ pub fn (t Table) show() {
 	for row in t.rowdata {
 		rowstrings << row_to_string(row, col_sizes)
 	}
+	mut final_str := '$sepline\n'
 	for row_str in rowstrings {
-		println(sepline)
-		println(row_str)
+		final_str += '$row_str\n'
+		final_str += '$sepline\n'
 	}
-	println(sepline)
+	return final_str.trim_space()
 }
 
 fn get_coldata(rowdata [][]string) [][]string {

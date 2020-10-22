@@ -1,5 +1,22 @@
 module termtable
 
+fn test_table_str() {
+	rowdata := [
+		['Name', 'Age'],
+		['Max', '13'],
+		['Moritz', '12'],
+	]
+	t := Table{ rowdata }
+	expected := '+--------+-----+
+| Name   | Age |
++--------+-----+
+| Max    | 13  |
++--------+-----+
+| Moritz | 12  |
++--------+-----+'
+	assert t.str() == expected
+}
+
 fn test_get_coldata() {
 	rowdata := [
 		['Name', 'Age'],
