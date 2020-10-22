@@ -1,4 +1,5 @@
 # V Terminal Tables
+![CI](https://github.com/serkonda7/termtable/workflows/CI/badge.svg?branch=master)
 
 Simple but flexible module to display tables in the terminal.
 
