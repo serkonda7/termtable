@@ -35,8 +35,18 @@ fn test_get_coldata() {
 fn test_row_to_string() {
 	row := ['a', 'bc', 'def']
 	col_sizes := [3, 4, 3]
-	expected := '| a   | bc   | def |'
-	assert row_to_string(row, col_sizes, .left) == expected
+	inputs := [
+		[0, 1],
+		[2, 3],
+	]
+	expected := [
+		'| a   | bc   | def |',
+		'|     a   |     bc   |   def   |',
+	]
+	for i, inp in inputs {
+		res := row_to_string(row, col_sizes, Alignment(inp[0]), inp[1])
+		assert res == expected[i]
+	}
 }
 
 fn test_calculate_spacing() {

@@ -10,6 +10,7 @@ pub struct Table {
 pub mut:
 	rowdata [][]string
 	align   Alignment = .left
+	padding int = 1
 }
 
 pub fn (t Table) str() string {
@@ -21,7 +22,7 @@ pub fn (t Table) str() string {
 	sepline := create_sepline(col_sizes)
 	mut rowstrings := []string{}
 	for row in t.rowdata {
-		rowstrings << row_to_string(row, col_sizes, t.align)
+		rowstrings << row_to_string(row, col_sizes, t.align, t.padding)
 	}
 	mut final_str := '$sepline\n'
 	for row_str in rowstrings {
@@ -44,12 +45,13 @@ fn get_coldata(rowdata [][]string) [][]string {
 	return coldata
 }
 
-fn row_to_string(row []string, col_sizes []int, align Alignment) string {
-	mut rstr := '| '
+fn row_to_string(row []string, col_sizes []int, align Alignment, padding int) string {
+	pad := ' '.repeat(padding)
+	mut rstr := '|$pad'
 	for i, cell in row {
 		lspace, rspace := calculate_spacing(col_sizes[i] - cell.len, align)
 		rstr += ' '.repeat(lspace) + cell + ' '.repeat(rspace)
-		rstr += ' | '
+		rstr += '$pad|$pad'
 	}
 	return rstr.trim_space()
 }

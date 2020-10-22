@@ -21,6 +21,8 @@ fn main() {
 	]
 	t := termtable.Table{ 
 		rowdata: data
+		align: .left
+		padding: 1
 	}
 	println(t)
 }
@@ -45,6 +47,16 @@ fn main() {
 | Max    | 13  | male   |  // .left (default)
 |  Max   | 13  |  male  |  // .center
 |    Max |  13 |   male |  // .right
+```
+
+### Padding
+Control the count of spaces between the cell border and the item.
+```v
+| Lisa | 42 | female |  // 1 (default)
+
+|Lisa|42|female|  // 0
+
+|   Lisa   |   42   |   female   |  // 3
 ```
 
 
