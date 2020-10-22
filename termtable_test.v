@@ -6,7 +6,7 @@ fn test_table_str() {
 		['Max', '13'],
 		['Moritz', '12'],
 	]
-	t := Table{ rowdata }
+	t := Table{rowdata}
 	expected := '+--------+-----+
 | Name   | Age |
 +--------+-----+

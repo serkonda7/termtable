@@ -27,7 +27,7 @@ pub fn (t Table) str() string {
 fn get_coldata(rowdata [][]string) [][]string {
 	mut coldata := [][]string{}
 	col_count := rowdata[0].len
-	for i in 0..col_count {
+	for i in 0 .. col_count {
 		mut c := []string{}
 		for r in rowdata {
 			c << r[i]
