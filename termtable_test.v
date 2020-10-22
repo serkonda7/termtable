@@ -7,6 +7,12 @@ fn test_row_to_string() {
 	assert row_to_string(row, col_sizes) == expected
 }
 
+fn test_colmax() {
+	column := ['Name', 'Max', 'Moritz']
+	expected := 6
+	assert colmax(column) == expected
+}
+
 fn test_create_sepline() {
 	col_sizes := [1, 2, 3]
 	expected := '+---+----+-----+'

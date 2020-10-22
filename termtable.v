@@ -13,11 +13,7 @@ pub fn (t Table) show() {
 		for r in t.rowdata {
 			col << r[i]
 		}
-		for cval in col {
-			if cval.len > col_sizes[i] {
-				col_sizes[i] = cval.len
-			}
-		}
+		col_sizes[i] = colmax(col)
 	}
 	sepline := create_sepline(col_sizes)
 	mut rowstrings := []string{}
@@ -38,6 +34,16 @@ fn row_to_string(row []string, col_sizes []int) string {
 		rstr += ' | '
 	}
 	return rstr.trim_space()
+}
+
+fn colmax(col []string) int {
+	mut max := 0
+	for c in col {
+		if c.len > max {
+			max = c.len
+		}
+	}
+	return max
 }
 
 fn create_sepline(col_sizes []int) string {
