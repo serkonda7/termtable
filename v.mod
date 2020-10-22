@@ -1,6 +1,6 @@
 Module {
 	name: 'termtable'
-	description: ''
+	description: 'Simple but flexible module to display tables in the terminal.'
 	author: 'Lukas Neubert <serkonda@protonmail.com>'
 	license: 'MIT'
 	repo_url: 'https://github.com/serkonda7/termtable'
