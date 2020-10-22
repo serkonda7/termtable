@@ -22,18 +22,22 @@ pub fn (t Table) show() {
 	sepline := create_sepline(col_sizes)
 	mut rowstrings := []string{}
 	for row in t.rowdata {
-		mut rstr := '| '
-		for j, cell in row {
-			rstr += cell + ' '.repeat(col_sizes[j] - cell.len)
-			rstr += ' | '
-		}
-		rowstrings << rstr
+		rowstrings << row_to_string(row, col_sizes)
 	}
 	for row_str in rowstrings {
 		println(sepline)
 		println(row_str)
 	}
 	println(sepline)
+}
+
+fn row_to_string(row []string, col_sizes []int) string {
+	mut rstr := '| '
+	for i, cell in row {
+		rstr += cell + ' '.repeat(col_sizes[i] - cell.len)
+		rstr += ' | '
+	}
+	return rstr.trim_space()
 }
 
 fn create_sepline(col_sizes []int) string {
