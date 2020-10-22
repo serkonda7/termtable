@@ -42,14 +42,9 @@ fn main() {
 
 ### Alignment
 ```v
-.left // (default)
-// | Max    | 13  | male   |
-
-.center
-// |  Max   | 13  |  male  |
-
-.right
-// |    Max |  13 |   male |
+| Max    | 13  | male   |  // .left (default)
+|  Max   | 13  |  male  |  // .center
+|    Max |  13 |   male |  // .right
 ```
 
 
