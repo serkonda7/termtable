@@ -1,6 +1,16 @@
 # Changelog
 
 
+## 0.2.0
+_23 October 2020_
+
+**Additions**
+- New `align` config to control cell item alignment
+- New `padding` config to set the minimum space between cell separator and item
+- Readme: add description and sections about installation and usage 
+- Add GH Sponsors button
+
+
 ## 0.1.0
 _22 October 2020_
 
