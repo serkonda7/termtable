@@ -10,7 +10,7 @@ Simple but flexible module to display tables in the terminal.
 
 ## Usage
 ```v
-import termtable
+import serkonda7.termtable
 
 fn main() {
 	data := [
