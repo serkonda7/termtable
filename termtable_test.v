@@ -21,14 +21,14 @@ fn test_table_str() {
 	]
 	expected := [
 		'+------+-----+
-| Name | Age |
+| \e[1mName\e[0m | \e[1mAge\e[0m |
 +------+-----+
 | Lisa | 42  |
 +------+-----+',
 		'+----+---+------+
-|Name|Max|Moritz|
+|\e[1mName\e[0m|Max|Moritz|
 +----+---+------+
-| Age| 13|    12|
+| \e[1mAge\e[0m| 13|    12|
 +----+---+------+',
 	]
 	for i, t in tables {
@@ -54,24 +54,48 @@ fn test_get_row_and_col_data() {
 	assert r2 == coldata
 }
 
+struct RowToStrInput {
+	align   Alignment
+	padding int
+	bold    int
+}
+
 fn test_row_to_string() {
 	row := ['a', 'bc', 'def']
-	col_sizes := [3, 4, 3]
-	inputs := [
-		[0, 1],
-		[2, 3],
+	rspace := [2, 2, 0]
+	inp_vals := [
+		RowToStrInput{.left, 1, 1},
+		RowToStrInput{.center, 3, 0},
 	]
 	expected := [
-		'| a   | bc   | def |',
-		'|     a   |     bc   |   def   |',
+		'| \e[1ma\e[0m   | bc   | def |',
+		'|    a    |    bc    |   def   |',
 	]
-	for i, inp in inputs {
-		res := row_to_string(row, col_sizes, Alignment(inp[0]), inp[1])
-		assert res == expected[i]
+	for i, val in inp_vals {
+		exp := expected[i]
+		assert row_to_string(row, rspace, val.align, val.padding, val.bold) == exp
 	}
 }
 
-fn test_calculate_spacing() {
+fn test_get_row_spaces() {
+	rows := [
+		['a', 'bc', 'def'],
+		['foo', 'bar', 'baz'],
+	]
+	col_sizes := [
+		[3, 4, 5],
+		[5, 3, 6],
+	]
+	expected := [
+		[2, 2, 2],
+		[2, 0, 3],
+	]
+	for i, r in rows {
+		assert get_row_spaces(r, col_sizes[i]) == expected[i]
+	}
+}
+
+fn test_cell_space() {
 	inputs := [
 		[2, 0],
 		[4, 1],
@@ -85,7 +109,7 @@ fn test_calculate_spacing() {
 		[3, 0],
 	]
 	for i, inp in inputs {
-		ls, rs := calculate_spacing(inp[0], Alignment(inp[1]))
+		ls, rs := cell_space(inp[0], Alignment(inp[1]))
 		assert ls == expected[i][0]
 		assert rs == expected[i][1]
 	}
@@ -110,4 +134,13 @@ fn test_create_sepline() {
 	for i, sizes in col_sizes {
 		assert create_sepline(sizes, paddings[i]) == expected[i]
 	}
+}
+
+fn test_row_to_bold() {
+	rows := [
+		['a', 'bc', 'def'],
+		['foo', 'bar', 'baz'],
+	]
+	assert row_to_bold(rows[0], 2) == ['\e[1ma\e[0m', '\e[1mbc\e[0m', '\e[1mdef\e[0m']
+	assert row_to_bold(rows[1], 1) == ['\e[1mfoo\e[0m', 'bar', 'baz']
 }
