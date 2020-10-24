@@ -1,6 +1,17 @@
 # Changelog
 
 
+## 0.3.0
+_24 October 2020_
+
+**Additions**
+- Print headers in bold
+- New `orientation` config 
+
+**Fixes**
+- Use the actual padding value to create the seperator line
+
+
 ## 0.2.0
 _23 October 2020_
 
