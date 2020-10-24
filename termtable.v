@@ -26,11 +26,7 @@ pub fn (t Table) str() string {
 		col_sizes << colmax(c)
 	}
 	sepline := create_sepline(col_sizes, t.padding)
-	mut bold := if t.orientation == .row {
-		2
-	} else {
-		1
-	}
+	mut bold := if t.orientation == .row { 2 } else { 1 }
 	mut rowstrings := []string{}
 	for row in rowdata {
 		rspace := get_row_spaces(row, col_sizes)
@@ -66,11 +62,7 @@ fn get_row_and_col_data(data [][]string, orient Orientation) ([][]string, [][]st
 
 // bold: 0 = none; 1 = first el; 2 = all
 fn row_to_string(row []string, rspace []int, align Alignment, padding int, bold int) string {
-	final_row := if bold == 0 {
-		row
-	} else {
-		row_to_bold(row, bold)
-	}
+	final_row := if bold == 0 { row } else { row_to_bold(row, bold) }
 	pad := ' '.repeat(padding)
 	mut rstr := '|$pad'
 	for i, cell in final_row {
