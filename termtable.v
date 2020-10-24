@@ -12,9 +12,6 @@ pub enum Alignment {
 }
 
 pub struct Table {
-mut:
-	rowdata     [][]string
-	coldata     [][]string
 pub mut:
 	data        [][]string
 	orientation Orientation = .row
@@ -23,14 +20,14 @@ pub mut:
 }
 
 pub fn (t Table) str() string {
-	t.rowdata, t.coldata = get_row_and_col_data(t.data)
+	rowdata, coldata := get_row_and_col_data(t.data, t.orientation)
 	mut col_sizes := []int{}
-	for c in t.coldata {
+	for c in coldata {
 		col_sizes << colmax(c)
 	}
 	sepline := create_sepline(col_sizes)
 	mut rowstrings := []string{}
-	for row in t.rowdata {
+	for row in rowdata {
 		rowstrings << row_to_string(row, col_sizes, t.align, t.padding)
 	}
 	mut final_str := '$sepline\n'
@@ -51,9 +48,10 @@ fn get_row_and_col_data(data [][]string, orient Orientation) ([][]string, [][]st
 		}
 		otherdata << od
 	}
-	return match orient {
-		.row { data, otherdata }
-		.column { otherdata, data }
+	if orient == .row {
+		return data, otherdata
+	} else {
+		return otherdata, data
 	}
 }
 
