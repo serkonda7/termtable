@@ -21,14 +21,14 @@ fn test_table_str() {
 	]
 	expected := [
 		'+------+-----+
-| Name | Age |
+| \e[1mName\e[0m | \e[1mAge\e[0m |
 +------+-----+
 | Lisa | 42  |
 +------+-----+',
 		'+----+---+------+
-|Name|Max|Moritz|
+|\e[1mName\e[0m|Max|Moritz|
 +----+---+------+
-| Age| 13|    12|
+| \e[1mAge\e[0m| 13|    12|
 +----+---+------+',
 	]
 	for i, t in tables {
@@ -54,43 +54,50 @@ fn test_get_row_and_col_data() {
 	assert r2 == coldata
 }
 
+struct RowToStrInput {
+	align   Alignment
+	padding int
+	bold    int
+}
+
 fn test_row_to_string() {
 	row := ['a', 'bc', 'def']
-	col_sizes := [3, 4, 3]
-	inputs := [
-		[0, 1],
-		[2, 3],
+	rspace := [2, 2, 0]
+	inp_vals := [
+		RowToStrInput{.left, 1, 1},
+		RowToStrInput{.center, 3, 0},
 	]
 	expected := [
-		'| a   | bc   | def |',
-		'|     a   |     bc   |   def   |',
+		'| \e[1ma\e[0m   | bc   | def |',
+		'|    a    |    bc    |   def   |',
 	]
-	for i, inp in inputs {
-		res := row_to_string(row, col_sizes, Alignment(inp[0]), inp[1])
-		assert res == expected[i]
+	for i, val in inp_vals {
+		exp := expected[i]
+		assert row_to_string(row, rspace, val.align, val.padding, val.bold) == exp
 	}
 }
 
+/*
 fn test_calculate_spacing() {
 	inputs := [
-		[2, 0],
-		[4, 1],
-		[5, 1],
-		[3, 2],
+	[2, 0],
+	[4, 1],
+	[5, 1],
+	[3, 2],
 	]
 	expected := [
-		[0, 2],
-		[2, 2],
-		[2, 3],
-		[3, 0],
+	[0, 2],
+	[2, 2],
+	[2, 3],
+	[3, 0],
 	]
 	for i, inp in inputs {
-		ls, rs := calculate_spacing(inp[0], Alignment(inp[1]))
-		assert ls == expected[i][0]
-		assert rs == expected[i][1]
+	ls, rs := calculate_spacing(inp[0], Alignment(inp[1]))
+	assert ls == expected[i][0]
+	assert rs == expected[i][1]
 	}
 }
-
+*/
 fn test_colmax() {
 	column := ['Name', 'Max', 'Moritz']
 	expected := 6

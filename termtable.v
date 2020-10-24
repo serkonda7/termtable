@@ -62,7 +62,10 @@ fn get_row_and_col_data(data [][]string, orient Orientation) ([][]string, [][]st
 
 // bold: 0 = none; 1 = first el; 2 = all
 fn row_to_string(row []string, rspace []int, align Alignment, padding int, bold int) string {
-	final_row := if bold == 0 { row } else { row_to_bold(row, bold) }
+	mut final_row := row.clone()
+	if bold > 0 {
+		final_row = row_to_bold(final_row, bold)
+	}
 	pad := ' '.repeat(padding)
 	mut rstr := '|$pad'
 	for i, cell in final_row {
