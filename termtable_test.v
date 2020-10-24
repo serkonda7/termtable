@@ -12,7 +12,7 @@ fn test_table_str() {
 			data: [
 				['Name', 'Max', 'Moritz'],
 				['Age', '13', '12'],
-			],
+			]
 			orientation: .column
 			align: .right
 			padding: 0
@@ -24,7 +24,7 @@ fn test_table_str() {
 +------+-----+
 | Lisa | 42  |
 +------+-----+',
-'+--------+-----+
+		'+--------+-----+
 |  Name|Age|
 +------+---+
 |   Max| 13|
