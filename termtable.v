@@ -26,10 +26,18 @@ pub fn (t Table) str() string {
 		col_sizes << colmax(c)
 	}
 	sepline := create_sepline(col_sizes, t.padding)
+	mut bold := if t.orientation == .row {
+		2
+	} else {
+		1
+	}
 	mut rowstrings := []string{}
 	for row in rowdata {
 		rspace := get_row_spaces(row, col_sizes)
-		rowstrings << row_to_string(row, rspace, t.align, t.padding)
+		rowstrings << row_to_string(row, rspace, t.align, t.padding, bold)
+		if bold == 2 {
+			bold = 0
+		}
 	}
 	mut final_str := '$sepline\n'
 	for row_str in rowstrings {
@@ -56,10 +64,16 @@ fn get_row_and_col_data(data [][]string, orient Orientation) ([][]string, [][]st
 	}
 }
 
-fn row_to_string(row []string, rspace []int, align Alignment, padding int) string {
+// bold: 0 = none; 1 = first el; 2 = all
+fn row_to_string(row []string, rspace []int, align Alignment, padding int, bold int) string {
+	final_row := if bold == 0 {
+		row
+	} else {
+		row_to_bold(row, bold)
+	}
 	pad := ' '.repeat(padding)
 	mut rstr := '|$pad'
-	for i, cell in row {
+	for i, cell in final_row {
 		sl, sr := cell_space(rspace[i], align)
 		rstr += ' '.repeat(sl) + cell + ' '.repeat(sr)
 		rstr += '$pad|$pad'
@@ -111,6 +125,12 @@ fn create_sepline(col_sizes []int, pad int) string {
 	return line
 }
 
-fn bold_cell(cell string) string {
-	return '\e[1m$cell\e[0m'
+fn row_to_bold(row []string, bold int) []string {
+	mut final_row := row
+	if bold == 1 {
+		final_row[0] = '\e[1m${row[0]}\e[0m'
+	} else {
+		final_row = final_row.map('\e[1m$it\e[0m')
+	}
+	return final_row
 }
