@@ -10,8 +10,9 @@ fn test_table_str() {
 		},
 		Table{
 			data: [
-				['Name', 'Max', 'Moritz'],
-				['Age', '13', '12'],
+				['Name', 'Age'],
+				['Max', '13'],
+				['Moritz', '12'],
 			]
 			orientation: .column
 			align: .right
@@ -24,13 +25,11 @@ fn test_table_str() {
 +------+-----+
 | Lisa | 42  |
 +------+-----+',
-		'+--------+-----+
-|  Name|Age|
-+------+---+
-|   Max| 13|
-+------+---+
-|Moritz| 12|
-+------+---+',
+		'+----+---+------+
+|Name|Max|Moritz|
++----+---+------+
+| Age| 13|    12|
++----+---+------+',
 	]
 	for i, t in tables {
 		assert t.str() == expected[i]
