@@ -25,7 +25,7 @@ pub fn (t Table) str() string {
 	for c in coldata {
 		col_sizes << colmax(c)
 	}
-	sepline := create_sepline(col_sizes)
+	sepline := create_sepline(col_sizes, t.padding)
 	mut rowstrings := []string{}
 	for row in rowdata {
 		rowstrings << row_to_string(row, col_sizes, t.align, t.padding)
@@ -92,10 +92,11 @@ fn colmax(col []string) int {
 	return max
 }
 
-fn create_sepline(col_sizes []int) string {
+fn create_sepline(col_sizes []int, pad int) string {
+	padding := pad * 2
 	mut line := '+'
 	for cs in col_sizes {
-		line += '-'.repeat(cs + 2)
+		line += '-'.repeat(cs + padding)
 		line += '+'
 	}
 	return line

@@ -98,7 +98,16 @@ fn test_colmax() {
 }
 
 fn test_create_sepline() {
-	col_sizes := [1, 2, 3]
-	expected := '+---+----+-----+'
-	assert create_sepline(col_sizes) == expected
+	col_sizes := [
+		[1, 2, 3],
+		[1, 4],
+	]
+	paddings := [1, 0]
+	expected := [
+		'+---+----+-----+',
+		'+-+----+',
+	]
+	for i, sizes in col_sizes {
+		assert create_sepline(sizes, paddings[i]) == expected[i]
+	}
 }
