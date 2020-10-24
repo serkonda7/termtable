@@ -1,35 +1,58 @@
 module termtable
 
 fn test_table_str() {
-	data := [
-		['Name', 'Age'],
-		['Max', '13'],
-		['Moritz', '12'],
+	tables := [
+		Table{
+			data: [
+				['Name', 'Age'],
+				['Lisa', '42'],
+			]
+		},
+		Table{
+			data: [
+				['Name', 'Max', 'Moritz'],
+				['Age', '13', '12'],
+			],
+			orientation: .column
+			align: .right
+			padding: 0
+		},
 	]
-	t := Table{
-		rowdata: data
+	expected := [
+		'+------+-----+
+| Name | Age |
++------+-----+
+| Lisa | 42  |
++------+-----+',
+'+--------+-----+
+|  Name|Age|
++------+---+
+|   Max| 13|
++------+---+
+|Moritz| 12|
++------+---+',
+	]
+	for i, t in tables {
+		assert t.str() == expected[i]
 	}
-	expected := '+--------+-----+
-| Name   | Age |
-+--------+-----+
-| Max    | 13  |
-+--------+-----+
-| Moritz | 12  |
-+--------+-----+'
-	assert t.str() == expected
 }
 
-fn test_get_coldata() {
+fn test_get_row_and_col_data() {
 	rowdata := [
 		['Name', 'Age'],
 		['Max', '13'],
 		['Moritz', '12'],
 	]
-	expected := [
+	coldata := [
 		['Name', 'Max', 'Moritz'],
 		['Age', '13', '12'],
 	]
-	assert get_coldata(rowdata) == expected
+	mut r1, mut r2 := get_row_and_col_data(rowdata, .row)
+	assert r1 == rowdata
+	assert r2 == coldata
+	r1, r2 = get_row_and_col_data(coldata, .column)
+	assert r1 == rowdata
+	assert r2 == coldata
 }
 
 fn test_row_to_string() {
