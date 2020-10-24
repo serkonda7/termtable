@@ -10,6 +10,7 @@ _24 October 2020_
 
 **Fixes**
 - Use the actual padding value to create the seperator line
+- Readme: fix import line in Usage example
 
 
 ## 0.2.0
