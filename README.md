@@ -20,7 +20,9 @@ fn main() {
 		['Lisa', '42', 'female'],
 	]
 	t := termtable.Table{ 
-		rowdata: data
+		data: data
+		// The following settings are optional. Here I use the default values.
+		orientation: .row
 		align: .left
 		padding: 1
 	}
@@ -41,6 +43,41 @@ fn main() {
 ```
 
 ## Configuration Options
+### Orientation
+```v
+row_t := termtable.Table{
+	data: [
+		['Name', 'Age'],
+		['Max', '13'],
+		['Moritz', '12'],
+	]
+}
+/* Output
++--------+-----+
+| Name   | Age |
++--------+-----+
+| Max    | 13  |
++--------+-----+
+| Moritz | 12  |
++--------+-----+
+*/
+col_t := termtable.Table{
+	data: [
+		['Name', 'Age'],
+		['Max', '13'],
+		['Moritz', '12'],
+	]
+	orientation: .column
+}
+/* Output
++------+-----+--------+
+| Name | Max | Moritz |
++------+-----+--------+
+| Age  | 13  | 12     |
++------+-----+--------+
+*/
+```
+
 
 ### Alignment
 ```v
@@ -48,6 +85,7 @@ fn main() {
 |  Max   | 13  |  male  |  // .center
 |    Max |  13 |   male |  // .right
 ```
+
 
 ### Padding
 Control the count of spaces between the cell border and the item.

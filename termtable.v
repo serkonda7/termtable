@@ -1,5 +1,10 @@
 module termtable
 
+pub enum Orientation {
+	row
+	column
+}
+
 pub enum Alignment {
 	left
 	center
@@ -8,20 +13,21 @@ pub enum Alignment {
 
 pub struct Table {
 pub mut:
-	rowdata [][]string
-	align   Alignment = .left
-	padding int = 1
+	data        [][]string
+	orientation Orientation = .row
+	align       Alignment = .left
+	padding     int = 1
 }
 
 pub fn (t Table) str() string {
-	coldata := get_coldata(t.rowdata)
+	rowdata, coldata := get_row_and_col_data(t.data, t.orientation)
 	mut col_sizes := []int{}
 	for c in coldata {
 		col_sizes << colmax(c)
 	}
 	sepline := create_sepline(col_sizes)
 	mut rowstrings := []string{}
-	for row in t.rowdata {
+	for row in rowdata {
 		rowstrings << row_to_string(row, col_sizes, t.align, t.padding)
 	}
 	mut final_str := '$sepline\n'
@@ -32,17 +38,21 @@ pub fn (t Table) str() string {
 	return final_str.trim_space()
 }
 
-fn get_coldata(rowdata [][]string) [][]string {
-	mut coldata := [][]string{}
-	col_count := rowdata[0].len
-	for i in 0 .. col_count {
-		mut c := []string{}
-		for r in rowdata {
-			c << r[i]
+fn get_row_and_col_data(data [][]string, orient Orientation) ([][]string, [][]string) {
+	mut otherdata := [][]string{}
+	other_count := data[0].len
+	for i in 0 .. other_count {
+		mut od := []string{}
+		for d in data {
+			od << d[i]
 		}
-		coldata << c
+		otherdata << od
 	}
-	return coldata
+	if orient == .row {
+		return data, otherdata
+	} else {
+		return otherdata, data
+	}
 }
 
 fn row_to_string(row []string, col_sizes []int, align Alignment, padding int) string {
