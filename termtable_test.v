@@ -77,27 +77,44 @@ fn test_row_to_string() {
 	}
 }
 
-/*
-fn test_calculate_spacing() {
-	inputs := [
-	[2, 0],
-	[4, 1],
-	[5, 1],
-	[3, 2],
+fn test_get_row_spaces() {
+	rows := [
+		['a', 'bc', 'def'],
+		['foo', 'bar', 'baz'],
+	]
+	col_sizes := [
+		[3, 4, 5],
+		[5, 3, 6],
 	]
 	expected := [
-	[0, 2],
-	[2, 2],
-	[2, 3],
-	[3, 0],
+		[2, 2, 2],
+		[2, 0, 3],
 	]
-	for i, inp in inputs {
-	ls, rs := calculate_spacing(inp[0], Alignment(inp[1]))
-	assert ls == expected[i][0]
-	assert rs == expected[i][1]
+	for i, r in rows {
+		assert get_row_spaces(r, col_sizes[i]) == expected[i]
 	}
 }
-*/
+
+fn test_cell_space() {
+	inputs := [
+		[2, 0],
+		[4, 1],
+		[5, 1],
+		[3, 2],
+	]
+	expected := [
+		[0, 2],
+		[2, 2],
+		[2, 3],
+		[3, 0],
+	]
+	for i, inp in inputs {
+		ls, rs := cell_space(inp[0], Alignment(inp[1]))
+		assert ls == expected[i][0]
+		assert rs == expected[i][1]
+	}
+}
+
 fn test_colmax() {
 	column := ['Name', 'Max', 'Moritz']
 	expected := 6
@@ -117,4 +134,13 @@ fn test_create_sepline() {
 	for i, sizes in col_sizes {
 		assert create_sepline(sizes, paddings[i]) == expected[i]
 	}
+}
+
+fn test_row_to_bold() {
+	rows := [
+		['a', 'bc', 'def'],
+		['foo', 'bar', 'baz'],
+	]
+	assert row_to_bold(rows[0], 2) == ['\e[1ma\e[0m', '\e[1mbc\e[0m', '\e[1mdef\e[0m']
+	assert row_to_bold(rows[1], 1) == ['\e[1mfoo\e[0m', 'bar', 'baz']
 }
