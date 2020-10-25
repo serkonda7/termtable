@@ -62,6 +62,28 @@ fn get_row_and_col_data(data [][]string, orient Orientation) ([][]string, [][]st
 	}
 }
 
+fn colmax(columns [][]string) []int {
+	mut col_maxes := []int{len: columns.len, init: 0}
+	for i, col in columns {
+		for c in col {
+			if c.len > col_maxes[i] {
+				col_maxes[i] = c.len
+			}
+		}
+	}
+	return col_maxes
+}
+
+fn create_sepline(col_sizes []int, pad int) string {
+	padding := pad * 2
+	mut line := '+'
+	for cs in col_sizes {
+		line += '-'.repeat(cs + padding)
+		line += '+'
+	}
+	return line
+}
+
 // bold: 0 = none; 1 = first el; 2 = all
 fn row_to_string(row []string, rspace []int, align Alignment, padding int, bold int) string {
 	mut final_row := row.clone()
@@ -100,28 +122,6 @@ fn cell_space(total_space int, align Alignment) (int, int) {
 			return total_space, 0
 		}
 	}
-}
-
-fn colmax(columns [][]string) []int {
-	mut col_maxes := []int{len: columns.len, init: 0}
-	for i, col in columns {
-		for c in col {
-			if c.len > col_maxes[i] {
-				col_maxes[i] = c.len
-			}
-		}
-	}
-	return col_maxes
-}
-
-fn create_sepline(col_sizes []int, pad int) string {
-	padding := pad * 2
-	mut line := '+'
-	for cs in col_sizes {
-		line += '-'.repeat(cs + padding)
-		line += '+'
-	}
-	return line
 }
 
 fn row_to_bold(row []string, bold int) []string {
