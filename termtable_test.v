@@ -54,6 +54,31 @@ fn test_get_row_and_col_data() {
 	assert r2 == coldata
 }
 
+fn test_colmax() {
+	columns := [
+		['Name', 'Age', 'Sex'],
+		['Max', '13', 'male'],
+		['Moritz', '12', 'male'],
+	]
+	expected := [4, 4, 6]
+	assert colmax(columns) == expected
+}
+
+fn test_create_sepline() {
+	col_sizes := [
+		[1, 2, 3],
+		[1, 4],
+	]
+	paddings := [1, 0]
+	expected := [
+		'+---+----+-----+',
+		'+-+----+',
+	]
+	for i, sizes in col_sizes {
+		assert create_sepline(sizes, paddings[i]) == expected[i]
+	}
+}
+
 struct RowToStrInput {
 	align   Alignment
 	padding int
@@ -112,31 +137,6 @@ fn test_cell_space() {
 		ls, rs := cell_space(inp[0], Alignment(inp[1]))
 		assert ls == expected[i][0]
 		assert rs == expected[i][1]
-	}
-}
-
-fn test_colmax() {
-	columns := [
-		['Name', 'Age', 'Sex'],
-		['Max', '13', 'male'],
-		['Moritz', '12', 'male'],
-	]
-	expected := [4, 4, 6]
-	assert colmax(columns) == expected
-}
-
-fn test_create_sepline() {
-	col_sizes := [
-		[1, 2, 3],
-		[1, 4],
-	]
-	paddings := [1, 0]
-	expected := [
-		'+---+----+-----+',
-		'+-+----+',
-	]
-	for i, sizes in col_sizes {
-		assert create_sepline(sizes, paddings[i]) == expected[i]
 	}
 }
 
