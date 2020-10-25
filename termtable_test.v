@@ -116,9 +116,13 @@ fn test_cell_space() {
 }
 
 fn test_colmax() {
-	column := ['Name', 'Max', 'Moritz']
-	expected := 6
-	assert colmax(column) == expected
+	columns := [
+		['Name', 'Age', 'Sex'],
+		['Max', '13', 'male'],
+		['Moritz', '12', 'male'],
+	]
+	expected := [4, 4, 6]
+	assert colmax(columns) == expected
 }
 
 fn test_create_sepline() {

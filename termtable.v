@@ -1,5 +1,9 @@
 module termtable
 
+pub enum Style {
+	plain
+}
+
 pub enum Orientation {
 	row
 	column
@@ -14,6 +18,7 @@ pub enum Alignment {
 pub struct Table {
 pub mut:
 	data        [][]string
+	// style       Style = .plain
 	orientation Orientation = .row
 	align       Alignment = .left
 	padding     int = 1
@@ -21,15 +26,12 @@ pub mut:
 
 pub fn (t Table) str() string {
 	rowdata, coldata := get_row_and_col_data(t.data, t.orientation)
-	mut col_sizes := []int{}
-	for c in coldata {
-		col_sizes << colmax(c)
-	}
-	sepline := create_sepline(col_sizes, t.padding)
+	col_maxes := colmax(coldata)
+	sepline := create_sepline(col_maxes, t.padding)
 	mut bold := if t.orientation == .row { 2 } else { 1 }
 	mut rowstrings := []string{}
 	for row in rowdata {
-		rspace := get_row_spaces(row, col_sizes)
+		rspace := get_row_spaces(row, col_maxes)
 		rowstrings << row_to_string(row, rspace, t.align, t.padding, bold)
 		if bold == 2 {
 			bold = 0
@@ -100,14 +102,16 @@ fn cell_space(total_space int, align Alignment) (int, int) {
 	}
 }
 
-fn colmax(col []string) int {
-	mut max := 0
-	for c in col {
-		if c.len > max {
-			max = c.len
+fn colmax(columns [][]string) []int {
+	mut col_maxes := []int{len: columns.len, init: 0}
+	for i, col in columns {
+		for c in col {
+			if c.len > col_maxes[i] {
+				col_maxes[i] = c.len
+			}
 		}
 	}
-	return max
+	return col_maxes
 }
 
 fn create_sepline(col_sizes []int, pad int) string {
