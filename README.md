@@ -23,6 +23,7 @@ fn main() {
 		data: data
 		// The following settings are optional. Here I use the default values.
 		orientation: .row
+		header_style: .bold
 		align: .left
 		padding: 1
 	}
@@ -77,6 +78,12 @@ col_t := termtable.Table{
 +------+-----+--------+
 */
 ```
+
+
+### Header Style
+| `.bold (default)` | `.plain` |
+| --- | --- |
+| ![](img/headers_bold.png) | ![](img/headers_plain.png) |
 
 
 ### Alignment
