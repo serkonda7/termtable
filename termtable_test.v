@@ -21,14 +21,14 @@ fn test_table_str() {
 	]
 	expected := [
 		'+------+-----+
-| \e[1mName\e[0m | \e[1mAge\e[0m |
+| Name | Age |
 +------+-----+
 | Lisa | 42  |
 +------+-----+',
 		'+----+---+------+
-|\e[1mName\e[0m|Max|Moritz|
+|Name|Max|Moritz|
 +----+---+------+
-| \e[1mAge\e[0m| 13|    12|
+| Age| 13|    12|
 +----+---+------+',
 	]
 	for i, t in tables {
@@ -82,23 +82,22 @@ fn test_create_sepline() {
 struct RowToStrInput {
 	align   Alignment
 	padding int
-	bold    int
 }
 
 fn test_row_to_string() {
 	row := ['a', 'bc', 'def']
 	rspace := [2, 2, 0]
 	inp_vals := [
-		RowToStrInput{.left, 1, 1},
-		RowToStrInput{.center, 3, 0},
+		RowToStrInput{.left, 1},
+		RowToStrInput{.center, 3},
 	]
 	expected := [
-		'| \e[1ma\e[0m   | bc   | def |',
+		'| a   | bc   | def |',
 		'|    a    |    bc    |   def   |',
 	]
 	for i, val in inp_vals {
 		exp := expected[i]
-		assert row_to_string(row, rspace, val.align, val.padding, val.bold) == exp
+		assert row_to_string(row, rspace, val.align, val.padding) == exp
 	}
 }
 

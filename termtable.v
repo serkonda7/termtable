@@ -4,6 +4,11 @@ pub enum Style {
 	plain
 }
 
+pub enum HeaderStyle {
+	plain
+	bold
+}
+
 pub enum Orientation {
 	row
 	column
@@ -17,25 +22,26 @@ pub enum Alignment {
 
 pub struct Table {
 pub mut:
-	data        [][]string
+	data         [][]string
 	// style       Style = .plain
-	orientation Orientation = .row
-	align       Alignment = .left
-	padding     int = 1
+	header_style HeaderStyle = .bold
+	orientation  Orientation = .row
+	align        Alignment = .left
+	padding      int = 1
 }
 
 pub fn (t Table) str() string {
 	rowdata, coldata := get_row_and_col_data(t.data, t.orientation)
 	col_maxes := colmax(coldata)
 	sepline := create_sepline(col_maxes, t.padding)
-	mut bold := if t.orientation == .row { 2 } else { 1 }
+	// mut bold := if t.orientation == .row { 2 } else { 1 }
 	mut rowstrings := []string{}
 	for row in rowdata {
 		rspace := get_row_spaces(row, col_maxes)
-		rowstrings << row_to_string(row, rspace, t.align, t.padding, bold)
-		if bold == 2 {
-			bold = 0
-		}
+		rowstrings << row_to_string(row, rspace, t.align, t.padding)
+		// if bold == 2 {
+		// 	bold = 0
+		// }
 	}
 	mut final_str := '$sepline\n'
 	for row_str in rowstrings {
@@ -85,11 +91,11 @@ fn create_sepline(col_sizes []int, pad int) string {
 }
 
 // bold: 0 = none; 1 = first el; 2 = all
-fn row_to_string(row []string, rspace []int, align Alignment, padding int, bold int) string {
+fn row_to_string(row []string, rspace []int, align Alignment, padding int) string {
 	mut final_row := row.clone()
-	if bold > 0 {
-		final_row = row_to_bold(final_row, bold)
-	}
+	// if bold > 0 {
+	// 	final_row = row_to_bold(final_row, bold)
+	// }
 	pad := ' '.repeat(padding)
 	mut rstr := '|$pad'
 	for i, cell in final_row {
