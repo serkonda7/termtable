@@ -130,11 +130,9 @@ fn cell_space(total_space int, align Alignment) (int, int) {
 
 fn apply_header_style(row []string, style HeaderStyle) []string {
 	match style {
-		.plain {
-			return row
-		}
-		.bold {
-			return row.map('\e[1m$it\e[0m')
-		}
+		.plain { return row }
+		// vfmt currently breaks this:
+		// TODO: reenable fmt verify after a fix
+		.bold { return row.map('\e[1m$it\e[0m') }
 	}
 }
