@@ -19,9 +19,9 @@ fn main() {
 		['Moritz', '12', 'male'],
 		['Lisa', '42', 'female'],
 	]
-	t := termtable.Table{ 
+	t := termtable.Table{
 		data: data
-		// The following settings are optional. Here I use the default values.
+		// The following settings are optional. These are their default values:
 		orientation: .row
 		header_style: .bold
 		align: .left
@@ -46,14 +46,17 @@ fn main() {
 ## Configuration Options
 ### Orientation
 ```v
-row_t := termtable.Table{
+t := termtable.Table{
 	data: [
 		['Name', 'Age'],
 		['Max', '13'],
 		['Moritz', '12'],
 	]
+	// orientation: ...
 }
-/* Output
+println(t)
+
+/* orientation: .row (default)
 +--------+-----+
 | Name   | Age |
 +--------+-----+
@@ -62,15 +65,8 @@ row_t := termtable.Table{
 | Moritz | 12  |
 +--------+-----+
 */
-col_t := termtable.Table{
-	data: [
-		['Name', 'Age'],
-		['Max', '13'],
-		['Moritz', '12'],
-	]
-	orientation: .column
-}
-/* Output
+
+/* orientation: .column
 +------+-----+--------+
 | Name | Max | Moritz |
 +------+-----+--------+
@@ -81,6 +77,9 @@ col_t := termtable.Table{
 
 
 ### Header Style
+```v
+// header_style: ...
+```
 | `.bold (default)` | `.plain` |
 | --- | --- |
 | ![](img/headers_bold.png) | ![](img/headers_plain.png) |
@@ -88,6 +87,7 @@ col_t := termtable.Table{
 
 ### Alignment
 ```v
+// align: ...
 | Max    | 13  | male   |  // .left (default)
 |  Max   | 13  |  male  |  // .center
 |    Max |  13 |   male |  // .right
@@ -97,11 +97,12 @@ col_t := termtable.Table{
 ### Padding
 Control the count of spaces between the cell border and the item.
 ```v
+// padding: ...
+|   Lisa   |   42   |   female   |  // 3
+
 | Lisa | 42 | female |  // 1 (default)
 
 |Lisa|42|female|  // 0
-
-|   Lisa   |   42   |   female   |  // 3
 ```
 
 
