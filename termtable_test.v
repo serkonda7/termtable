@@ -18,6 +18,15 @@ fn test_table_str() {
 			align: .right
 			padding: 0
 		},
+		Table{
+			data: [
+				['Name', 'Age'],
+				['Lisa', '42'],
+			]
+			header_style: .plain
+			align: .center
+			padding: 3
+		},
 	]
 	expected := [
 		'+------+-----+
@@ -30,6 +39,11 @@ fn test_table_str() {
 +----+---+------+
 | \e[1mAge\e[0m| 13|    12|
 +----+---+------+',
+		'+----------+---------+
+|   Name   |   Age   |
++----------+---------+
+|   Lisa   |   42    |
++----------+---------+',
 	]
 	for i, t in tables {
 		assert t.str() == expected[i]
@@ -82,23 +96,22 @@ fn test_create_sepline() {
 struct RowToStrInput {
 	align   Alignment
 	padding int
-	bold    int
 }
 
 fn test_row_to_string() {
 	row := ['a', 'bc', 'def']
 	rspace := [2, 2, 0]
 	inp_vals := [
-		RowToStrInput{.left, 1, 1},
-		RowToStrInput{.center, 3, 0},
+		RowToStrInput{.left, 1},
+		RowToStrInput{.center, 3},
 	]
 	expected := [
-		'| \e[1ma\e[0m   | bc   | def |',
+		'| a   | bc   | def |',
 		'|    a    |    bc    |   def   |',
 	]
 	for i, val in inp_vals {
 		exp := expected[i]
-		assert row_to_string(row, rspace, val.align, val.padding, val.bold) == exp
+		assert row_to_string(row, rspace, val.align, val.padding) == exp
 	}
 }
 
@@ -140,11 +153,11 @@ fn test_cell_space() {
 	}
 }
 
-fn test_row_to_bold() {
+fn test_apply_header_style() {
 	rows := [
 		['a', 'bc', 'def'],
 		['foo', 'bar', 'baz'],
 	]
-	assert row_to_bold(rows[0], 2) == ['\e[1ma\e[0m', '\e[1mbc\e[0m', '\e[1mdef\e[0m']
-	assert row_to_bold(rows[1], 1) == ['\e[1mfoo\e[0m', 'bar', 'baz']
+	assert apply_header_style(rows[0], .bold) == ['\e[1ma\e[0m', '\e[1mbc\e[0m', '\e[1mdef\e[0m']
+	assert apply_header_style(rows[1], .plain) == ['foo', 'bar', 'baz']
 }
