@@ -34,20 +34,16 @@ pub fn (t Table) str() string {
 	rowdata, coldata := get_row_and_col_data(t.data, t.orientation)
 	col_maxes := colmax(coldata)
 	sepline := create_sepline(col_maxes, t.padding)
-	// mut bold := if t.orientation == .row { 2 } else { 1 }
 	mut rowstrings := []string{}
 	for i, row in rowdata {
-		mut styled_row := row
+		mut styled_row := row.clone()
 		if t.orientation == .row && i == 0 {
 			styled_row = apply_header_style(row, t.header_style)
 		} else if t.orientation == .column {
 			styled_row[0] = apply_header_style(row, t.header_style)[0]
 		}
 		rspace := get_row_spaces(row, col_maxes)
-		rowstrings << row_to_string(row, rspace, t.align, t.padding)
-		// if bold == 2 {
-		// 	bold = 0
-		// }
+		rowstrings << row_to_string(styled_row, rspace, t.align, t.padding)
 	}
 	mut final_str := '$sepline\n'
 	for row_str in rowstrings {
@@ -96,12 +92,8 @@ fn create_sepline(col_sizes []int, pad int) string {
 	return line
 }
 
-// bold: 0 = none; 1 = first el; 2 = all
 fn row_to_string(row []string, rspace []int, align Alignment, padding int) string {
 	mut final_row := row.clone()
-	// if bold > 0 {
-	// 	final_row = row_to_bold(final_row, bold)
-	// }
 	pad := ' '.repeat(padding)
 	mut rstr := '|$pad'
 	for i, cell in final_row {
@@ -137,12 +129,12 @@ fn cell_space(total_space int, align Alignment) (int, int) {
 }
 
 fn apply_header_style(row []string, style HeaderStyle) []string {
-	// mut final_row := row
-	// if bold == 1 {
-	// 	final_row[0] = '\e[1m${row[0]}\e[0m'
-	// } else {
-	// 	final_row = final_row.map('\e[1m$it\e[0m')
-	// }
-	// return final_row
-	return row
+	match style {
+		.plain {
+			return row
+		}
+		.bold {
+			return row.map('\e[1m$it\e[0m')
+		}
+	}
 }
