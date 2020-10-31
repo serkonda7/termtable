@@ -23,6 +23,7 @@ fn test_table_str() {
 				['Name', 'Age'],
 				['Lisa', '42'],
 			]
+			style: .plain
 			header_style: .plain
 			align: .center
 			padding: 3
@@ -39,11 +40,8 @@ fn test_table_str() {
 +----+---+------+
 | \e[1mAge\e[0m| 13|    12|
 +----+---+------+',
-		'+----------+---------+
-|   Name   |   Age   |
-+----------+---------+
-|   Lisa   |   42    |
-+----------+---------+',
+		'Name      Age
+Lisa      42',
 	]
 	for i, t in tables {
 		exp := expected[i]
@@ -85,6 +83,14 @@ struct CreateSeplineInput {
 	style     Style
 }
 
+fn test_get_border() {
+	mut inputs := []Style{}
+	inputs = [.plain]
+	for inp in inputs {
+		assert get_border(inp).style == inp
+	}
+}
+
 fn test_create_sepline() {
 	inputs := [
 		CreateSeplineInput{
@@ -97,10 +103,16 @@ fn test_create_sepline() {
 			padding: 0
 			style: .grid
 		},
+		CreateSeplineInput{
+			col_sizes: [2, 2]
+			padding: 1
+			style: .plain
+		},
 	]
 	expected := [
 		['+---+----+-----+\n', '+---+----+-----+'],
 		['+-+----+\n', '+-+----+'],
+		['', ''],
 	]
 	for i, inp in inputs {
 		b := get_border(inp.style)

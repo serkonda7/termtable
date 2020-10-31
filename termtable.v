@@ -79,7 +79,7 @@ pub fn (t Table) str() string {
 		}
 	}
 	final_str += bottomline
-	return final_str
+	return final_str.trim_space()
 }
 
 fn get_row_and_col_data(data [][]string, orient Orientation) ([][]string, [][]string) {
@@ -114,7 +114,10 @@ fn colmax(columns [][]string) []int {
 fn get_border(style Style) Border {
 	return match style {
 		.grid { Border{} }
-		.plain { Border{} } // TODO
+		.plain { Border{
+				style: .plain
+				col_sep: ''
+			} }
 	}
 }
 
