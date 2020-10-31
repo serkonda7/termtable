@@ -113,7 +113,7 @@ fn test_create_sepline() {
 struct RowToStrInput {
 	align   Alignment
 	padding int
-	style Style
+	style   Style
 }
 
 fn test_row_to_string() {
