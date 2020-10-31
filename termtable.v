@@ -55,6 +55,7 @@ pub fn (t Table) str() string {
 	rowdata, coldata := get_row_and_col_data(t.data, t.orientation)
 	col_maxes := colmax(coldata)
 	mut rowstrings := []string{}
+	border := get_border(t.style)
 	for i, row in rowdata {
 		mut styled_row := row.clone()
 		if t.orientation == .row && i == 0 {
@@ -63,9 +64,8 @@ pub fn (t Table) str() string {
 			styled_row[0] = apply_header_style(row, t.header_style)[0]
 		}
 		rspace := get_row_spaces(row, col_maxes)
-		rowstrings << row_to_string(styled_row, rspace, t.align, t.padding)
+		rowstrings << row_to_string(styled_row, rspace, t.align, t.padding, border)
 	}
-	border := get_border(t.style)
 	topline := create_sepline(.top, col_maxes, t.padding, border)
 	sepline := create_sepline(.middle, col_maxes, t.padding, border)
 	bottomline := create_sepline(.bottom, col_maxes, t.padding, border)
@@ -143,14 +143,14 @@ fn create_sepline(pos SeplinePos, col_sizes []int, pad int, b Border) string {
 	return line
 }
 
-fn row_to_string(row []string, rspace []int, align Alignment, padding int) string {
+fn row_to_string(row []string, rspace []int, align Alignment, padding int, b Border) string {
 	mut final_row := row.clone()
 	pad := ' '.repeat(padding)
-	mut rstr := '|$pad'
+	mut rstr := b.col_sep + pad
 	for i, cell in final_row {
 		sl, sr := cell_space(rspace[i], align)
 		rstr += ' '.repeat(sl) + cell + ' '.repeat(sr)
-		rstr += '$pad|$pad'
+		rstr += pad + b.col_sep + pad
 	}
 	return rstr.trim_space()
 }

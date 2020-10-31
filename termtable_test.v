@@ -84,7 +84,6 @@ struct CreateSeplineInput {
 	style     Style
 }
 
-// this is also the test for get_border()
 fn test_create_sepline() {
 	inputs := [
 		CreateSeplineInput{
@@ -104,31 +103,34 @@ fn test_create_sepline() {
 	]
 	for i, inp in inputs {
 		b := get_border(inp.style)
-		assert create_sepline(.top, inp.col_sizes, inp.padding, b) == expected[i]
-		assert create_sepline(.middle, inp.col_sizes, inp.padding, b) == expected[i]
-		assert create_sepline(.bottom, inp.col_sizes, inp.padding, b) == expected[i]
+		exp := expected[i]
+		assert create_sepline(.top, inp.col_sizes, inp.padding, b) == exp
+		assert create_sepline(.middle, inp.col_sizes, inp.padding, b) == exp
+		assert create_sepline(.bottom, inp.col_sizes, inp.padding, b) == exp
 	}
 }
 
 struct RowToStrInput {
 	align   Alignment
 	padding int
+	style Style
 }
 
 fn test_row_to_string() {
 	row := ['a', 'bc', 'def']
 	rspace := [2, 2, 0]
 	inp_vals := [
-		RowToStrInput{.left, 1},
-		RowToStrInput{.center, 3},
+		RowToStrInput{.left, 1, .grid},
+		RowToStrInput{.center, 3, .grid},
 	]
 	expected := [
 		'| a   | bc   | def |',
 		'|    a    |    bc    |   def   |',
 	]
-	for i, val in inp_vals {
+	for i, inp in inp_vals {
+		b := get_border(inp.style)
 		exp := expected[i]
-		assert row_to_string(row, rspace, val.align, val.padding) == exp
+		assert row_to_string(row, rspace, inp.align, inp.padding, b) == exp
 	}
 }
 
