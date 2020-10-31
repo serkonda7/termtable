@@ -1,7 +1,7 @@
 module termtable
 
 pub enum Style {
-	plain
+	grid
 }
 
 pub enum HeaderStyle {
@@ -23,11 +23,32 @@ pub enum Alignment {
 pub struct Table {
 pub mut:
 	data         [][]string
-	// style       Style = .plain
+	style        Style = .grid
 	header_style HeaderStyle = .bold
 	orientation  Orientation = .row
 	align        Alignment = .left
 	padding      int = 1
+}
+
+const (
+	predefined_styles = {
+		'grid': Border{}
+	}
+)
+
+struct Border {
+pub mut:
+	top_left byte = '+'
+	top_right byte = '+'
+	bottom_right byte = '+'
+	bottom_left byte = '+'
+	top_cross byte = '+'
+	right_cross byte = '+'
+	bottom_cross byte = '+'
+	left_cross byte = '+'
+	center_cross byte = '+'
+	row_sep byte = '-'
+	col_sep byte = '|'
 }
 
 pub fn (t Table) str() string {
