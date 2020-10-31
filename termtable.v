@@ -1,11 +1,5 @@
 module termtable
 
-const (
-	predefined_styles = {
-		'grid': Border{}
-	}
-)
-
 pub enum Style {
 	grid
 }
@@ -44,23 +38,22 @@ pub mut:
 
 struct Border {
 pub mut:
-	top_left byte = `+`
-	top_right byte = `+`
-	bottom_right byte = `+`
-	bottom_left byte = `+`
-	top_cross byte = `+`
-	right_cross byte = `+`
-	bottom_cross byte = `+`
-	left_cross byte = `+`
-	center_cross byte = `+`
-	row_sep byte = `-`
-	col_sep byte = `|`
+	top_left     string = '+'
+	top_right    string = '+'
+	bottom_right string = '+'
+	bottom_left  string = '+'
+	cross_top    string = '+'
+	cross_right  string = '+'
+	cross_bottom string = '+'
+	cross_left   string = '+'
+	cross_center string = '+'
+	row_sep      string = '-'
+	col_sep      string = '|'
 }
 
 pub fn (t Table) str() string {
 	rowdata, coldata := get_row_and_col_data(t.data, t.orientation)
 	col_maxes := colmax(coldata)
-	sepline := create_sepline(col_maxes, t.padding)
 	mut rowstrings := []string{}
 	for i, row in rowdata {
 		mut styled_row := row.clone()
@@ -72,12 +65,19 @@ pub fn (t Table) str() string {
 		rspace := get_row_spaces(row, col_maxes)
 		rowstrings << row_to_string(styled_row, rspace, t.align, t.padding)
 	}
-	mut final_str := '$sepline\n'
-	for row_str in rowstrings {
+	border := get_border(t.style)
+	topline := create_sepline(.top, col_maxes, t.padding, border)
+	sepline := create_sepline(.middle, col_maxes, t.padding, border)
+	bottomline := create_sepline(.bottom, col_maxes, t.padding, border)
+	mut final_str := '$topline\n'
+	for i, row_str in rowstrings {
 		final_str += '$row_str\n'
-		final_str += '$sepline\n'
+		if i < rowstrings.len - 1 {
+			final_str += '$sepline\n'
+		}
 	}
-	return final_str.trim_space()
+	final_str += bottomline
+	return final_str
 }
 
 fn get_row_and_col_data(data [][]string, orient Orientation) ([][]string, [][]string) {
@@ -109,13 +109,37 @@ fn colmax(columns [][]string) []int {
 	return col_maxes
 }
 
-fn create_sepline(col_sizes []int, pad int) string {
-	padding := pad * 2
-	mut line := '+'
-	for cs in col_sizes {
-		line += '-'.repeat(cs + padding)
-		line += '+'
+fn get_border(style Style) Border {
+	return match style {
+		.grid { Border{} }
 	}
+}
+
+fn create_sepline(pos SeplinePos, col_sizes []int, pad int, b Border) string {
+	padding := pad * 2
+	line_start := match pos {
+		.top { b.top_left }
+		.middle { b.cross_left }
+		.bottom { b.bottom_left }
+	}
+	cross := match pos {
+		.top { b.cross_top }
+		.middle { b.cross_center }
+		.bottom { b.cross_bottom }
+	}
+	line_end := match pos {
+		.top { b.top_right }
+		.middle { b.cross_right }
+		.bottom { b.bottom_right }
+	}
+	mut line := line_start
+	for i, cs in col_sizes {
+		line += '-'.repeat(cs + padding)
+		if i < col_sizes.len - 1 {
+			line += cross
+		}
+	}
+	line += line_end
 	return line
 }
 
