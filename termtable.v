@@ -134,7 +134,7 @@ fn create_sepline(pos SeplinePos, col_sizes []int, pad int, b Border) string {
 	}
 	mut line := line_start
 	for i, cs in col_sizes {
-		line += '-'.repeat(cs + padding)
+		line += b.row_sep.repeat(cs + padding)
 		if i < col_sizes.len - 1 {
 			line += cross
 		}
