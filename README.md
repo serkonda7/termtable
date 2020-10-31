@@ -47,7 +47,7 @@ fn main() {
 ## Configuration Options
 ### Style
 ```v
-// .grid (default)
+/* .grid (default)
 +--------+-----+--------+
 | Name   | Age | Sex    |
 +--------+-----+--------+
@@ -57,12 +57,14 @@ fn main() {
 +--------+-----+--------+
 | Lisa   | 42  | female |
 +--------+-----+--------+
+*/
 
-// .plain
+/* .plain
 Name    Age  Sex
 Max     13   male
 Moritz  12   male
-Lisa    42   female
+Lisa    42   
+*/
 ```
 
 
