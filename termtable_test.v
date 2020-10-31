@@ -46,7 +46,8 @@ fn test_table_str() {
 +----------+---------+',
 	]
 	for i, t in tables {
-		assert t.str() == expected[i]
+		exp := expected[i]
+		assert t.str() == exp
 	}
 }
 
@@ -98,15 +99,15 @@ fn test_create_sepline() {
 		},
 	]
 	expected := [
-		'+---+----+-----+',
-		'+-+----+',
+		['+---+----+-----+\n', '+---+----+-----+'],
+		['+-+----+\n', '+-+----+'],
 	]
 	for i, inp in inputs {
 		b := get_border(inp.style)
 		exp := expected[i]
-		assert create_sepline(.top, inp.col_sizes, inp.padding, b) == exp
-		assert create_sepline(.middle, inp.col_sizes, inp.padding, b) == exp
-		assert create_sepline(.bottom, inp.col_sizes, inp.padding, b) == exp
+		assert create_sepline(.top, inp.col_sizes, inp.padding, b) == exp[0]
+		assert create_sepline(.middle, inp.col_sizes, inp.padding, b) == exp[0]
+		assert create_sepline(.bottom, inp.col_sizes, inp.padding, b) == exp[1]
 	}
 }
 
