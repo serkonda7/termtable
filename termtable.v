@@ -1,6 +1,7 @@
 module termtable
 
 pub enum Style {
+	plain
 	grid
 }
 
@@ -38,6 +39,7 @@ pub mut:
 
 struct Border {
 pub mut:
+	style        Style = .grid
 	top_left     string = '+'
 	top_right    string = '+'
 	bottom_right string = '+'
@@ -69,15 +71,15 @@ pub fn (t Table) str() string {
 	topline := create_sepline(.top, col_maxes, t.padding, border)
 	sepline := create_sepline(.middle, col_maxes, t.padding, border)
 	bottomline := create_sepline(.bottom, col_maxes, t.padding, border)
-	mut final_str := '$topline\n'
+	mut final_str := topline
 	for i, row_str in rowstrings {
-		final_str += '$row_str\n'
+		final_str += row_str + '\n'
 		if i < rowstrings.len - 1 {
-			final_str += '$sepline\n'
+			final_str += sepline
 		}
 	}
 	final_str += bottomline
-	return final_str
+	return final_str.trim_space()
 }
 
 fn get_row_and_col_data(data [][]string, orient Orientation) ([][]string, [][]string) {
@@ -112,10 +114,17 @@ fn colmax(columns [][]string) []int {
 fn get_border(style Style) Border {
 	return match style {
 		.grid { Border{} }
+		.plain { Border{
+				style: .plain
+				col_sep: ''
+			} }
 	}
 }
 
 fn create_sepline(pos SeplinePos, col_sizes []int, pad int, b Border) string {
+	if b.style == .plain {
+		return ''
+	}
 	padding := pad * 2
 	line_start := match pos {
 		.top { b.top_left }
@@ -140,6 +149,9 @@ fn create_sepline(pos SeplinePos, col_sizes []int, pad int, b Border) string {
 		}
 	}
 	line += line_end
+	if pos != .bottom {
+		line += '\n'
+	}
 	return line
 }
 

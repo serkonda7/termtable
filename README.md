@@ -22,9 +22,10 @@ fn main() {
 	t := termtable.Table{
 		data: data
 		// The following settings are optional. These are their default values:
-		orientation: .row
+		style: .grid
 		header_style: .bold
 		align: .left
+		orientation: .row
 		padding: 1
 	}
 	println(t)
@@ -44,6 +45,47 @@ fn main() {
 ```
 
 ## Configuration Options
+### Style
+```v
+/* .grid (default)
++--------+-----+--------+
+| Name   | Age | Sex    |
++--------+-----+--------+
+| Max    | 13  | male   |
++--------+-----+--------+
+| Moritz | 12  | male   |
++--------+-----+--------+
+| Lisa   | 42  | female |
++--------+-----+--------+
+*/
+
+/* .plain
+Name    Age  Sex
+Max     13   male
+Moritz  12   male
+Lisa    42   
+*/
+```
+
+
+### Header Style
+```v
+// header_style: ...
+```
+| `.bold (default)` | `.plain` |
+| --- | --- |
+| ![](img/headers_bold.png) | ![](img/headers_plain.png) |
+
+
+### Alignment
+```v
+// align: ...
+| Max    | 13  | male   |  // .left (default)
+|  Max   | 13  |  male  |  // .center
+|    Max |  13 |   male |  // .right
+```
+
+
 ### Orientation
 ```v
 t := termtable.Table{
@@ -73,24 +115,6 @@ println(t)
 | Age  | 13  | 12     |
 +------+-----+--------+
 */
-```
-
-
-### Header Style
-```v
-// header_style: ...
-```
-| `.bold (default)` | `.plain` |
-| --- | --- |
-| ![](img/headers_bold.png) | ![](img/headers_plain.png) |
-
-
-### Alignment
-```v
-// align: ...
-| Max    | 13  | male   |  // .left (default)
-|  Max   | 13  |  male  |  // .center
-|    Max |  13 |   male |  // .right
 ```
 
 
