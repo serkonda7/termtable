@@ -1,6 +1,17 @@
 # Changelog
 
 
+## 0.4.0
+_31 October 2020_
+
+**Additions**
+- Choose from a set of predefined table styles using the `style` property
+- Bring back plain text headers. Choose what you want with `header_style`
+
+**Changes**
+- Readme: small improvements and clarifications
+
+
 ## 0.3.0
 _24 October 2020_
 
