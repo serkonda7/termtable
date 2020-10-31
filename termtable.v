@@ -1,5 +1,11 @@
 module termtable
 
+const (
+	predefined_styles = {
+		'grid': Border{}
+	}
+)
+
 pub enum Style {
 	grid
 }
@@ -20,6 +26,12 @@ pub enum Alignment {
 	right
 }
 
+enum SeplinePos {
+	top
+	middle
+	bottom
+}
+
 pub struct Table {
 pub mut:
 	data         [][]string
@@ -30,25 +42,19 @@ pub mut:
 	padding      int = 1
 }
 
-const (
-	predefined_styles = {
-		'grid': Border{}
-	}
-)
-
 struct Border {
 pub mut:
-	top_left byte = '+'
-	top_right byte = '+'
-	bottom_right byte = '+'
-	bottom_left byte = '+'
-	top_cross byte = '+'
-	right_cross byte = '+'
-	bottom_cross byte = '+'
-	left_cross byte = '+'
-	center_cross byte = '+'
-	row_sep byte = '-'
-	col_sep byte = '|'
+	top_left byte = `+`
+	top_right byte = `+`
+	bottom_right byte = `+`
+	bottom_left byte = `+`
+	top_cross byte = `+`
+	right_cross byte = `+`
+	bottom_cross byte = `+`
+	left_cross byte = `+`
+	center_cross byte = `+`
+	row_sep byte = `-`
+	col_sep byte = `|`
 }
 
 pub fn (t Table) str() string {
