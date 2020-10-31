@@ -78,18 +78,35 @@ fn test_colmax() {
 	assert colmax(columns) == expected
 }
 
+struct CreateSeplineInput {
+	col_sizes []int
+	padding   int
+	style     Style
+}
+
+// this is also the test for get_border()
 fn test_create_sepline() {
-	col_sizes := [
-		[1, 2, 3],
-		[1, 4],
+	inputs := [
+		CreateSeplineInput{
+			col_sizes: [1, 2, 3]
+			padding: 1
+			style: .grid
+		},
+		CreateSeplineInput{
+			col_sizes: [1, 4]
+			padding: 0
+			style: .grid
+		},
 	]
-	paddings := [1, 0]
 	expected := [
 		'+---+----+-----+',
 		'+-+----+',
 	]
-	for i, sizes in col_sizes {
-		// assert create_sepline(sizes, paddings[i]) == expected[i]
+	for i, inp in inputs {
+		b := get_border(inp.style)
+		assert create_sepline(.top, inp.col_sizes, inp.padding, b) == expected[i]
+		assert create_sepline(.middle, inp.col_sizes, inp.padding, b) == expected[i]
+		assert create_sepline(.bottom, inp.col_sizes, inp.padding, b) == expected[i]
 	}
 }
 
