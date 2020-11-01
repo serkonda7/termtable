@@ -49,7 +49,7 @@ fn test_table_styles() {
 	styles = [
 		.grid,
 		.plain,
-		.simple,
+		// .simple,
 	]
 	expected := [
 		'+--------+-----+
@@ -143,6 +143,7 @@ fn test_create_sepline() {
 		b := get_border(inp.style)
 		exp := expected[i]
 		assert create_sepline(.top, inp.col_sizes, inp.padding, b) == exp[0]
+		assert create_sepline(.header, inp.col_sizes, inp.padding, b) == exp[0]
 		assert create_sepline(.middle, inp.col_sizes, inp.padding, b) == exp[0]
 		assert create_sepline(.bottom, inp.col_sizes, inp.padding, b) == exp[1]
 	}
