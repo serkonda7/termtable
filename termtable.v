@@ -176,7 +176,6 @@ fn create_sepline(pos SeplinePos, col_sizes []int, pad int, b Border) string {
 			line += rs.repeat(cs)
 			line += ' '.repeat(padding)
 		}
-
 		if i < col_sizes.len - 1 {
 			line += cross
 		}
