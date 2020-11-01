@@ -57,6 +57,7 @@ pub mut:
 	head_right   string = '+'
 	row_sep      string = '-'
 	col_sep      string = '|'
+	fill_padding bool = true
 }
 
 pub fn (t Table) str() string {
@@ -130,7 +131,11 @@ fn get_border(style Style) Border {
 			b.col_sep = ''
 		}
 		.simple {
-			// TODO
+			b.col_sep = ''
+			b.head_left = ''
+			b.head_right = ''
+			b.head_cross = ''
+			b.fill_padding = false
 		}
 	}
 	return b
@@ -138,6 +143,9 @@ fn get_border(style Style) Border {
 
 fn create_sepline(pos SeplinePos, col_sizes []int, pad int, b Border) string {
 	if b.style == .plain {
+		return ''
+	}
+	if b.style == .simple && pos != .header {
 		return ''
 	}
 	padding := pad * 2
@@ -162,12 +170,19 @@ fn create_sepline(pos SeplinePos, col_sizes []int, pad int, b Border) string {
 	rs := if pos == .header { b.head_row_sep } else { b.row_sep }
 	mut line := line_start
 	for i, cs in col_sizes {
-		line += rs.repeat(cs + padding)
+		if b.fill_padding {
+			line += rs.repeat(cs + padding)
+		} else {
+			line += rs.repeat(cs)
+			line += ' '.repeat(padding)
+		}
+
 		if i < col_sizes.len - 1 {
 			line += cross
 		}
 	}
 	line += line_end
+	line = line.trim_space()
 	if pos != .bottom {
 		line += '\n'
 	}

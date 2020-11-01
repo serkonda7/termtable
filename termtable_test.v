@@ -49,7 +49,7 @@ fn test_table_styles() {
 	styles = [
 		.grid,
 		.plain,
-		// .simple,
+		.simple,
 	]
 	expected := [
 		'+--------+-----+
