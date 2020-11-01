@@ -38,16 +38,18 @@ Age     13        12',
 
 fn test_table_styles() {
 	mut table := Table{
-			data: [
-				['Name', 'Age'],
-				['Max', '13'],
-				['Moritz', '12'],
-			]
-			header_style: .plain
-		}
+		data: [
+			['Name', 'Age'],
+			['Max', '13'],
+			['Moritz', '12'],
+		]
+		header_style: .plain
+	}
 	mut styles := []Style{}
 	styles = [
-		.grid, .plain
+		.grid,
+		.plain,
+		.simple,
 	]
 	expected := [
 		'+--------+-----+
@@ -56,9 +58,14 @@ fn test_table_styles() {
 | Max    | 13  |
 +--------+-----+
 | Moritz | 12  |
-+--------+-----+', 'Name    Age
++--------+-----+',
+		'Name    Age
 Max     13
-Moritz  12'
+Moritz  12',
+		'Name    Age
+------  ---
+Max     13
+Moritz  12',
 	]
 	for i, s in styles {
 		table.style = s
