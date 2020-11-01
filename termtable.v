@@ -3,6 +3,7 @@ module termtable
 pub enum Style {
 	plain
 	grid
+	simple
 }
 
 pub enum HeaderStyle {
@@ -112,13 +113,17 @@ fn colmax(columns [][]string) []int {
 }
 
 fn get_border(style Style) Border {
-	return match style {
-		.grid { Border{} }
-		.plain { Border{
-				style: .plain
-				col_sep: ''
-			} }
+	mut b := Border {
+		style: style
 	}
+	match style {
+		.grid { }
+		.plain {b.col_sep = '' }
+		.simple{
+			// TODO
+		}
+	}
+	return b
 }
 
 fn create_sepline(pos SeplinePos, col_sizes []int, pad int, b Border) string {
