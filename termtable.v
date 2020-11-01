@@ -3,6 +3,7 @@ module termtable
 pub enum Style {
 	plain
 	grid
+	simple
 }
 
 pub enum HeaderStyle {
@@ -23,6 +24,7 @@ pub enum Alignment {
 
 enum SeplinePos {
 	top
+	header
 	middle
 	bottom
 }
@@ -49,8 +51,13 @@ pub mut:
 	cross_bottom string = '+'
 	cross_left   string = '+'
 	cross_center string = '+'
+	head_left    string = '+'
+	head_row_sep string = '-'
+	head_cross   string = '+'
+	head_right   string = '+'
 	row_sep      string = '-'
 	col_sep      string = '|'
+	fill_padding bool = true
 }
 
 pub fn (t Table) str() string {
@@ -69,12 +76,15 @@ pub fn (t Table) str() string {
 		rowstrings << row_to_string(styled_row, rspace, t.align, t.padding, border)
 	}
 	topline := create_sepline(.top, col_maxes, t.padding, border)
+	headline := create_sepline(.header, col_maxes, t.padding, border)
 	sepline := create_sepline(.middle, col_maxes, t.padding, border)
 	bottomline := create_sepline(.bottom, col_maxes, t.padding, border)
 	mut final_str := topline
 	for i, row_str in rowstrings {
 		final_str += '$row_str\n'
-		if i < rowstrings.len - 1 {
+		if i == 0 {
+			final_str += headline
+		} else if i < rowstrings.len - 1 {
 			final_str += sepline
 		}
 	}
@@ -112,43 +122,66 @@ fn colmax(columns [][]string) []int {
 }
 
 fn get_border(style Style) Border {
-	return match style {
-		.grid { Border{} }
-		.plain { Border{
-				style: .plain
-				col_sep: ''
-			} }
+	mut b := Border{
+		style: style
 	}
+	match style {
+		.grid {}
+		.plain {
+			b.col_sep = ''
+		}
+		.simple {
+			b.col_sep = ''
+			b.head_left = ''
+			b.head_right = ''
+			b.head_cross = ''
+			b.fill_padding = false
+		}
+	}
+	return b
 }
 
 fn create_sepline(pos SeplinePos, col_sizes []int, pad int, b Border) string {
 	if b.style == .plain {
 		return ''
 	}
+	if b.style == .simple && pos != .header {
+		return ''
+	}
 	padding := pad * 2
 	line_start := match pos {
 		.top { b.top_left }
+		.header { b.head_left }
 		.middle { b.cross_left }
 		.bottom { b.bottom_left }
 	}
 	cross := match pos {
 		.top { b.cross_top }
+		.header { b.head_cross }
 		.middle { b.cross_center }
 		.bottom { b.cross_bottom }
 	}
 	line_end := match pos {
 		.top { b.top_right }
+		.header { b.head_right }
 		.middle { b.cross_right }
 		.bottom { b.bottom_right }
 	}
+	rs := if pos == .header { b.head_row_sep } else { b.row_sep }
 	mut line := line_start
 	for i, cs in col_sizes {
-		line += b.row_sep.repeat(cs + padding)
+		if b.fill_padding {
+			line += rs.repeat(cs + padding)
+		} else {
+			line += rs.repeat(cs)
+			line += ' '.repeat(padding)
+		}
 		if i < col_sizes.len - 1 {
 			line += cross
 		}
 	}
 	line += line_end
+	line = line.trim_space()
 	if pos != .bottom {
 		line += '\n'
 	}
