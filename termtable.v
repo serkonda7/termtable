@@ -113,13 +113,15 @@ fn colmax(columns [][]string) []int {
 }
 
 fn get_border(style Style) Border {
-	mut b := Border {
+	mut b := Border{
 		style: style
 	}
 	match style {
-		.grid { }
-		.plain {b.col_sep = '' }
-		.simple{
+		.grid {}
+		.plain {
+			b.col_sep = ''
+		}
+		.simple {
 			// TODO
 		}
 	}
