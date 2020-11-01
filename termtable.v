@@ -73,7 +73,7 @@ pub fn (t Table) str() string {
 	bottomline := create_sepline(.bottom, col_maxes, t.padding, border)
 	mut final_str := topline
 	for i, row_str in rowstrings {
-		final_str += row_str + '\n'
+		final_str += '$row_str\n'
 		if i < rowstrings.len - 1 {
 			final_str += sepline
 		}

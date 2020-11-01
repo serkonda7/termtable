@@ -1,6 +1,6 @@
 module termtable
 
-fn test_table_str() {
+fn test_setting_config_options() {
 	tables := [
 		Table{
 			data: [
@@ -14,19 +14,11 @@ fn test_table_str() {
 				['Max', '13'],
 				['Moritz', '12'],
 			]
-			orientation: .column
-			align: .right
-			padding: 0
-		},
-		Table{
-			data: [
-				['Name', 'Age'],
-				['Lisa', '42'],
-			]
 			style: .plain
 			header_style: .plain
-			align: .center
-			padding: 3
+			orientation: .column
+			align: .right
+			padding: 2
 		},
 	]
 	expected := [
@@ -35,17 +27,43 @@ fn test_table_str() {
 +------+-----+
 | Lisa | 42  |
 +------+-----+',
-		'+----+---+------+
-|\e[1mName\e[0m|Max|Moritz|
-+----+---+------+
-| \e[1mAge\e[0m| 13|    12|
-+----+---+------+',
-		'Name      Age
-Lisa      42',
+		'Name    Max    Moritz
+Age     13        12',
 	]
 	for i, t in tables {
 		exp := expected[i]
 		assert t.str() == exp
+	}
+}
+
+fn test_table_styles() {
+	mut table := Table{
+			data: [
+				['Name', 'Age'],
+				['Max', '13'],
+				['Moritz', '12'],
+			]
+			header_style: .plain
+		}
+	mut styles := []Style{}
+	styles = [
+		.grid, .plain
+	]
+	expected := [
+		'+--------+-----+
+| Name   | Age |
++--------+-----+
+| Max    | 13  |
++--------+-----+
+| Moritz | 12  |
++--------+-----+', 'Name    Age
+Max     13
+Moritz  12'
+	]
+	for i, s in styles {
+		table.style = s
+		exp := expected[i]
+		assert table.str() == exp
 	}
 }
 
