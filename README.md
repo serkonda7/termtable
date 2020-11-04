@@ -52,6 +52,7 @@ Supported values for `style: ...` are:
 - .plain
 - .simple
 - .github
+- .fancy_grid
 
 `.grid` (default):
 ```
@@ -101,6 +102,19 @@ Lisa    42   female
 | Max    | 13  | male   |
 | Moritz | 12  | male   |
 | Lisa   | 42  | female |
+```
+
+`.fancy_grid`:
+```
+╒════════╤═════╤════════╕
+│ Name   │ Age │ Sex    │
+╞════════╪═════╪════════╡
+│ Max    │ 13  │ male   │
+├────────┼─────┼────────┤
+│ Moritz │ 12  │ male   │
+├────────┼─────┼────────┤
+│ Lisa   │ 42  │ female │
+╘════════╧═════╧════════╛
 ```
 
 

@@ -6,6 +6,7 @@ pub enum Style {
 	simple
 	pretty
 	github
+	fancy_grid
 }
 
 pub enum HeaderStyle {
@@ -43,23 +44,25 @@ pub mut:
 
 struct Border {
 pub mut:
-	style        Style = .grid
-	top_left     string = '+'
-	top_right    string = '+'
-	bottom_right string = '+'
-	bottom_left  string = '+'
-	cross_top    string = '+'
-	cross_right  string = '+'
-	cross_bottom string = '+'
-	cross_left   string = '+'
-	cross_center string = '+'
-	head_left    string = '+'
-	head_row_sep string = '-'
-	head_cross   string = '+'
-	head_right   string = '+'
-	row_sep      string = '-'
-	col_sep      string = '|'
-	fill_padding bool = true
+	style          Style = .grid
+	top_left       string = '+'
+	top_right      string = '+'
+	top_row_sep    string = '-'
+	bottom_right   string = '+'
+	bottom_left    string = '+'
+	bottom_row_sep string = '-'
+	cross_top      string = '+'
+	cross_right    string = '+'
+	cross_bottom   string = '+'
+	cross_left     string = '+'
+	cross_center   string = '+'
+	head_left      string = '+'
+	head_row_sep   string = '-'
+	head_cross     string = '+'
+	head_right     string = '+'
+	row_sep        string = '-'
+	col_sep        string = '|'
+	fill_padding   bool = true
 }
 
 pub fn (t Table) str() string {
@@ -148,6 +151,25 @@ fn get_border(style Style) Border {
 			b.cross_center = '|'
 			b.cross_right = '|'
 		}
+		.fancy_grid {
+			b.top_left = '╒'
+			b.top_right = '╕'
+			b.top_row_sep = '═'
+			b.bottom_right = '╛'
+			b.bottom_left = '╘'
+			b.bottom_row_sep = '═'
+			b.cross_top = '╤'
+			b.cross_right = '┤'
+			b.cross_bottom = '╧'
+			b.cross_left = '├'
+			b.cross_center = '┼'
+			b.head_left = '╞'
+			b.head_row_sep = '═'
+			b.head_cross = '╪'
+			b.head_right = '╡'
+			b.row_sep = '─'
+			b.col_sep = '│'
+		}
 	}
 	return b
 }
@@ -184,13 +206,18 @@ fn create_sepline(pos SeplinePos, col_sizes []int, pad int, b Border) string {
 		.middle { b.cross_right }
 		.bottom { b.bottom_right }
 	}
-	rs := if pos == .header { b.head_row_sep } else { b.row_sep }
+	rsep := match pos {
+		.top { b.top_row_sep }
+		.header { b.head_row_sep }
+		.middle { b.row_sep }
+		.bottom { b.bottom_row_sep }
+	}
 	mut line := line_start
 	for i, cs in col_sizes {
 		if b.fill_padding {
-			line += rs.repeat(cs + padding)
+			line += rsep.repeat(cs + padding)
 		} else {
-			line += rs.repeat(cs)
+			line += rsep.repeat(cs)
 			line += ' '.repeat(padding)
 		}
 		if i < col_sizes.len - 1 {
