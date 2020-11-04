@@ -4,6 +4,7 @@ pub enum Style {
 	plain
 	grid
 	simple
+	pretty
 }
 
 pub enum HeaderStyle {
@@ -137,6 +138,7 @@ fn get_border(style Style) Border {
 			b.head_cross = ''
 			b.fill_padding = false
 		}
+		.pretty {}
 	}
 	return b
 }
@@ -146,6 +148,9 @@ fn create_sepline(pos SeplinePos, col_sizes []int, pad int, b Border) string {
 		return ''
 	}
 	if b.style == .simple && pos != .header {
+		return ''
+	}
+	if b.style == .pretty && pos == .middle {
 		return ''
 	}
 	padding := pad * 2
