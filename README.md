@@ -105,17 +105,8 @@ Lisa    42   female
 ```
 
 `.fancy_grid`:
-```
-╒════════╤═════╤════════╕
-│ Name   │ Age │ Sex    │
-╞════════╪═════╪════════╡
-│ Max    │ 13  │ male   │
-├────────┼─────┼────────┤
-│ Moritz │ 12  │ male   │
-├────────┼─────┼────────┤
-│ Lisa   │ 42  │ female │
-╘════════╧═════╧════════╛
-```
+
+![](img/fancy_grid_preview.png)
 
 
 ### Header Style
