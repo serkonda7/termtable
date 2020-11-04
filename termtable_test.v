@@ -51,6 +51,7 @@ fn test_table_styles() {
 		.plain,
 		.simple,
 		.pretty,
+		.github,
 	]
 	expected := [
 		'+--------+-----+
@@ -73,6 +74,11 @@ Moritz  12',
 | Max    | 13  |
 | Moritz | 12  |
 +--------+-----+',
+		'| Name   | Age |
+|--------|-----|
+| Max    | 13  |
+|--------|-----|
+| Moritz | 12  |',
 	]
 	for i, s in styles {
 		table.style = s

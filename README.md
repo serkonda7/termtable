@@ -51,6 +51,7 @@ Supported values for `style: ...` are:
 - .pretty
 - .plain
 - .simple
+- .github
 
 `.grid` (default):
 ```
@@ -91,6 +92,15 @@ Name    Age  Sex
 Max     13   male
 Moritz  12   male
 Lisa    42   female
+```
+
+`.github`:
+```
+| Name   | Age | Sex    |
+|--------|-----|--------|
+| Max    | 13  | male   |
+| Moritz | 12  | male   |
+| Lisa   | 42  | female |
 ```
 
 

@@ -5,6 +5,7 @@ pub enum Style {
 	grid
 	simple
 	pretty
+	github
 }
 
 pub enum HeaderStyle {
@@ -139,6 +140,14 @@ fn get_border(style Style) Border {
 			b.fill_padding = false
 		}
 		.pretty {}
+		.github {
+			b.head_cross = '|'
+			b.head_left = '|'
+			b.head_right = '|'
+			b.cross_left = '|'
+			b.cross_center = '|'
+			b.cross_right = '|'
+		}
 	}
 	return b
 }
@@ -151,6 +160,9 @@ fn create_sepline(pos SeplinePos, col_sizes []int, pad int, b Border) string {
 		return ''
 	}
 	if b.style == .pretty && pos == .middle {
+		return ''
+	}
+	if b.style == .github && (pos == .top || pos == .bottom) {
 		return ''
 	}
 	padding := pad * 2
