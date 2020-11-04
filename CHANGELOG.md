@@ -1,6 +1,12 @@
 # Changelog
 
 
+## 0.5.0
+_04 November 2020_
+
+**Additions**
+- Add a total of four new styles: `.simple`, `.pretty`, `.github`, `.fancy_grid`
+
 ## 0.4.0
 _31 October 2020_
 
