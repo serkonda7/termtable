@@ -46,8 +46,14 @@ fn main() {
 
 ## Configuration Options
 ### Style
-```v
-/* .grid (default)
+Supported values for `style: ...` are:
+- .grid
+- .pretty
+- .plain
+- .simple
+
+`.grid` (default):
+```
 +--------+-----+--------+
 | Name   | Age | Sex    |
 +--------+-----+--------+
@@ -57,14 +63,34 @@ fn main() {
 +--------+-----+--------+
 | Lisa   | 42  | female |
 +--------+-----+--------+
-*/
+```
 
-/* .plain
+`.pretty`:
+```
++--------+-----+--------+
+| Name   | Age | Sex    |
++--------+-----+--------+
+| Max    | 13  | male   |
+| Moritz | 12  | male   |
+| Lisa   | 42  | female |
++--------+-----+--------+
+```
+
+`.plain`:
+```
 Name    Age  Sex
 Max     13   male
 Moritz  12   male
-Lisa    42   
-*/
+Lisa    42   female
+```
+
+`.simple`:
+```
+Name    Age  Sex
+------  ---  ------
+Max     13   male
+Moritz  12   male
+Lisa    42   female
 ```
 
 
