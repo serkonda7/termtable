@@ -95,15 +95,23 @@ Moritz  12',
 }
 
 fn test_expand_tabs() {
-	data := [
+	datasets := [[
 		['Name', 'Age\t'],
 		['Max\t', '13'],
-	]
-	expected := [
+	], [
+		['Name', 'Age'],
+		['Max\t\t', '13'],
+	]]
+	expected := [[
 		['Name', 'Age    '],
 		['Max    ', '13'],
-	]
-	assert expand_tabs(data) == expected
+	], [
+		['Name', 'Age'],
+		['Max        ', '13'],
+	]]
+	for i, d in datasets {
+		assert expand_tabs(d) == expected[i]
+	}
 }
 
 fn test_get_row_and_col_data() {
