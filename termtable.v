@@ -184,7 +184,7 @@ fn create_sepline(pos SeplinePos, col_sizes []int, pad int, b Border) string {
 	if b.style == .pretty && pos == .middle {
 		return ''
 	}
-	if b.style == .github && (pos == .top || pos == .bottom) {
+	if b.style == .github && pos != .header {
 		return ''
 	}
 	padding := pad * 2
