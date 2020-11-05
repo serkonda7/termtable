@@ -94,6 +94,18 @@ Moritz  12',
 	}
 }
 
+fn test_expand_tabs() {
+	data := [
+		['Name', 'Age\t'],
+		['Max\t', '13'],
+	]
+	expected := [
+		['Name', 'Age    '],
+		['Max    ', '13'],
+	]
+	assert expand_tabs(data) == expected
+}
+
 fn test_get_row_and_col_data() {
 	rowdata := [
 		['Name', 'Age'],

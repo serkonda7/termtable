@@ -66,7 +66,8 @@ pub mut:
 }
 
 pub fn (t Table) str() string {
-	rowdata, coldata := get_row_and_col_data(t.data, t.orientation)
+	expanded_data := expand_tabs(t.data)
+	rowdata, coldata := get_row_and_col_data(expanded_data, t.orientation)
 	col_maxes := colmax(coldata)
 	mut rowstrings := []string{}
 	border := get_border(t.style)
@@ -95,6 +96,14 @@ pub fn (t Table) str() string {
 	}
 	final_str += bottomline
 	return final_str.trim_space()
+}
+
+fn expand_tabs(data [][]string) [][]string {
+	mut retdata := [][]string{}
+	for d in data {
+		retdata << d.map(it.replace('\t', '    '))
+	}
+	return retdata
 }
 
 fn get_row_and_col_data(data [][]string, orient Orientation) ([][]string, [][]string) {
