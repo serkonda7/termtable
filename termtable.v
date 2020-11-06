@@ -66,9 +66,9 @@ pub mut:
 }
 
 pub fn (t Table) str() string {
-	expanded_data := expand_tabs(t.data)
-	rowdata, coldata := get_row_and_col_data(expanded_data, t.orientation)
-	col_maxes := colmax(coldata)
+	edata := expand_tabs(t.data)
+	rowdata, coldata := get_row_and_col_data(edata, t.orientation)
+	colmaxes := max_column_sizes(coldata)
 	mut rowstrings := []string{}
 	border := get_border(t.style)
 	for i, row in rowdata {
@@ -78,13 +78,13 @@ pub fn (t Table) str() string {
 		} else if t.orientation == .column {
 			styled_row[0] = apply_header_style(row, t.header_style)[0]
 		}
-		rspace := get_row_spaces(row, col_maxes)
+		rspace := get_row_spaces(row, colmaxes)
 		rowstrings << row_to_string(styled_row, rspace, t.align, t.padding, border)
 	}
-	topline := create_sepline(.top, col_maxes, t.padding, border)
-	headline := create_sepline(.header, col_maxes, t.padding, border)
-	sepline := create_sepline(.middle, col_maxes, t.padding, border)
-	bottomline := create_sepline(.bottom, col_maxes, t.padding, border)
+	topline := create_sepline(.top, colmaxes, t.padding, border)
+	headline := create_sepline(.header, colmaxes, t.padding, border)
+	sepline := create_sepline(.middle, colmaxes, t.padding, border)
+	bottomline := create_sepline(.bottom, colmaxes, t.padding, border)
 	mut final_str := topline
 	for i, row_str in rowstrings {
 		final_str += '$row_str\n'
@@ -98,41 +98,40 @@ pub fn (t Table) str() string {
 	return final_str.trim_space()
 }
 
-fn expand_tabs(data [][]string) [][]string {
-	mut retdata := [][]string{}
-	for d in data {
-		retdata << d.map(it.replace('\t', '    '))
+fn expand_tabs(raw_data [][]string) [][]string {
+	mut edata := [][]string{}
+	for d in raw_data {
+		edata << d.map(it.replace('\t', '    '))
 	}
-	return retdata
+	return edata
 }
 
 fn get_row_and_col_data(data [][]string, orient Orientation) ([][]string, [][]string) {
-	mut otherdata := [][]string{}
-	other_count := data[0].len
-	for i in 0 .. other_count {
+	mut other_data := [][]string{}
+	for i in 0 .. data[0].len {
 		mut od := []string{}
 		for d in data {
 			od << d[i]
 		}
-		otherdata << od
+		other_data << od
 	}
 	if orient == .row {
-		return data, otherdata
+		return data, other_data
 	} else {
-		return otherdata, data
+		return other_data, data
 	}
 }
 
-fn colmax(columns [][]string) []int {
-	mut col_maxes := []int{len: columns.len, init: 0}
+fn max_column_sizes(columns [][]string) []int {
+	mut colmaxes := []int{len: columns.len, init: 0}
 	for i, col in columns {
 		for c in col {
-			if c.len > col_maxes[i] {
-				col_maxes[i] = c.len
+			if c.len > colmaxes[i] {
+				colmaxes[i] = c.len
 			}
 		}
 	}
-	return col_maxes
+	return colmaxes
 }
 
 fn get_border(style Style) Border {

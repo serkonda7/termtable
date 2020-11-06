@@ -1,22 +1,22 @@
 module termtable
 
 fn test_expand_tabs() {
-	datasets := [[
+	raw_datasets := [[
 		['Name', 'Age\t'],
 		['Max\t', '13'],
 	], [
-		['Name', 'Age'],
+		['\tName', 'Age'],
 		['Max\t\t', '13'],
 	]]
-	expected := [[
+	expanded_datasets := [[
 		['Name', 'Age    '],
 		['Max    ', '13'],
 	], [
-		['Name', 'Age'],
+		['    Name', 'Age'],
 		['Max        ', '13'],
 	]]
-	for i, d in datasets {
-		assert expand_tabs(d) == expected[i]
+	for i, d in raw_datasets {
+		assert expand_tabs(d) == expanded_datasets[i]
 	}
 }
 
@@ -30,22 +30,22 @@ fn test_get_row_and_col_data() {
 		['Name', 'Max', 'Moritz'],
 		['Age', '13', '12'],
 	]
-	mut r1, mut r2 := get_row_and_col_data(rowdata, .row)
-	assert r1 == rowdata
-	assert r2 == coldata
-	r1, r2 = get_row_and_col_data(coldata, .column)
-	assert r1 == rowdata
-	assert r2 == coldata
+	mut rd, mut cd := get_row_and_col_data(rowdata, .row)
+	assert rd == rowdata
+	assert cd == coldata
+	rd, cd = get_row_and_col_data(coldata, .column)
+	assert rd == rowdata
+	assert cd == coldata
 }
 
-fn test_colmax() {
-	columns := [
+fn test_max_column_sizes() {
+	coldata := [
 		['Name', 'Age', 'Sex'],
 		['Max', '13', 'male'],
 		['Moritz', '12', 'male'],
 	]
-	expected := [4, 4, 6]
-	assert colmax(columns) == expected
+	colmaxes := [4, 4, 6]
+	assert max_column_sizes(coldata) == colmaxes
 }
 
 fn test_get_border() {
