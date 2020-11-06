@@ -183,6 +183,49 @@ fn get_border(style Style) Border {
 	return b
 }
 
+fn apply_header_style(row []string, style HeaderStyle) []string {
+	match style {
+		.plain { return row }
+		.bold { return row.map('\e[1m$it\e[0m') }
+	}
+}
+
+fn get_row_spaces(row []string, col_sizes []int) []int {
+	mut rspace := []int{}
+	for i, cell in row {
+		rspace << col_sizes[i] - cell.len
+	}
+	return rspace
+}
+
+fn row_to_string(row []string, rspace []int, align Alignment, padding int, b Border) string {
+	mut final_row := row.clone()
+	pad := ' '.repeat(padding)
+	mut rstr := b.col_sep + pad
+	for i, cell in final_row {
+		sl, sr := cell_space(rspace[i], align)
+		rstr += ' '.repeat(sl) + cell + ' '.repeat(sr)
+		rstr += pad + b.col_sep + pad
+	}
+	return rstr.trim_space()
+}
+
+fn cell_space(total_space int, align Alignment) (int, int) {
+	match align {
+		.left {
+			return 0, total_space
+		}
+		.center {
+			half_space := total_space / 2
+			sr := half_space + total_space % 2
+			return half_space, sr
+		}
+		.right {
+			return total_space, 0
+		}
+	}
+}
+
 fn create_sepline(pos SeplinePos, col_sizes []int, pad int, b Border) string {
 	if b.style == .plain {
 		return ''
@@ -239,47 +282,4 @@ fn create_sepline(pos SeplinePos, col_sizes []int, pad int, b Border) string {
 		line += '\n'
 	}
 	return line
-}
-
-fn row_to_string(row []string, rspace []int, align Alignment, padding int, b Border) string {
-	mut final_row := row.clone()
-	pad := ' '.repeat(padding)
-	mut rstr := b.col_sep + pad
-	for i, cell in final_row {
-		sl, sr := cell_space(rspace[i], align)
-		rstr += ' '.repeat(sl) + cell + ' '.repeat(sr)
-		rstr += pad + b.col_sep + pad
-	}
-	return rstr.trim_space()
-}
-
-fn get_row_spaces(row []string, col_sizes []int) []int {
-	mut rspace := []int{}
-	for i, cell in row {
-		rspace << col_sizes[i] - cell.len
-	}
-	return rspace
-}
-
-fn cell_space(total_space int, align Alignment) (int, int) {
-	match align {
-		.left {
-			return 0, total_space
-		}
-		.center {
-			half_space := total_space / 2
-			sr := half_space + total_space % 2
-			return half_space, sr
-		}
-		.right {
-			return total_space, 0
-		}
-	}
-}
-
-fn apply_header_style(row []string, style HeaderStyle) []string {
-	match style {
-		.plain { return row }
-		.bold { return row.map('\e[1m$it\e[0m') }
-	}
 }

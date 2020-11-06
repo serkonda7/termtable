@@ -1,8 +1,8 @@
 import os
-import termtable as tt
+import termtable
 
 fn test_table_styles() {
-	mut table := tt.Table{
+	mut table := termtable.Table{
 		data: [
 			['Name', 'Age', 'Sex'],
 			['Max', '13', 'male'],
@@ -11,7 +11,7 @@ fn test_table_styles() {
 		]
 		header_style: .plain
 	}
-	mut styles := []tt.Style{}
+	mut styles := []termtable.Style{}
 	styles = [
 		.grid,
 		.plain,
