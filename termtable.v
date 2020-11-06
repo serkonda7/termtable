@@ -42,27 +42,23 @@ pub mut:
 	padding      int = 1
 }
 
-struct Border {
+struct Sepline {
 pub mut:
-	style          Style = .grid
-	top_left       string = '+'
-	top_right      string = '+'
-	top_row_sep    string = '-'
-	bottom_right   string = '+'
-	bottom_left    string = '+'
-	bottom_row_sep string = '-'
-	cross_top      string = '+'
-	cross_right    string = '+'
-	cross_bottom   string = '+'
-	cross_left     string = '+'
-	cross_center   string = '+'
-	head_left      string = '+'
-	head_row_sep   string = '-'
-	head_cross     string = '+'
-	head_right     string = '+'
-	row_sep        string = '-'
-	col_sep        string = '|'
-	fill_padding   bool = true
+	left  string = '+'
+	right string = '+'
+	cross string = '+'
+	sep   string = '-'
+}
+
+struct StyleConfig {
+pub mut:
+	style        Style = .grid
+	topline      Sepline
+	headerline   Sepline
+	middleline   Sepline
+	bottomline   Sepline
+	col_sep      string = '|'
+	fill_padding bool = true
 }
 
 pub fn (t Table) str() string {
@@ -134,52 +130,62 @@ fn max_column_sizes(columns [][]string) []int {
 	return colmaxes
 }
 
-fn get_border(style Style) Border {
-	mut b := Border{
+fn get_border(style Style) StyleConfig {
+	mut sc := StyleConfig{
 		style: style
 	}
 	match style {
 		.grid {}
 		.plain {
-			b.col_sep = ''
+			sc.col_sep = ''
 		}
 		.simple {
-			b.col_sep = ''
-			b.head_left = ''
-			b.head_right = ''
-			b.head_cross = ''
-			b.fill_padding = false
+			sc.col_sep = ''
+			sc.head_line = Sepline{
+				left: ''
+				right: ''
+				cross: ''
+			}
+			sc.fill_padding = false
 		}
 		.pretty {}
 		.github {
-			b.head_cross = '|'
-			b.head_left = '|'
-			b.head_right = '|'
-			b.cross_left = '|'
-			b.cross_center = '|'
-			b.cross_right = '|'
+			sc.head_line = Sepline{
+				left: '|'
+				right: '|'
+				cross: '|'
+			}
+			sc.middleline = sc.headline
 		}
 		.fancy_grid {
-			b.top_left = '╒'
-			b.top_right = '╕'
-			b.top_row_sep = '═'
-			b.bottom_right = '╛'
-			b.bottom_left = '╘'
-			b.bottom_row_sep = '═'
-			b.cross_top = '╤'
-			b.cross_right = '┤'
-			b.cross_bottom = '╧'
-			b.cross_left = '├'
-			b.cross_center = '┼'
-			b.head_left = '╞'
-			b.head_row_sep = '═'
-			b.head_cross = '╪'
-			b.head_right = '╡'
-			b.row_sep = '─'
-			b.col_sep = '│'
+			sc.topline = Sepline{
+				left: '╒'
+				right: '╕'
+				cross: '╤'
+				sep: '═'
+			}
+			sc.headline = Sepline{
+				left: '╞'
+				right: '╡'
+				cross: '╪'
+				sep: '═'
+			}
+			sc.middleline = Sepline{
+				left: '├'
+				right: '┤'
+				cross: '┼'
+				sep: '─'
+			}
+			sc.bottomline = Sepline{
+				left: '╘'
+				right: '╛'
+				cross: '╧'
+				sep: '═'
+			}
+			sc.col_sep = '│'
 		}
 	}
-	return b
+	return sc
 }
 
 fn apply_header_style(row []string, style HeaderStyle) []string {
@@ -197,14 +203,14 @@ fn get_row_spaces(row []string, col_sizes []int) []int {
 	return rspace
 }
 
-fn row_to_string(row []string, rspace []int, align Alignment, padding int, b Border) string {
+fn row_to_string(row []string, rspace []int, align Alignment, padding int, sc StyleConfig) string {
 	mut final_row := row.clone()
 	pad := ' '.repeat(padding)
-	mut rstr := b.col_sep + pad
+	mut rstr := sc.col_sep + pad
 	for i, cell in final_row {
 		sl, sr := cell_space(rspace[i], align)
 		rstr += ' '.repeat(sl) + cell + ' '.repeat(sr)
-		rstr += pad + b.col_sep + pad
+		rstr += pad + sc.col_sep + pad
 	}
 	return rstr.trim_space()
 }
@@ -225,47 +231,47 @@ fn cell_space(total_space int, align Alignment) (int, int) {
 	}
 }
 
-fn create_sepline(pos SeplinePos, col_sizes []int, pad int, b Border) string {
-	if b.style == .plain {
+fn create_sepline(pos SeplinePos, col_sizes []int, pad int, sc StyleConfig) string {
+	if sc.style == .plain {
 		return ''
 	}
-	if b.style == .simple && pos != .header {
+	if sc.style == .simple && pos != .header {
 		return ''
 	}
-	if b.style == .pretty && pos == .middle {
+	if sc.style == .pretty && pos == .middle {
 		return ''
 	}
-	if b.style == .github && pos != .header {
+	if sc.style == .github && pos != .header {
 		return ''
 	}
 	padding := pad * 2
 	line_start := match pos {
-		.top { b.top_left }
-		.header { b.head_left }
-		.middle { b.cross_left }
-		.bottom { b.bottom_left }
+		.top { sc.top_left }
+		.header { sc.head_left }
+		.middle { sc.cross_left }
+		.bottom { sc.bottom_left }
 	}
 	cross := match pos {
-		.top { b.cross_top }
-		.header { b.head_cross }
-		.middle { b.cross_center }
-		.bottom { b.cross_bottom }
+		.top { sc.cross_top }
+		.header { sc.head_cross }
+		.middle { sc.cross_center }
+		.bottom { sc.cross_bottom }
 	}
 	line_end := match pos {
-		.top { b.top_right }
-		.header { b.head_right }
-		.middle { b.cross_right }
-		.bottom { b.bottom_right }
+		.top { sc.top_right }
+		.header { sc.head_right }
+		.middle { sc.cross_right }
+		.bottom { sc.bottom_right }
 	}
 	rsep := match pos {
-		.top { b.top_row_sep }
-		.header { b.head_row_sep }
-		.middle { b.row_sep }
-		.bottom { b.bottom_row_sep }
+		.top { sc.top_row_sep }
+		.header { sc.head_row_sep }
+		.middle { sc.row_sep }
+		.bottom { sc.bottom_row_sep }
 	}
 	mut line := line_start
 	for i, cs in col_sizes {
-		if b.fill_padding {
+		if sc.fill_padding {
 			line += rsep.repeat(cs + padding)
 		} else {
 			line += rsep.repeat(cs)
