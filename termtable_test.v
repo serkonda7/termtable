@@ -36,64 +36,6 @@ Age     13        12',
 	}
 }
 
-fn test_table_styles() {
-	mut table := Table{
-		data: [
-			['Name', 'Age'],
-			['Max', '13'],
-			['Moritz', '12'],
-		]
-		header_style: .plain
-	}
-	mut styles := []Style{}
-	styles = [
-		.grid,
-		.plain,
-		.simple,
-		.pretty,
-		.github,
-		.fancy_grid,
-	]
-	expected := [
-		'+--------+-----+
-| Name   | Age |
-+--------+-----+
-| Max    | 13  |
-+--------+-----+
-| Moritz | 12  |
-+--------+-----+',
-		'Name    Age
-Max     13
-Moritz  12',
-		'Name    Age
-------  ---
-Max     13
-Moritz  12',
-		'+--------+-----+
-| Name   | Age |
-+--------+-----+
-| Max    | 13  |
-| Moritz | 12  |
-+--------+-----+',
-		'| Name   | Age |
-|--------|-----|
-| Max    | 13  |
-| Moritz | 12  |',
-		'╒════════╤═════╕
-│ Name   │ Age │
-╞════════╪═════╡
-│ Max    │ 13  │
-├────────┼─────┤
-│ Moritz │ 12  │
-╘════════╧═════╛',
-	]
-	for i, s in styles {
-		table.style = s
-		exp := expected[i]
-		assert table.str() == exp
-	}
-}
-
 fn test_expand_tabs() {
 	datasets := [[
 		['Name', 'Age\t'],
