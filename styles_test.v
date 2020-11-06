@@ -22,7 +22,7 @@ fn test_table_styles() {
 	]
 	for s in styles {
 		table.style = s
-		exp := os.read_file('style_test_out/${s.str()}.out') or {
+		exp := os.read_file('styles_test_out/${s.str()}.out') or {
 			panic(err)
 		}
 		assert table.str() == exp.trim_suffix('\n')
