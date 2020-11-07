@@ -141,7 +141,7 @@ fn get_border(style Style) StyleConfig {
 		}
 		.simple {
 			sc.col_sep = ''
-			sc.head_line = Sepline{
+			sc.headerline = Sepline{
 				left: ''
 				right: ''
 				cross: ''
@@ -150,12 +150,12 @@ fn get_border(style Style) StyleConfig {
 		}
 		.pretty {}
 		.github {
-			sc.head_line = Sepline{
+			sc.headerline = Sepline{
 				left: '|'
 				right: '|'
 				cross: '|'
 			}
-			sc.middleline = sc.headline
+			sc.middleline = sc.headerline
 		}
 		.fancy_grid {
 			sc.topline = Sepline{
@@ -164,7 +164,7 @@ fn get_border(style Style) StyleConfig {
 				cross: '╤'
 				sep: '═'
 			}
-			sc.headline = Sepline{
+			sc.headerline = Sepline{
 				left: '╞'
 				right: '╡'
 				cross: '╪'
