@@ -245,43 +245,25 @@ fn create_sepline(pos SeplinePos, col_sizes []int, pad int, sc StyleConfig) stri
 		return ''
 	}
 	padding := pad * 2
-	line_start := match pos {
-		.top { sc.top_left }
-		.header { sc.head_left }
-		.middle { sc.cross_left }
-		.bottom { sc.bottom_left }
+	sl_cfg := match pos {
+		.top { sc.topline }
+		.header { sc.headerline}
+		.middle { sc.middleline}
+		.bottom { sc.bottomline}
 	}
-	cross := match pos {
-		.top { sc.cross_top }
-		.header { sc.head_cross }
-		.middle { sc.cross_center }
-		.bottom { sc.cross_bottom }
-	}
-	line_end := match pos {
-		.top { sc.top_right }
-		.header { sc.head_right }
-		.middle { sc.cross_right }
-		.bottom { sc.bottom_right }
-	}
-	rsep := match pos {
-		.top { sc.top_row_sep }
-		.header { sc.head_row_sep }
-		.middle { sc.row_sep }
-		.bottom { sc.bottom_row_sep }
-	}
-	mut line := line_start
+	mut line := sl_cfg.left
 	for i, cs in col_sizes {
 		if sc.fill_padding {
-			line += rsep.repeat(cs + padding)
+			line += sl_cfg.sep.repeat(cs + padding)
 		} else {
-			line += rsep.repeat(cs)
+			line += sl_cfg.sep.repeat(cs)
 			line += ' '.repeat(padding)
 		}
 		if i < col_sizes.len - 1 {
-			line += cross
+			line += sl_cfg.cross
 		}
 	}
-	line += line_end
+	line += sl_cfg.right
 	line = line.trim_space()
 	if pos != .bottom {
 		line += '\n'
