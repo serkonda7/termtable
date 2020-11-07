@@ -246,9 +246,9 @@ fn create_sepline(pos SeplinePos, col_sizes []int, pad int, sc StyleConfig) stri
 	padding := pad * 2
 	sl_cfg := match pos {
 		.top { sc.topline }
-		.header { sc.headerline}
-		.middle { sc.middleline}
-		.bottom { sc.bottomline}
+		.header { sc.headerline }
+		.middle { sc.middleline }
+		.bottom { sc.bottomline }
 	}
 	mut line := sl_cfg.left
 	for i, cs in col_sizes {
