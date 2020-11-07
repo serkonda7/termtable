@@ -53,10 +53,10 @@ pub mut:
 struct StyleConfig {
 pub mut:
 	style        Style = .grid
-	topline      Sepline
-	headerline   Sepline
-	middleline   Sepline
-	bottomline   Sepline
+	topline      Sepline = Sepline{}
+	headerline   Sepline = Sepline{}
+	middleline   Sepline = Sepline{}
+	bottomline   Sepline = Sepline{}
 	col_sep      string = '|'
 	fill_padding bool = true
 }
@@ -155,7 +155,6 @@ fn get_border(style Style) StyleConfig {
 				right: '|'
 				cross: '|'
 			}
-			sc.middleline = sc.headerline
 		}
 		.fancy_grid {
 			sc.topline = Sepline{
