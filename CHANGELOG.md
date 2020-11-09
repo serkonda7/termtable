@@ -9,7 +9,7 @@ _09 November 2020_
 - Tab support
 
 **Fixes**
-- Remove lines between rows in github style
+- Remove seplines between rows in github style
 
 
 ## 0.5.0

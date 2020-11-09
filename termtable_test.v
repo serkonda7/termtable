@@ -1,23 +1,15 @@
 module termtable
 
 fn test_expand_tabs() {
-	raw_datasets := [[
-		['Name', 'Age\t'],
-		['Max\t', '13'],
-	], [
-		['\tName', 'Age'],
-		['Max\t\t', '13'],
-	]]
-	expanded_datasets := [[
-		['Name', 'Age    '],
-		['Max    ', '13'],
-	], [
-		['    Name', 'Age'],
-		['Max        ', '13'],
-	]]
-	for i, d in raw_datasets {
-		assert expand_tabs(d) == expanded_datasets[i]
-	}
+	tabs := [
+		['Name\t\t', '\tAge'],
+		['Max\t', '1\t3'],
+	]
+	expanded_tabs := [
+		['Name        ', '    Age'],
+		['Max    ', '1    3'],
+	]
+	assert expand_tabs(tabs) == expanded_tabs
 }
 
 fn test_get_row_and_col_data() {
