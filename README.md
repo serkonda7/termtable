@@ -5,6 +5,7 @@ Simple and highly customizable library to display tables in the terminal.
 
 Some of the main features are:
 - Allow choosing from a total of six predefined [styles](#style)
+- Basic support for Unicode symbols _(Unicode number won't be converted to the emoji)_
 - Tab support _(each tab will be expanded to four spaces)_
 
 ## Installation

@@ -40,11 +40,11 @@ fn test_get_row_and_col_data() {
 
 fn test_max_column_sizes() {
 	coldata := [
-		['Name', 'Age', 'Sex'],
-		['Max', '13', 'male'],
-		['Moritz', '12', 'male'],
+		['Name', 'Max', 'Moritz', 'Lisa'],
+		['Age', '13', '12', '①②③'],
+		['Sex', 'male', 'male', '♀'],
 	]
-	colmaxes := [4, 4, 6]
+	colmaxes := [6, 3, 4]
 	assert max_column_sizes(coldata) == colmaxes
 }
 
@@ -65,21 +65,25 @@ fn test_apply_header_style() {
 	assert apply_header_style(rows[1], .plain) == ['foo', 'bar', 'baz']
 }
 
+struct RowSpacesInput {
+	row       []string
+	col_sizes []int
+}
+
 fn test_get_row_spaces() {
-	rows := [
-		['a', 'bc', 'def'],
-		['foo', 'bar', 'baz'],
-	]
-	col_sizes := [
-		[3, 4, 5],
-		[5, 3, 6],
+	inputs := [
+		RowSpacesInput{['a', 'bc', 'def'], [3, 4, 5]},
+		RowSpacesInput{['foo', 'bar', 'baz'], [5, 3, 6]},
+		RowSpacesInput{['🤨', '💯💯', '✌👍🐞'], [4, 3, 4]},
 	]
 	expected := [
 		[2, 2, 2],
 		[2, 0, 3],
+		[3, 1, 1],
 	]
-	for i, r in rows {
-		assert get_row_spaces(r, col_sizes[i]) == expected[i]
+	for i, inp in inputs {
+		exp := expected[i]
+		assert get_row_spaces(inp.row, inp.col_sizes) == exp
 	}
 }
 
