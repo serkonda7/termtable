@@ -1,6 +1,17 @@
 # Changelog
 
 
+## 0.6.0
+_09 November 2020_
+
+**Additions**
+- Basic Unicode symbol support
+- Tab support
+
+**Fixes**
+- Remove lines between rows in github style
+
+
 ## 0.5.0
 _04 November 2020_
 
