@@ -491,8 +491,9 @@ fn wcwidth(c string) int {
 }
 
 fn wcswidth(str string) int {
+	end := str.len - 1
 	mut width := 0
-	for i := 0; i < str.len; i++ {
+	for i := 0; i < end; i++ {
 		s := str[i].str()
 		wcw := wcwidth(s)
 		if wcw < 0 {
