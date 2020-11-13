@@ -481,7 +481,7 @@ fn wcwidth(c string) int {
 	if ucs in zero_width_cf {
 		return 0
 	}
-	if ucs < 32 || (ucs >= 0x07F && ucs < 0x0A0) {
+	if ucs < 32 || (0x07F <= ucs && ucs < 0x0A0) {
 		return -1
 	}
 	if bisearch(ucs, zero_width) == 1 {
@@ -491,11 +491,9 @@ fn wcwidth(c string) int {
 }
 
 fn wcswidth(str string) int {
-	end := str.len - 1
 	mut width := 0
-	for i := 0; i < end; i++ {
-		s := str[i].str()
-		wcw := wcwidth(s)
+	for c in str {
+		wcw := wcwidth(c.str())
 		if wcw < 0 {
 			return -1
 		}
