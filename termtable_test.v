@@ -30,15 +30,15 @@ fn test_get_row_and_col_data() {
 	assert cd == coldata
 }
 
-fn test_max_column_sizes() {
-	coldata := [
-		['Name', 'Max', 'Moritz', 'Lisa'],
-		['Age', '13', '12', '①②③'],
-		['Sex', 'male', 'male', '♀'],
-	]
-	colmaxes := [6, 3, 4]
-	assert max_column_sizes(coldata) == colmaxes
-}
+// fn test_max_column_sizes() {
+// 	coldata := [
+// 		['Name', 'Max', 'Moritz', 'Lisa'],
+// 		['Age', '13', '12', '①②③'],
+// 		['Sex', 'male', 'male', '♀'],
+// 	]
+// 	colmaxes := [6, 3, 4]
+// 	assert max_column_sizes(coldata) == colmaxes
+// }
 
 fn test_get_border() {
 	mut inputs := []Style{}
@@ -62,22 +62,22 @@ struct RowSpacesInput {
 	col_sizes []int
 }
 
-fn test_get_row_spaces() {
-	inputs := [
-		RowSpacesInput{['a', 'bc', 'def'], [3, 4, 5]},
-		RowSpacesInput{['foo', 'bar', 'baz'], [5, 3, 6]},
-		RowSpacesInput{['🤨', '💯💯', '✌👍🐞'], [4, 3, 4]},
-	]
-	expected := [
-		[2, 2, 2],
-		[2, 0, 3],
-		[3, 1, 1],
-	]
-	for i, inp in inputs {
-		exp := expected[i]
-		assert get_row_spaces(inp.row, inp.col_sizes) == exp
-	}
-}
+// fn test_get_row_spaces() {
+// 	inputs := [
+// 		RowSpacesInput{['a', 'bc', 'def'], [3, 4, 5]},
+// 		RowSpacesInput{['foo', 'bar', 'baz'], [5, 3, 6]},
+// 		RowSpacesInput{['🤨', '💯💯', '✌👍🐞'], [4, 3, 4]},
+// 	]
+// 	expected := [
+// 		[2, 2, 2],
+// 		[2, 0, 3],
+// 		[3, 1, 1],
+// 	]
+// 	for i, inp in inputs {
+// 		exp := expected[i]
+// 		assert get_row_spaces(inp.row, inp.col_sizes) == exp
+// 	}
+// }
 
 struct RowToStrInput {
 	align   Alignment
