@@ -71,10 +71,8 @@ pub fn (t Table) str() string {
 	border := get_border(t.style)
 	for i, row in rowdata {
 		mut styled_row := row.clone()
-		if t.orientation == .row && i == 0 {
-			styled_row = apply_header_style(row, t.header_style)
-		} else if t.orientation == .column {
-			styled_row[0] = apply_header_style(row, t.header_style)[0]
+		if t.orientation == .column || i == 0 {
+			styled_row = apply_header_style(row, t.header_style, t.orientation)
 		}
 		rspace := get_row_spaces(row, colmaxes)
 		rowstrings << row_to_string(styled_row, rspace, t.align, t.padding, border)
@@ -190,11 +188,16 @@ fn get_border(style Style) StyleConfig {
 	return sc
 }
 
-fn apply_header_style(row []string, style HeaderStyle) []string {
-	match style {
-		.plain { return row }
-		.bold { return row.map('\e[1m$it\e[0m') }
+fn apply_header_style(row []string, style HeaderStyle, orient Orientation) []string {
+	if style == .plain {
+		return row
 	}
+	if orient == .column {
+		mut r := ['\e[1m${row[0]}\e[0m']
+		r << row[1..]
+		return r
+	}
+	return row.map('\e[1m$it\e[0m')
 }
 
 fn get_row_spaces(row []string, col_sizes []int) []int {

@@ -48,13 +48,27 @@ fn test_get_border() {
 	}
 }
 
+struct ApplyHeaderStyleInput {
+	row          []string
+	header_style HeaderStyle
+	orient       Orientation
+}
+
 fn test_apply_header_style() {
-	rows := [
-		['a', 'bc', 'def'],
-		['foo', 'bar', 'baz'],
+	inputs := [
+		ApplyHeaderStyleInput{['spam', 'eggs'], .bold, .row},
+		ApplyHeaderStyleInput{['foo', 'bar', 'baz'], .plain, .row},
+		ApplyHeaderStyleInput{['test', 'placeholder'], .bold, .column},
 	]
-	assert apply_header_style(rows[0], .bold) == ['\e[1ma\e[0m', '\e[1mbc\e[0m', '\e[1mdef\e[0m']
-	assert apply_header_style(rows[1], .plain) == ['foo', 'bar', 'baz']
+	expected := [
+		['\e[1mspam\e[0m', '\e[1meggs\e[0m'],
+		['foo', 'bar', 'baz'],
+		['\e[1mtest\e[0m', 'placeholder'],
+	]
+	for i, inp in inputs {
+		exp := expected[i]
+		assert apply_header_style(inp.row, inp.header_style, inp.orient) == exp
+	}
 }
 
 struct RowSpacesInput {
