@@ -86,7 +86,7 @@ pub fn (t Table) str() string {
 	mut final_str := topline
 	for i, row_str in rowstrings {
 		final_str += '$row_str\n'
-		if i == 0 {
+		if i == 0 && rowstrings.len >= 2 {
 			final_str += headline
 		} else if i < rowstrings.len - 1 {
 			final_str += sepline

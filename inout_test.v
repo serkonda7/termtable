@@ -11,16 +11,11 @@ fn test_table_styles() {
 		]
 		header_style: .plain
 	}
-	mut styles := []termtable.Style{}
-	styles = [
-		.grid,
-		.plain,
-		.simple,
-		.pretty,
-		.github,
-		.fancy_grid,
-	]
-	for s in styles {
+	for i := 0; true; i++ {
+		s := termtable.Style(i)
+		if s.str() == 'unknown enum value' {
+			break
+		}
 		table.style = s
 		mut exp := os.read_file('tests/styles/${s.str()}.out') or {
 			panic(err)
@@ -28,4 +23,19 @@ fn test_table_styles() {
 		exp = exp.trim_suffix('\n')
 		assert table.str() == exp
 	}
+}
+
+fn test_single_row_tables() {
+	table := termtable.Table{
+		data: [
+			['Foo', 'bar', 'baz'],
+		]
+		header_style: .plain
+		style: .grid
+	}
+	mut exp := os.read_file('tests/grid_single_row.out') or {
+		panic(err)
+	}
+	exp = exp.trim_suffix('\n')
+	assert table.str() == exp
 }
