@@ -39,3 +39,28 @@ fn test_single_row_tables() {
 	exp = exp.trim_suffix('\n')
 	assert table.str() == exp
 }
+
+fn test_no_padding() {
+	mut table := termtable.Table{
+		data: [
+			['Name', 'Age', 'Sex'],
+			['Max', '13', 'male'],
+			['Lisa', '42', 'female'],
+		]
+		padding: 0
+		header_style: .plain
+	}
+	mut styles := []termtable.Style{}
+	styles = [
+		.plain,
+		.simple,
+	]
+	for s in styles {
+		table.style = s
+		mut exp := os.read_file('tests/no_padding/${s.str()}.out') or {
+			panic(err)
+		}
+		exp = exp.trim_suffix('\n')
+		assert table.str() == exp
+	}
+}

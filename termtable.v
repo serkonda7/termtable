@@ -140,14 +140,14 @@ fn get_border(style Style) StyleConfig {
 	match style {
 		.grid {}
 		.plain {
-			sc.col_sep = ''
+			sc.col_sep = ' '
 		}
 		.simple {
-			sc.col_sep = ''
+			sc.col_sep = ' '
 			sc.headerline = Sepline{
 				left: ''
 				right: ''
-				cross: ''
+				cross: ' '
 			}
 			sc.fill_padding = false
 		}
