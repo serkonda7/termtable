@@ -22,7 +22,7 @@ fn test_table_styles() {
 	]
 	for s in styles {
 		table.style = s
-		mut exp := os.read_file('tests/${s.str()}.out') or {
+		mut exp := os.read_file('tests/styles/${s.str()}.out') or {
 			panic(err)
 		}
 		exp = exp.trim_suffix('\n')
