@@ -49,54 +49,24 @@ Supported values for `style: ...` are:
 - .fancy_grid
 
 `.grid` (default):
-```
-+--------+-----+--------+
-| Name   | Age | Sex    |
-+--------+-----+--------+
-| Max    | 13  | male   |
-+--------+-----+--------+
-| Moritz | 12  | male   |
-+--------+-----+--------+
-| Lisa   | 42  | female |
-+--------+-----+--------+
-```
+
+![](img/grid_preview.png)
 
 `.pretty`:
-```
-+--------+-----+--------+
-| Name   | Age | Sex    |
-+--------+-----+--------+
-| Max    | 13  | male   |
-| Moritz | 12  | male   |
-| Lisa   | 42  | female |
-+--------+-----+--------+
-```
+
+![](img/pretty_preview.png)
 
 `.plain`:
-```
-Name    Age  Sex
-Max     13   male
-Moritz  12   male
-Lisa    42   female
-```
+
+![](img/plain_preview.png)
 
 `.simple`:
-```
-Name    Age  Sex
-------  ---  ------
-Max     13   male
-Moritz  12   male
-Lisa    42   female
-```
+
+![](img/simple_preview.png)
 
 `.github`:
-```
-| Name   | Age | Sex    |
-|--------|-----|--------|
-| Max    | 13  | male   |
-| Moritz | 12  | male   |
-| Lisa   | 42  | female |
-```
+
+![](img/github_preview.png)
 
 `.fancy_grid`:
 
@@ -132,25 +102,10 @@ t := termtable.Table{
 	// orientation: ...
 }
 println(t)
-
-/* orientation: .row (default)
-+--------+-----+
-| Name   | Age |
-+--------+-----+
-| Max    | 13  |
-+--------+-----+
-| Moritz | 12  |
-+--------+-----+
-*/
-
-/* orientation: .column
-+------+-----+--------+
-| Name | Max | Moritz |
-+------+-----+--------+
-| Age  | 13  | 12     |
-+------+-----+--------+
-*/
 ```
+| `.row (default)` | `.column` |
+| --- | --- |
+| ![](img/orientation_row.png) | ![](img/orientation_column.png) |
 
 
 ### Padding
