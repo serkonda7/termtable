@@ -3,10 +3,11 @@
 
 Simple and highly customizable library to display tables in the terminal.
 
-Some of the main features are:
-- Allow choosing from a total of six predefined [styles](#style)
-- Basic support for Unicode symbols
-- Tab support _(each tab will be expanded to four spaces)_
+
+## Features
+- Choose from six predefined [styles](#predefined-styles)
+- [Tab support](#tabsize)
+
 
 ## Installation
 `v install serkonda7.termtable`
@@ -25,31 +26,20 @@ fn main() {
 	]
 	t := termtable.Table{
 		data: data
-		// The following settings are optional. These are their default values:
+		// The following settings are optional and have these defaults:
 		style: .grid
 		header_style: .bold
 		align: .left
 		orientation: .row
 		padding: 1
+		tabsize: 4
 	}
 	println(t)
 }
-
-/* Output
-+--------+-----+--------+
-| Name   | Age | Sex    |
-+--------+-----+--------+
-| Max    | 13  | male   |
-+--------+-----+--------+
-| Moritz | 12  | male   |
-+--------+-----+--------+
-| Lisa   | 42  | female |
-+--------+-----+--------+
-*/
 ```
 
-## Configuration Options
-### Style
+
+### Predefined Styles
 Supported values for `style: ...` are:
 - .grid
 - .pretty
@@ -172,6 +162,36 @@ Control the count of spaces between the cell border and the item.
 | Lisa | 42 | female |  // 1 (default)
 
 |Lisa|42|female|  // 0
+```
+
+
+### Tabsize
+```v
+t := termtable.Table{
+	data: [
+		['\tName', 'Sex\t\t'],
+		['1.\tMax', 'male\t'],
+		['2. Moritz', 'male'],
+	]
+	// tabsize: ...
+}
+println(t)
+
+/* 4 (default)
++-----------+----------+
+|     Name  | Sex      |
++-----------+----------+
+| 1.  Max   | male     |
++-----------+----------+
+*/
+
+/* 2
++-----------+--------+
+|   Name    | Sex    |
++-----------+--------+
+| 1.  Max   | male   |
++-----------+--------+
+*/
 ```
 
 

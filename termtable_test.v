@@ -2,14 +2,27 @@ module termtable
 
 fn test_expand_tabs() {
 	tabs := [
-		['Name\t\t', '\tAge'],
-		['Max\t', '1\t3'],
+		['\tName', 'Sex\t\t'],
+		['1.\tMax', 'male\t'],
+		['2. Moritz', 'male'],
 	]
+	tabsizes := [4, 2]
 	expanded_tabs := [
-		['Name        ', '    Age'],
-		['Max    ', '1    3'],
+		[
+			['    Name', 'Sex     '],
+			['1.  Max', 'male    '],
+			['2. Moritz', 'male'],
+		],
+		[
+			['  Name', 'Sex   '],
+			['1.  Max', 'male  '],
+			['2. Moritz', 'male'],
+		],
 	]
-	assert expand_tabs(tabs) == expanded_tabs
+	for i, ts in tabsizes {
+		exp := expanded_tabs[i]
+		assert expand_tabs(tabs, ts) == exp
+	}
 }
 
 fn test_get_row_and_col_data() {
