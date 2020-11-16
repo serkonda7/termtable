@@ -42,6 +42,7 @@ pub mut:
 	orientation  Orientation = .row
 	align        Alignment = .left
 	padding      int = 1
+	tabsize      int = 4
 }
 
 struct Sepline {
@@ -64,7 +65,7 @@ pub mut:
 }
 
 pub fn (t Table) str() string {
-	edata := expand_tabs(t.data)
+	edata := expand_tabs(t.data, t.tabsize)
 	rowdata, coldata := get_row_and_col_data(edata, t.orientation)
 	colmaxes := max_column_sizes(coldata)
 	mut rowstrings := []string{}
@@ -94,7 +95,7 @@ pub fn (t Table) str() string {
 	return final_str.trim_space()
 }
 
-fn expand_tabs(raw_data [][]string) [][]string {
+fn expand_tabs(raw_data [][]string, tabsize int) [][]string {
 	mut edata := [][]string{}
 	for d in raw_data {
 		mut ed := []string{}
@@ -103,7 +104,7 @@ fn expand_tabs(raw_data [][]string) [][]string {
 			tabs := ec.count('\t')
 			for _ in 0..tabs {
 				tpos := ec.index_old('\t')
-				spaces := 4 - (tpos % 4)
+				spaces := tabsize - (tpos % tabsize)
 				ec = ec.replace_once('\t', ' '.repeat(spaces))
 			}
 			ed << ec

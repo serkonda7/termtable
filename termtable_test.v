@@ -6,12 +6,23 @@ fn test_expand_tabs() {
 		['1.\tMax', 'male\t'],
 		['2. Moritz', 'male'],
 	]
-	expanded_tabs := [
-		['    Name', 'Sex     '],
-		['1.  Max', 'male    '],
-		['2. Moritz', 'male'],
+	tabsizes := [4, 2]
+	expanded_tabs :=[
+		[
+			['    Name', 'Sex     '],
+			['1.  Max', 'male    '],
+			['2. Moritz', 'male'],
+		],
+		[
+			['  Name', 'Sex   '],
+			['1.  Max', 'male  '],
+			['2. Moritz', 'male'],
+		]
 	]
-	assert expand_tabs(tabs) == expanded_tabs
+	for i, ts in tabsizes {
+		exp := expanded_tabs[i]
+		assert expand_tabs(tabs, ts) == exp
+	}
 }
 
 fn test_get_row_and_col_data() {
