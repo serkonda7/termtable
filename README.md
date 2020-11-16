@@ -3,11 +3,6 @@
 
 Simple and highly customizable library to display tables in the terminal.
 
-Some of the main features are:
-- Allow choosing from a total of six predefined [styles](#style)
-- Basic support for Unicode symbols
-- Tab support _(each tab will be expanded to four spaces)_
-
 ## Installation
 `v install serkonda7.termtable`
 
@@ -47,6 +42,31 @@ fn main() {
 +--------+-----+--------+
 */
 ```
+
+
+## Features
+### Tab support
+```v
+t := Table{
+	data: [
+		['\tName', 'Sex\t\t'],
+		['1.\tMax', 'male\t'],
+		['2. Moritz', 'male'],
+	]
+}
+println(t)
+
+/* Output
++-----------+----------+
+|     Name  | Sex      |
++-----------+----------+
+| 1.  Max   | male     |
++-----------+----------+
+| 2. Moritz | male     |
++-----------+----------+
+*/
+```
+
 
 ## Configuration Options
 ### Style
