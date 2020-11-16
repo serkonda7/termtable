@@ -7,7 +7,7 @@ fn test_expand_tabs() {
 		['2. Moritz', 'male'],
 	]
 	tabsizes := [4, 2]
-	expanded_tabs :=[
+	expanded_tabs := [
 		[
 			['    Name', 'Sex     '],
 			['1.  Max', 'male    '],
@@ -17,7 +17,7 @@ fn test_expand_tabs() {
 			['  Name', 'Sex   '],
 			['1.  Max', 'male  '],
 			['2. Moritz', 'male'],
-		]
+		],
 	]
 	for i, ts in tabsizes {
 		exp := expanded_tabs[i]
