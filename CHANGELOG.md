@@ -1,6 +1,17 @@
 # Changelog
 
 
+## 0.7.0
+_16 November 2020_
+
+**Additions**
+- Implement proper tab support
+
+**Fixes**
+- Fix behaviour of various styles with padding of zero
+- Do not print a header sepline for single rowed tables
+
+
 ## 0.6.0
 _09 November 2020_
 
