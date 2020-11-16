@@ -3,6 +3,12 @@
 
 Simple and highly customizable library to display tables in the terminal.
 
+
+## Features
+- Choose from six predefined [styles](#predefined-styles)
+- Tab support
+
+
 ## Installation
 `v install serkonda7.termtable`
 
@@ -20,7 +26,7 @@ fn main() {
 	]
 	t := termtable.Table{
 		data: data
-		// The following settings are optional. These are their default values:
+		// The following settings are optional and have these defaults:
 		style: .grid
 		header_style: .bold
 		align: .left
@@ -29,47 +35,10 @@ fn main() {
 	}
 	println(t)
 }
-
-/* Output
-+--------+-----+--------+
-| Name   | Age | Sex    |
-+--------+-----+--------+
-| Max    | 13  | male   |
-+--------+-----+--------+
-| Moritz | 12  | male   |
-+--------+-----+--------+
-| Lisa   | 42  | female |
-+--------+-----+--------+
-*/
 ```
 
 
-## Features
-### Tab support
-```v
-t := Table{
-	data: [
-		['\tName', 'Sex\t\t'],
-		['1.\tMax', 'male\t'],
-		['2. Moritz', 'male'],
-	]
-}
-println(t)
-
-/* Output
-+-----------+----------+
-|     Name  | Sex      |
-+-----------+----------+
-| 1.  Max   | male     |
-+-----------+----------+
-| 2. Moritz | male     |
-+-----------+----------+
-*/
-```
-
-
-## Configuration Options
-### Style
+### Predefined Styles
 Supported values for `style: ...` are:
 - .grid
 - .pretty
