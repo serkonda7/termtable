@@ -97,7 +97,18 @@ pub fn (t Table) str() string {
 fn expand_tabs(raw_data [][]string) [][]string {
 	mut edata := [][]string{}
 	for d in raw_data {
-		edata << d.map(it.replace('\t', '    '))
+		mut ed := []string{}
+		for c in d {
+			mut ec := c.clone()
+			tabs := ec.count('\t')
+			for _ in 0..tabs {
+				tpos := ec.index_old('\t')
+				spaces := 4 - (tpos % 4)
+				ec = ec.replace_once('\t', ' '.repeat(spaces))
+			}
+			ed << ec
+		}
+		edata << ed
 	}
 	return edata
 }
