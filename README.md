@@ -6,7 +6,7 @@ Simple and highly customizable library to display tables in the terminal.
 
 ## Features
 - Choose from six predefined [styles](#predefined-styles)
-- Tab support
+- [Tab support](#tabsize)
 
 
 ## Installation
@@ -32,6 +32,7 @@ fn main() {
 		align: .left
 		orientation: .row
 		padding: 1
+		tabsize: 4
 	}
 	println(t)
 }
@@ -161,6 +162,36 @@ Control the count of spaces between the cell border and the item.
 | Lisa | 42 | female |  // 1 (default)
 
 |Lisa|42|female|  // 0
+```
+
+
+### Tabsize
+```v
+t := termtable.Table{
+	data: [
+		['\tName', 'Sex\t\t'],
+		['1.\tMax', 'male\t'],
+		['2. Moritz', 'male'],
+	]
+	// tabsize: ...
+}
+println(t)
+
+/* 4 (default)
++-----------+----------+
+|     Name  | Sex      |
++-----------+----------+
+| 1.  Max   | male     |
++-----------+----------+
+*/
+
+/* 2
++-----------+--------+
+|   Name    | Sex    |
++-----------+--------+
+| 1.  Max   | male   |
++-----------+--------+
+*/
 ```
 
 
