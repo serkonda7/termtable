@@ -2,12 +2,12 @@ module termtable
 
 fn test_expand_tabs() {
 	tabs := [
-		['Name\t\t', '\tAge'],
-		['Max\t', '1\t3'],
+		['\tName', 'Age\t'],
+		['1.\tMax', '13\t\t'],
 	]
 	expanded_tabs := [
-		['Name        ', '    Age'],
-		['Max    ', '1    3'],
+		['    Name', 'Age '],
+		['1.  Max', '13      '],
 	]
 	assert expand_tabs(tabs) == expanded_tabs
 }
