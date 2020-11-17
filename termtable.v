@@ -2,25 +2,6 @@ module termtable
 
 import encoding.utf8
 
-const (
-	grid_line = Sepline{
-		left: '+'
-		right: '+'
-		cross: '+'
-		sep: '-'
-	}
-)
-
-pub enum Style {
-	custom
-	plain
-	grid
-	simple
-	pretty
-	github
-	fancy_grid
-}
-
 pub enum HeaderStyle {
 	plain
 	bold
@@ -54,24 +35,6 @@ pub mut:
 	padding      int = 1
 	tabsize      int = 4
 	custom_style StyleConfig
-}
-
-pub struct Sepline {
-pub mut:
-	left  string
-	right string
-	cross string
-	sep   string
-}
-
-pub struct StyleConfig {
-pub mut:
-	topline      Sepline
-	headerline   Sepline
-	middleline   Sepline
-	bottomline   Sepline
-	col_sep      string = ' '
-	fill_padding bool = true
 }
 
 pub fn (t Table) str() string {
@@ -151,71 +114,6 @@ fn max_column_sizes(columns [][]string) []int {
 		}
 	}
 	return colmaxes
-}
-
-fn get_style_config(style Style) StyleConfig {
-	mut sc := StyleConfig{}
-	match style {
-		.grid {
-			sc.topline = grid_line
-			sc.headerline = grid_line
-			sc.middleline = grid_line
-			sc.bottomline = grid_line
-			sc.col_sep = '|'
-		}
-		.plain {}
-		.simple {
-			sc.headerline = Sepline{
-				cross: ' '
-				sep: '-'
-			}
-			sc.fill_padding = false
-		}
-		.pretty {
-			sc.topline = grid_line
-			sc.headerline = grid_line
-			sc.bottomline = grid_line
-			sc.col_sep = '|'
-		}
-		.github {
-			sc.headerline = Sepline{
-				left: '|'
-				right: '|'
-				cross: '|'
-				sep: '-'
-			}
-			sc.col_sep = '|'
-		}
-		.fancy_grid {
-			sc.topline = Sepline{
-				left: '╒'
-				right: '╕'
-				cross: '╤'
-				sep: '═'
-			}
-			sc.headerline = Sepline{
-				left: '╞'
-				right: '╡'
-				cross: '╪'
-				sep: '═'
-			}
-			sc.middleline = Sepline{
-				left: '├'
-				right: '┤'
-				cross: '┼'
-				sep: '─'
-			}
-			sc.bottomline = Sepline{
-				left: '╘'
-				right: '╛'
-				cross: '╧'
-				sep: '═'
-			}
-			sc.col_sep = '│'
-		}
-		.custom {}
-	}
-	return sc
 }
 
 fn apply_header_style(row []string, style HeaderStyle, orient Orientation) []string {
