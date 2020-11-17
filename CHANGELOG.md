@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.8.0
+_17 November 2020_
+
+**Additions**
+- Support for definition of custom styles
+- Validate the given table property values to prevent V panics
+
 
 ## 0.7.0
 _16 November 2020_

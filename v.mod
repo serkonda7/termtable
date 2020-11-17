@@ -4,6 +4,6 @@ Module {
 	author: 'Lukas Neubert <serkonda@protonmail.com>'
 	license: 'MIT'
 	repo_url: 'https://github.com/serkonda7/termtable'
-	version: '0.7.0'
+	version: '0.8.0'
 	dependencies: []
 }
