@@ -16,7 +16,7 @@ Simple and highly customizable library to display tables in the terminal.
 
 ## Usage
 ```v
-import serkonda7.termtable
+import serkonda7.termtable as tt
 
 fn main() {
 	data := [
@@ -25,7 +25,7 @@ fn main() {
 		['Moritz', '12', 'male'],
 		['Lisa', '42', 'female'],
 	]
-	t := termtable.Table{
+	t := tt.Table{
 		data: data
 		// The following settings are optional and have these defaults:
 		style: .grid
@@ -94,7 +94,7 @@ Supported values for `style: ...` are:
 
 ### Orientation
 ```v
-t := termtable.Table{
+t := tt.Table{
 	data: [
 		['Name', 'Age'],
 		['Max', '13'],
@@ -123,7 +123,7 @@ Control the count of spaces between the cell border and the item.
 
 ### Tabsize
 ```v
-t := termtable.Table{
+t := tt.Table{
 	data: [
 		['\tName', 'Sex\t\t'],
 		['1.\tMax', 'male\t'],
@@ -153,14 +153,14 @@ println(t)
 
 ### Creating Custom Styles
 To create a custom style set the tables style property to `style: .custom`
-and specify `custom_style: termtable.StyleConfig{...}`.
+and specify `custom_style: tt.StyleConfig{...}`.
 
 #### `StyleConfig` Struct
 ```v
-topline      termtable.Sepline{...}
-headerline   termtable.Sepline{...}
-middleline   termtable.Sepline{...}
-bottomline   termtable.Sepline{...}
+topline      tt.Sepline{...}
+headerline   tt.Sepline{...}
+middleline   tt.Sepline{...}
+bottomline   tt.Sepline{...}
 col_sep      string = ' '
 fill_padding bool = true
 ```
