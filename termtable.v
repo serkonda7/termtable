@@ -218,7 +218,7 @@ fn get_style_config(style Style) StyleConfig {
 			}
 			sc.col_sep = '│'
 		}
-		.custom{}
+		.custom {}
 	}
 	return sc
 }
