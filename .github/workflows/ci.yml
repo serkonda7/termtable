@@ -24,15 +24,19 @@ jobs:
       - name: v fmt -verify
         run: v/v fmt -verify termtable.v termtable_test.v styles.v styles_test.v
 
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #     - name: Set up V
-  #       uses: nocturlab/setup-vlang-action@v1
-  #       with:
-  #         v-version: master
-  #       id: v
-  #     - name: Run tests
-  #       run: v test .
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Checkout V
+        uses: actions/checkout@v2
+        with:
+          repository: vlang/v
+          path: v
+      - name: Build V
+        run: |
+          cd v
+          make
+      - name: Run tests
+        run: v/v test .
