@@ -13,6 +13,9 @@ fn test_table_styles() {
 	}
 	for i := 0; true; i++ {
 		s := termtable.Style(i)
+		if s == .custom {
+			continue
+		}
 		if s.str() == 'unknown enum value' {
 			break
 		}

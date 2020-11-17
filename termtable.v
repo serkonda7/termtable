@@ -53,6 +53,7 @@ pub mut:
 	align        Alignment = .left
 	padding      int = 1
 	tabsize      int = 4
+	custom_style StyleConfig
 }
 
 pub struct Sepline {
@@ -65,7 +66,6 @@ pub mut:
 
 pub struct StyleConfig {
 pub mut:
-	style        Style = .grid
 	topline      Sepline = Sepline{}
 	headerline   Sepline = Sepline{}
 	middleline   Sepline = Sepline{}
@@ -79,7 +79,7 @@ pub fn (t Table) str() string {
 	rowdata, coldata := get_row_and_col_data(edata, t.orientation)
 	colmaxes := max_column_sizes(coldata)
 	mut rowstrings := []string{}
-	sc := get_style_config(t.style)
+	sc := if t.style == .custom { t.custom_style } else { get_style_config(t.style) }
 	for i, row in rowdata {
 		mut styled_row := row.clone()
 		if t.orientation == .column || i == 0 {
@@ -154,9 +154,7 @@ fn max_column_sizes(columns [][]string) []int {
 }
 
 fn get_style_config(style Style) StyleConfig {
-	mut sc := StyleConfig{
-		style: style
-	}
+	mut sc := StyleConfig{}
 	match style {
 		.grid {}
 		.plain {
@@ -220,6 +218,7 @@ fn get_style_config(style Style) StyleConfig {
 			}
 			sc.col_sep = '│'
 		}
+		.custom{}
 	}
 	return sc
 }
