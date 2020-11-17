@@ -79,6 +79,9 @@ fn validate_table_properties(t Table) ? {
 	if t.tabsize < 2 {
 		return error('tabsize should be at least 2 (got $t.tabsize).')
 	}
+	if t.padding < 0 {
+		return error('cannot use a negative padding (got $t.padding).')
+	}
 }
 
 fn expand_tabs(raw_data [][]string, tabsize int) [][]string {
