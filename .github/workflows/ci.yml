@@ -16,10 +16,13 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: vlang/v
+          path: v
       - name: Build V
-        run: make
+        run: |
+          cd v
+          make
       - name: v fmt -verify
-        run: ./v fmt -verify termtable.v termtable_test.v styles.v styles_test.v
+        run: v/v fmt -verify termtable.v termtable_test.v styles.v styles_test.v
 
   # test:
   #   runs-on: ubuntu-latest
