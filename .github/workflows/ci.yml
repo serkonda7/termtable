@@ -10,25 +10,35 @@ jobs:
   code-formatting:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout V
         uses: actions/checkout@v2
-      - name: Set up V
-        uses: nocturlab/setup-vlang-action@v1
         with:
-          v-version: master
-        id: v
+          repository: vlang/v
+      - name: Build V
+        run: make
+      - name: Checkout termtable
+        uses: actions/checkout@v2
+        with:
+            path: termtable
       - name: v fmt -verify
-        run: v fmt -verify termtable.v termtable_test.v styles.v styles_test.v
+        run: |
+          cd termtable
+          ../v fmt -verify termtable.v termtable_test.v styles.v styles_test.v
 
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout V
         uses: actions/checkout@v2
-      - name: Set up V
-        uses: nocturlab/setup-vlang-action@v1
         with:
-          v-version: master
-        id: v
+          repository: vlang/v
+      - name: Build V
+        run: make
+      - name: Checkout termtable
+        uses: actions/checkout@v2
+        with:
+            path: termtable
       - name: Run tests
-        run: v test .
+        run: |
+          cd termtable
+          ../v test .
