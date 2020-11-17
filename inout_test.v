@@ -2,6 +2,15 @@ import os
 import termtable
 
 fn test_table_styles() {
+	custom_style := termtable.StyleConfig{
+		headerline: termtable.Sepline{
+			left: ''
+			right: ''
+			cross: ''
+			sep: '='
+		}
+		col_sep: ' '
+	}
 	mut table := termtable.Table{
 		data: [
 			['Name', 'Age', 'Sex'],
@@ -17,6 +26,9 @@ fn test_table_styles() {
 			break
 		}
 		table.style = s
+		if s == .custom {
+			table.custom_style = custom_style
+		}
 		mut exp := os.read_file('tests/styles/${s.str()}.out') or {
 			panic(err)
 		}

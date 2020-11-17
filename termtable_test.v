@@ -53,14 +53,6 @@ fn test_max_column_sizes() {
 	assert max_column_sizes(coldata) == colmaxes
 }
 
-fn test_get_border() {
-	mut inputs := []Style{}
-	inputs = [.plain]
-	for inp in inputs {
-		assert get_border(inp).style == inp
-	}
-}
-
 struct ApplyHeaderStyleInput {
 	row          []string
 	header_style HeaderStyle
@@ -124,7 +116,7 @@ fn test_row_to_string() {
 		'|    a    |    bc    |   def   |',
 	]
 	for i, inp in inp_vals {
-		b := get_border(inp.style)
+		b := get_style_config(inp.style)
 		exp := expected[i]
 		assert row_to_string(row, rspace, inp.align, inp.padding, b) == exp
 	}
@@ -180,7 +172,7 @@ fn test_create_sepline() {
 		['', ''],
 	]
 	for i, inp in inputs {
-		b := get_border(inp.style)
+		b := get_style_config(inp.style)
 		exp := expected[i]
 		assert create_sepline(.top, inp.col_sizes, inp.padding, b) == exp[0]
 		assert create_sepline(.header, inp.col_sizes, inp.padding, b) == exp[0]

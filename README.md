@@ -6,6 +6,7 @@ Simple and highly customizable library to display tables in the terminal.
 
 ## Features
 - Choose from six predefined [styles](#predefined-styles)
+- Or create any [custom style](#creating-custom-styles) you want 
 - [Tab support](#tabsize)
 
 
@@ -147,6 +148,29 @@ println(t)
 | 1.  Max   | male   |
 +-----------+--------+
 */
+```
+
+
+### Creating Custom Styles
+To create a custom style set the tables style property to `style: .custom`
+and specify `custom_style: termtable.StyleConfig{...}`.
+
+#### `StyleConfig` Struct
+```v
+topline      termtable.Sepline{...}
+headerline   termtable.Sepline{...}
+middleline   termtable.Sepline{...}
+bottomline   termtable.Sepline{...}
+col_sep      string = ' '
+fill_padding bool = true
+```
+
+#### `Sepline` Struct
+```v
+left  string
+right string
+cross string
+sep   string
 ```
 
 
