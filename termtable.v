@@ -3,7 +3,7 @@ module termtable
 import encoding.utf8
 
 const (
-	grid_line = Sepline {
+	grid_line = Sepline{
 		left: '+'
 		right: '+'
 		cross: '+'
