@@ -12,13 +12,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set up V
-        uses: nocturlab/setup-vlang-action@v1
+      - name: Checkout V
+        uses: actions/checkout@v2
         with:
-          v-version: master
-        id: v
+          repository: vlang/v
+      - name: Build V
+        run: make
       - name: v fmt -verify
-        run: v fmt -verify termtable.v termtable_test.v styles.v styles_test.v
+        run: ./v fmt -verify termtable.v termtable_test.v styles.v styles_test.v
 
   # test:
   #   runs-on: ubuntu-latest
