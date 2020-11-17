@@ -38,6 +38,10 @@ pub mut:
 }
 
 pub fn (t Table) str() string {
+	validate_table_properties(t) or {
+		println(err)
+		exit(1)
+	}
 	edata := expand_tabs(t.data, t.tabsize)
 	rowdata, coldata := get_row_and_col_data(edata, t.orientation)
 	colmaxes := max_column_sizes(coldata)
@@ -66,6 +70,12 @@ pub fn (t Table) str() string {
 	}
 	final_str += bottomline
 	return final_str.trim_space()
+}
+
+fn validate_table_properties(t Table) ? {
+	if t.data == [][]string{} {
+		return error('termtable: Table.data should not be empty.')
+	}
 }
 
 fn expand_tabs(raw_data [][]string, tabsize int) [][]string {
