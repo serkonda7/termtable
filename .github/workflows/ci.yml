@@ -18,7 +18,7 @@ jobs:
           v-version: master
         id: v
       - name: v fmt -verify
-        run: v fmt -verify termtable.v termtable_test.v inout_test.v
+        run: v fmt -verify termtable.v termtable_test.v styles.v styles_test.v
 
   test:
     runs-on: ubuntu-latest

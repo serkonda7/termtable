@@ -1,7 +1,7 @@
 module termtable
 
 const (
-	gridline = Sepline{
+	gridline      = Sepline{
 		left: '+'
 		right: '+'
 		cross: '+'
