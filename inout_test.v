@@ -3,16 +3,13 @@ import termtable
 
 fn test_table_styles() {
 	custom_style := termtable.StyleConfig{
-		topline: termtable.empty_line
-		middleline: termtable.empty_line
-		bottomline: termtable.empty_line
 		headerline: termtable.Sepline{
 			left: ''
 			right: ''
 			cross: ''
 			sep: '='
 		}
-		col_sep: ''
+		col_sep: ' '
 	}
 	mut table := termtable.Table{
 		data: [

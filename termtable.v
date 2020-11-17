@@ -2,12 +2,12 @@ module termtable
 
 import encoding.utf8
 
-pub const (
-	empty_line = Sepline{
-		left: ''
-		right: ''
-		cross: ''
-		sep: ''
+const (
+	grid_line = Sepline {
+		left: '+'
+		right: '+'
+		cross: '+'
+		sep: '-'
 	}
 )
 
@@ -58,19 +58,19 @@ pub mut:
 
 pub struct Sepline {
 pub mut:
-	left  string = '+'
-	right string = '+'
-	cross string = '+'
-	sep   string = '-'
+	left  string
+	right string
+	cross string
+	sep   string
 }
 
 pub struct StyleConfig {
 pub mut:
-	topline      Sepline = Sepline{}
-	headerline   Sepline = Sepline{}
-	middleline   Sepline = Sepline{}
-	bottomline   Sepline = Sepline{}
-	col_sep      string = '|'
+	topline      Sepline
+	headerline   Sepline
+	middleline   Sepline
+	bottomline   Sepline
+	col_sep      string = ' '
 	fill_padding bool = true
 }
 
@@ -156,33 +156,28 @@ fn max_column_sizes(columns [][]string) []int {
 fn get_style_config(style Style) StyleConfig {
 	mut sc := StyleConfig{}
 	match style {
-		.grid {}
-		.plain {
-			sc.topline = empty_line
-			sc.headerline = empty_line
-			sc.middleline = empty_line
-			sc.bottomline = empty_line
-			sc.col_sep = ' '
+		.grid {
+			sc.topline = grid_line
+			sc.headerline = grid_line
+			sc.middleline = grid_line
+			sc.bottomline = grid_line
+			sc.col_sep = '|'
 		}
+		.plain {}
 		.simple {
-			sc.topline = empty_line
-			sc.middleline = empty_line
-			sc.bottomline = empty_line
 			sc.headerline = Sepline{
-				left: ''
-				right: ''
 				cross: ' '
+				sep: '-'
 			}
-			sc.col_sep = ' '
 			sc.fill_padding = false
 		}
 		.pretty {
-			sc.middleline = empty_line
+			sc.topline = grid_line
+			sc.headerline = grid_line
+			sc.bottomline = grid_line
+			sc.col_sep = '|'
 		}
 		.github {
-			sc.topline = empty_line
-			sc.middleline = empty_line
-			sc.bottomline = empty_line
 			sc.headerline = Sepline{
 				left: '|'
 				right: '|'
