@@ -34,7 +34,7 @@ pub mut:
 	align        Alignment = .left
 	padding      int = 1
 	tabsize      int = 4
-	custom_style StyleConfig
+	custom_style StyleConfig = StyleConfig{}
 }
 
 pub fn (t Table) str() string {
