@@ -2,6 +2,15 @@ module termtable
 
 import encoding.utf8
 
+const (
+	empty_line = Sepline{
+		left: ''
+		right: ''
+		cross: ''
+		sep: ''
+	}
+)
+
 pub enum Style {
 	plain
 	grid
@@ -150,24 +159,38 @@ fn get_border(style Style) StyleConfig {
 	match style {
 		.grid {}
 		.plain {
+			sc.topline = empty_line
+			sc.headerline = empty_line
+			sc.middleline = empty_line
+			sc.bottomline = empty_line
 			sc.col_sep = ' '
 		}
 		.simple {
-			sc.col_sep = ' '
+			sc.topline = empty_line
+			sc.middleline = empty_line
+			sc.bottomline = empty_line
 			sc.headerline = Sepline{
 				left: ''
 				right: ''
 				cross: ' '
 			}
+			sc.col_sep = ' '
 			sc.fill_padding = false
 		}
-		.pretty {}
+		.pretty {
+			sc.middleline = empty_line
+		}
 		.github {
+			sc.topline = empty_line
+			sc.middleline = empty_line
+			sc.bottomline = empty_line
 			sc.headerline = Sepline{
 				left: '|'
 				right: '|'
 				cross: '|'
+				sep: '-'
 			}
+			sc.col_sep = '|'
 		}
 		.fancy_grid {
 			sc.topline = Sepline{
@@ -249,18 +272,6 @@ fn cell_space(total_space int, align Alignment) (int, int) {
 }
 
 fn create_sepline(pos SeplinePos, col_sizes []int, pad int, sc StyleConfig) string {
-	if sc.style == .plain {
-		return ''
-	}
-	if sc.style == .simple && pos != .header {
-		return ''
-	}
-	if sc.style == .pretty && pos == .middle {
-		return ''
-	}
-	if sc.style == .github && pos != .header {
-		return ''
-	}
 	padding := pad * 2
 	sl_cfg := match pos {
 		.top { sc.topline }
@@ -282,6 +293,9 @@ fn create_sepline(pos SeplinePos, col_sizes []int, pad int, sc StyleConfig) stri
 	}
 	line += sl_cfg.right
 	line = line.trim_space()
+	if line.len == 0 {
+		return ''
+	}
 	if pos != .bottom {
 		line += '\n'
 	}
