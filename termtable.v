@@ -2,7 +2,7 @@ module termtable
 
 import encoding.utf8
 
-const (
+pub const (
 	empty_line = Sepline{
 		left: ''
 		right: ''
@@ -12,6 +12,7 @@ const (
 )
 
 pub enum Style {
+	custom
 	plain
 	grid
 	simple
@@ -54,7 +55,7 @@ pub mut:
 	tabsize      int = 4
 }
 
-struct Sepline {
+pub struct Sepline {
 pub mut:
 	left  string = '+'
 	right string = '+'
@@ -62,7 +63,7 @@ pub mut:
 	sep   string = '-'
 }
 
-struct StyleConfig {
+pub struct StyleConfig {
 pub mut:
 	style        Style = .grid
 	topline      Sepline = Sepline{}
@@ -78,19 +79,19 @@ pub fn (t Table) str() string {
 	rowdata, coldata := get_row_and_col_data(edata, t.orientation)
 	colmaxes := max_column_sizes(coldata)
 	mut rowstrings := []string{}
-	border := get_border(t.style)
+	sc := get_style_config(t.style)
 	for i, row in rowdata {
 		mut styled_row := row.clone()
 		if t.orientation == .column || i == 0 {
 			styled_row = apply_header_style(row, t.header_style, t.orientation)
 		}
 		rspace := get_row_spaces(row, colmaxes)
-		rowstrings << row_to_string(styled_row, rspace, t.align, t.padding, border)
+		rowstrings << row_to_string(styled_row, rspace, t.align, t.padding, sc)
 	}
-	topline := create_sepline(.top, colmaxes, t.padding, border)
-	headline := create_sepline(.header, colmaxes, t.padding, border)
-	sepline := create_sepline(.middle, colmaxes, t.padding, border)
-	bottomline := create_sepline(.bottom, colmaxes, t.padding, border)
+	topline := create_sepline(.top, colmaxes, t.padding, sc)
+	headline := create_sepline(.header, colmaxes, t.padding, sc)
+	sepline := create_sepline(.middle, colmaxes, t.padding, sc)
+	bottomline := create_sepline(.bottom, colmaxes, t.padding, sc)
 	mut final_str := topline
 	for i, row_str in rowstrings {
 		final_str += '$row_str\n'
@@ -152,7 +153,7 @@ fn max_column_sizes(columns [][]string) []int {
 	return colmaxes
 }
 
-fn get_border(style Style) StyleConfig {
+fn get_style_config(style Style) StyleConfig {
 	mut sc := StyleConfig{
 		style: style
 	}
