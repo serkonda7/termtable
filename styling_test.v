@@ -1,9 +1,10 @@
+module termtable
+
 import os
-import termtable
 
 fn test_table_styles() {
-	custom_style := termtable.StyleConfig{
-		headerline: termtable.Sepline{
+	custom_style := StyleConfig{
+		headerline: Sepline{
 			left: ''
 			right: ''
 			cross: ''
@@ -11,7 +12,7 @@ fn test_table_styles() {
 		}
 		col_sep: ' '
 	}
-	mut table := termtable.Table{
+	mut table := Table{
 		data: [
 			['Name', 'Age', 'Sex'],
 			['Max', '13', 'male'],
@@ -21,7 +22,7 @@ fn test_table_styles() {
 		header_style: .plain
 	}
 	for i := 0; true; i++ {
-		s := termtable.Style(i)
+		s := Style(i)
 		if s.str() == 'unknown enum value' {
 			break
 		}
@@ -38,7 +39,7 @@ fn test_table_styles() {
 }
 
 fn test_single_row_tables() {
-	table := termtable.Table{
+	table := Table{
 		data: [
 			['Foo', 'bar', 'baz'],
 		]
@@ -53,7 +54,7 @@ fn test_single_row_tables() {
 }
 
 fn test_no_padding() {
-	mut table := termtable.Table{
+	mut table := Table{
 		data: [
 			['Name', 'Age', 'Sex'],
 			['Max', '13', 'male'],
@@ -62,7 +63,7 @@ fn test_no_padding() {
 		padding: 0
 		header_style: .plain
 	}
-	mut styles := []termtable.Style{}
+	mut styles := []Style{}
 	styles = [
 		.plain,
 		.simple,
