@@ -39,7 +39,7 @@ pub mut:
 
 pub fn (t Table) str() string {
 	validate_table_properties(t) or {
-		println(err)
+		eprintln('termtable: $err')
 		exit(1)
 	}
 	edata := expand_tabs(t.data, t.tabsize)
@@ -74,7 +74,10 @@ pub fn (t Table) str() string {
 
 fn validate_table_properties(t Table) ? {
 	if t.data == [][]string{} {
-		return error('termtable: Table.data should not be empty.')
+		return error('Table.data should not be empty.')
+	}
+	if t.tabsize < 2 {
+		return error('tabsize should be at least 2 (got $t.tabsize).')
 	}
 }
 
