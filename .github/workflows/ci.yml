@@ -10,33 +10,35 @@ jobs:
   code-formatting:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
       - name: Checkout V
         uses: actions/checkout@v2
         with:
           repository: vlang/v
-          path: v
       - name: Build V
-        run: |
-          cd v
-          make
+        run: make
+      - name: Checkout termtable
+        uses: actions/checkout@v2
+        with:
+            path: termtable
       - name: v fmt -verify
-        run: v/v fmt -verify termtable.v termtable_test.v styles.v styles_test.v
+        run: |
+          cd termtable
+          ../v fmt -verify termtable.v termtable_test.v styles.v styles_test.v
 
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
       - name: Checkout V
         uses: actions/checkout@v2
         with:
           repository: vlang/v
-          path: v
       - name: Build V
-        run: |
-          cd v
-          make
+        run: make
+      - name: Checkout termtable
+        uses: actions/checkout@v2
+        with:
+            path: termtable
       - name: Run tests
-        run: v/v test .
+        run: |
+          cd termtable
+          ../v test .
