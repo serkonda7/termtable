@@ -46,7 +46,7 @@ Supported values for `style: ...` are:
 - .pretty
 - .plain
 - .simple
-- .github
+- .markdown
 - .fancy_grid
 
 `.grid` (default):
@@ -65,13 +65,13 @@ Supported values for `style: ...` are:
 
 ![](img/simple_preview.png)
 
-`.github`:
-
-![](img/github_preview.png)
-
 `.fancy_grid`:
 
 ![](img/fancy_grid_preview.png)
+
+`.markdown` follows the conventions of Markdown. It does not add alignment colons though:
+
+![](img/markdown_preview.png)
 
 
 ### Header Style

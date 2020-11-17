@@ -29,15 +29,6 @@ const (
 			bottomline: gridline
 			col_sep: '|'
 		}
-		'github': StyleConfig{
-			headerline: Sepline{
-				left: '|'
-				right: '|'
-				cross: '|'
-				sep: '-'
-			}
-			col_sep: '|'
-		}
 		'fancy_grid': StyleConfig{
 			topline: Sepline{
 				left: '╒'
@@ -65,6 +56,15 @@ const (
 			}
 			col_sep: '│'
 		}
+		'markdown': StyleConfig{
+			headerline: Sepline{
+				left: '|'
+				right: '|'
+				cross: '|'
+				sep: '-'
+			}
+			col_sep: '|'
+		}
 	}
 )
 
@@ -74,8 +74,8 @@ pub enum Style {
 	grid
 	simple
 	pretty
-	github
 	fancy_grid
+	markdown
 }
 
 pub struct Sepline {
