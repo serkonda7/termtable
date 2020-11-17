@@ -1,5 +1,32 @@
 module termtable
 
+fn test_validate_table_properties() {
+	tables := {
+		'no_data': Table{}
+		'small_tab': Table{
+			data: [['Foo\t']]
+			tabsize: 1
+		}
+		'negative_pad': Table{
+			data: [['Foo']]
+			padding: -1
+		}
+	}
+	error_suffixes := {
+		'no_data': 'Table.data should not be empty.'
+		'small_tab': 'tabsize should be at least 2 (got 1).'
+		'negative_pad': 'cannot use a negative padding (got -1).'
+	}
+	mut errors := 0
+	for k, t in tables {
+		validate_table_properties(t) or {
+			errors++
+			assert err == error_suffixes[k]
+		}
+	}
+	assert errors == tables.len
+}
+
 fn test_expand_tabs() {
 	tabs := [
 		['\tName', 'Sex\t\t'],
