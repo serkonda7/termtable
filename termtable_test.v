@@ -80,7 +80,7 @@ fn test_max_column_sizes() {
 		['Name', 'Max', 'Moritz', 'Lisa'],
 		['Age', '13', '12', '42'],
 		['Sex', 'male', 'male', 'female'],
-		['', '']
+		['', ''],
 	]
 	colmaxes := [6, 3, 6, 0]
 	assert max_column_sizes(coldata) == colmaxes
@@ -123,7 +123,7 @@ fn test_get_row_spaces() {
 	expected := [
 		[2, 2, 2],
 		[2, 0, 3],
-		[0]
+		[0],
 	]
 	for i, inp in inputs {
 		exp := expected[i]
