@@ -166,7 +166,7 @@ topline      tt.Sepline{...}
 headerline   tt.Sepline{...}
 middleline   tt.Sepline{...}
 bottomline   tt.Sepline{...}
-col_sep      string = ' '
+colsep       string
 fill_padding bool = true
 ```
 
