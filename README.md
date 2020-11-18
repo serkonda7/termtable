@@ -84,7 +84,7 @@ Supported values for `style: ...` are:
 // header_style: ...
 ```
 | `.bold (default)` | `.plain` |
-| --- | --- |
+| :-------: | :-------: |
 | ![](img/headers_bold.png) | ![](img/headers_plain.png) |
 
 
@@ -110,7 +110,7 @@ t := tt.Table{
 println(t)
 ```
 | `.row (default)` | `.column` |
-| --- | --- |
+| :-------: | :-------: |
 | ![](img/orientation_row.png) | ![](img/orientation_column.png) |
 
 
@@ -132,28 +132,16 @@ t := tt.Table{
 	data: [
 		['\tName', 'Sex\t\t'],
 		['1.\tMax', 'male\t'],
-		['2. Moritz', 'male'],
+		['2. \tMoritz', 'male'],
 	]
 	// tabsize: ...
 }
 println(t)
-
-/* 4 (default)
-+-----------+----------+
-|     Name  | Sex      |
-+-----------+----------+
-| 1.  Max   | male     |
-+-----------+----------+
-*/
-
-/* 2
-+-----------+--------+
-|   Name    | Sex    |
-+-----------+--------+
-| 1.  Max   | male   |
-+-----------+--------+
-*/
 ```
+
+| `4 (default)` | `2` |
+| :-------: | :-------: |
+| ![](img/tabsize_4.png) | ![](img/tabsize_2.png) |
 
 
 ### Creating Custom Styles
