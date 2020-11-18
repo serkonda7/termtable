@@ -59,7 +59,7 @@ const (
 			}
 			colsep: '│'
 		}
-		'markdown': StyleConfig{
+		'md': StyleConfig{
 			headerline: Sepline{
 				left: '|'
 				right: '|'
@@ -99,7 +99,7 @@ pub enum Style {
 	simple
 	pretty
 	fancy_grid
-	markdown
+	md
 	rst
 }
 

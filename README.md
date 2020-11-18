@@ -46,8 +46,9 @@ Supported values for `style: ...` are:
 - .pretty
 - .plain
 - .simple
-- .markdown
 - .fancy_grid
+- .md
+- .rst
 
 `.grid` (default):
 
@@ -69,9 +70,13 @@ Supported values for `style: ...` are:
 
 ![](img/fancy_grid_preview.png)
 
-`.markdown` follows the conventions of Markdown. It does not add alignment colons though:
+`.md` follows the conventions of [Markdown][md-tables]. It does not add alignment colons though:
 
-![](img/markdown_preview.png)
+![](img/md_preview.png)
+
+`.rst` behaves like the [reStructuredText][rst-tables] simple table format:
+
+![](img/rst_preview.png)
 
 
 ### Header Style
@@ -176,3 +181,8 @@ sep   string
 
 ## License
 Licensed under the [MIT License](LICENSE.md)
+
+
+<!-- Links -->
+[md-tables]: https://www.markdownguide.org/extended-syntax#tables
+[rst-tables]: https://docutils.sourceforge.io/docs/user/rst/quickref.html#tables
