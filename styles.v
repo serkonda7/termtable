@@ -65,6 +65,28 @@ const (
 			}
 			col_sep: '|'
 		}
+		'rst': StyleConfig{
+			topline: Sepline{
+				left: ''
+				right: ''
+				cross: ''
+				sep: '='
+			}
+			headerline: Sepline{
+				left: ''
+				right: ''
+				cross: ''
+				sep: '='
+			}
+			bottomline: Sepline{
+				left: ''
+				right: ''
+				cross: ''
+				sep: '='
+			}
+			fill_padding: false
+			col_sep: ''
+		}
 	}
 )
 
@@ -76,6 +98,7 @@ pub enum Style {
 	pretty
 	fancy_grid
 	markdown
+	rst
 }
 
 pub struct Sepline {
