@@ -78,10 +78,11 @@ fn test_get_row_and_col_data() {
 fn test_max_column_sizes() {
 	coldata := [
 		['Name', 'Max', 'Moritz', 'Lisa'],
-		['Age', '13', '12', '①②③'],
-		['Sex', 'male', 'male', '♀'],
+		['Age', '13', '12', '42'],
+		['Sex', 'male', 'male', 'female'],
+		['', '']
 	]
-	colmaxes := [6, 3, 4]
+	colmaxes := [6, 3, 6, 0]
 	assert max_column_sizes(coldata) == colmaxes
 }
 
@@ -117,12 +118,12 @@ fn test_get_row_spaces() {
 	inputs := [
 		RowSpacesInput{['a', 'bc', 'def'], [3, 4, 5]},
 		RowSpacesInput{['foo', 'bar', 'baz'], [5, 3, 6]},
-		RowSpacesInput{['🤨', '💯💯', '✌👍🐞'], [4, 3, 4]},
+		RowSpacesInput{[''], [0]},
 	]
 	expected := [
 		[2, 2, 2],
 		[2, 0, 3],
-		[3, 1, 1],
+		[0]
 	]
 	for i, inp in inputs {
 		exp := expected[i]

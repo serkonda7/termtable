@@ -1,7 +1,5 @@
 module termtable
 
-import encoding.utf8
-
 pub enum HeaderStyle {
 	plain
 	bold
@@ -129,7 +127,7 @@ fn max_column_sizes(columns [][]string) []int {
 	mut colmaxes := []int{len: columns.len, init: 0}
 	for i, col in columns {
 		for c in col {
-			len := utf8.len(c)
+			len := c.len
 			if len > colmaxes[i] {
 				colmaxes[i] = len
 			}
@@ -153,7 +151,7 @@ fn apply_header_style(row []string, style HeaderStyle, orient Orientation) []str
 fn get_row_spaces(row []string, col_sizes []int) []int {
 	mut rspace := []int{}
 	for i, cell in row {
-		rspace << col_sizes[i] - utf8.len(cell)
+		rspace << col_sizes[i] - cell.len
 	}
 	return rspace
 }
