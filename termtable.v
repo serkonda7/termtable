@@ -155,11 +155,11 @@ fn get_row_spaces(row []string, col_sizes []int) []int {
 fn row_to_string(row []string, rspace []int, align Alignment, padding int, sc StyleConfig) string {
 	mut final_row := row.clone()
 	pad := ' '.repeat(padding)
-	mut rstr := sc.col_sep + pad
+	mut rstr := sc.colsep + pad
 	for i, cell in final_row {
 		sl, sr := cell_space(rspace[i], align)
 		rstr += ' '.repeat(sl) + cell + ' '.repeat(sr)
-		rstr += pad + sc.col_sep + pad
+		rstr += pad + sc.colsep + pad
 	}
 	return rstr.trim_space()
 }

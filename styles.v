@@ -13,21 +13,24 @@ const (
 			headerline: gridline
 			middleline: gridline
 			bottomline: gridline
-			col_sep: '|'
+			colsep: '|'
 		}
-		'plain': StyleConfig{}
+		'plain': StyleConfig{
+			colsep: ' '
+		}
 		'simple': StyleConfig{
 			headerline: Sepline{
 				cross: ' '
 				sep: '-'
 			}
 			fill_padding: false
+			colsep: ' '
 		}
 		'pretty': StyleConfig{
 			topline: gridline
 			headerline: gridline
 			bottomline: gridline
-			col_sep: '|'
+			colsep: '|'
 		}
 		'fancy_grid': StyleConfig{
 			topline: Sepline{
@@ -54,7 +57,7 @@ const (
 				cross: '╧'
 				sep: '═'
 			}
-			col_sep: '│'
+			colsep: '│'
 		}
 		'markdown': StyleConfig{
 			headerline: Sepline{
@@ -63,7 +66,7 @@ const (
 				cross: '|'
 				sep: '-'
 			}
-			col_sep: '|'
+			colsep: '|'
 		}
 		'rst': StyleConfig{
 			topline: Sepline{
@@ -85,7 +88,6 @@ const (
 				sep: '='
 			}
 			fill_padding: false
-			col_sep: ''
 		}
 	}
 )
@@ -115,7 +117,7 @@ pub mut:
 	headerline   Sepline
 	middleline   Sepline
 	bottomline   Sepline
-	col_sep      string = ' '
+	colsep       string
 	fill_padding bool = true
 }
 

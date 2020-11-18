@@ -10,7 +10,7 @@ fn test_table_styles() {
 			cross: ''
 			sep: '='
 		}
-		col_sep: ' '
+		colsep: ' '
 	}
 	mut table := Table{
 		data: [
