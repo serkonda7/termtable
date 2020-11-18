@@ -11,11 +11,16 @@ fn test_validate_table_properties() {
 			data: [['Foo']]
 			padding: -1
 		}
+		'no_custom_style_cfg': Table{
+			data: [['Foo']]
+			style: .custom
+		}
 	}
 	error_suffixes := {
 		'no_data': 'Table.data should not be empty.'
 		'small_tab': 'tabsize should be at least 2 (got 1).'
 		'negative_pad': 'cannot use a negative padding (got -1).'
+		'no_custom_style_cfg': 'please provide a value for `custom_style` if you use `style: .custom`.'
 	}
 	mut errors := 0
 	for k, t in tables {

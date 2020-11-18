@@ -5,7 +5,7 @@ Simple and highly customizable library to display tables in the terminal.
 
 
 ## Features
-- Choose from six predefined [styles](#predefined-styles)
+- Choose from seven predefined [styles](#predefined-styles)
 - Or create any [custom style](#creating-custom-styles) you want 
 - [Tab support](#tabsize)
 

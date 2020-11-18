@@ -82,6 +82,12 @@ fn validate_table_properties(t Table) ? {
 	if t.padding < 0 {
 		return error('cannot use a negative padding (got $t.padding).')
 	}
+	if t.style == .custom {
+		default_sc := StyleConfig{}
+		if t.custom_style.str() == default_sc.str() {
+			return error('please provide a value for `custom_style` if you use `style: .custom`.')
+		}
+	}
 }
 
 fn expand_tabs(raw_data [][]string, tabsize int) [][]string {
