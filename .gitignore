@@ -1,3 +1,10 @@
-*.code-workspace
+# Example ignores
+examples/*
+!*.v
+
+# Ignore shared libraries
 *.so
-examples/
+
+# Ignore editor files
+*.code-workspace
+
