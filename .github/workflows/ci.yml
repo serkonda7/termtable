@@ -42,3 +42,21 @@ jobs:
         run: |
           cd termtable
           ../v test .
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout V
+        uses: actions/checkout@v2
+        with:
+          repository: vlang/v
+      - name: Build V
+        run: make
+      - name: Checkout termtable
+        uses: actions/checkout@v2
+        with:
+            path: termtable
+      - name: Build termtable
+        run: |
+          cd termtable
+          ../v -shared -W .
