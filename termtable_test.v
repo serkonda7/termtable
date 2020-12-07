@@ -2,12 +2,12 @@ module termtable
 
 fn test_validate_table_properties() {
 	tables := {
-		'no_data': Table{}
-		'small_tab': Table{
+		'no_data':             Table{}
+		'small_tab':           Table{
 			data: [['Foo\t']]
 			tabsize: 1
 		}
-		'negative_pad': Table{
+		'negative_pad':        Table{
 			data: [['Foo']]
 			padding: -1
 		}
@@ -17,9 +17,9 @@ fn test_validate_table_properties() {
 		}
 	}
 	error_suffixes := {
-		'no_data': 'Table.data should not be empty.'
-		'small_tab': 'tabsize should be at least 2 (got 1).'
-		'negative_pad': 'cannot use a negative padding (got -1).'
+		'no_data':             'Table.data should not be empty.'
+		'small_tab':           'tabsize should be at least 2 (got 1).'
+		'negative_pad':        'cannot use a negative padding (got -1).'
 		'no_custom_style_cfg': 'please provide a value for `custom_style` if you use `style: .custom`.'
 	}
 	mut errors := 0
