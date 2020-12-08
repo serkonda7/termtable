@@ -8,17 +8,17 @@ const (
 		sep: '-'
 	}
 	style_configs = {
-		'grid': StyleConfig{
+		'grid':       StyleConfig{
 			topline: gridline
 			headerline: gridline
 			middleline: gridline
 			bottomline: gridline
 			colsep: '|'
 		}
-		'plain': StyleConfig{
+		'plain':      StyleConfig{
 			colsep: ' '
 		}
-		'simple': StyleConfig{
+		'simple':     StyleConfig{
 			headerline: Sepline{
 				cross: ' '
 				sep: '-'
@@ -26,7 +26,7 @@ const (
 			fill_padding: false
 			colsep: ' '
 		}
-		'pretty': StyleConfig{
+		'pretty':     StyleConfig{
 			topline: gridline
 			headerline: gridline
 			bottomline: gridline
@@ -59,7 +59,7 @@ const (
 			}
 			colsep: '│'
 		}
-		'md': StyleConfig{
+		'md':         StyleConfig{
 			headerline: Sepline{
 				left: '|'
 				right: '|'
@@ -68,7 +68,7 @@ const (
 			}
 			colsep: '|'
 		}
-		'rst': StyleConfig{
+		'rst':        StyleConfig{
 			topline: Sepline{
 				left: ''
 				right: ''
