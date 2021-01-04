@@ -26,10 +26,10 @@ enum SeplinePos {
 pub struct Table {
 pub mut:
 	data         [][]string
-	style        Style = .grid
+	style        Style       = .grid
 	header_style HeaderStyle = .bold
 	orientation  Orientation = .row
-	align        Alignment = .left
+	align        Alignment   = .left
 	padding      int = 1
 	tabsize      int = 4
 	custom_style StyleConfig = StyleConfig{}
