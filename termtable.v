@@ -96,7 +96,7 @@ fn expand_tabs(raw_data [][]string, tabsize int) [][]string {
 			mut ec := c.clone()
 			tabs := ec.count('\t')
 			for _ in 0 .. tabs {
-				tpos := ec.index_old('\t')
+				tpos := ec.index('\t') or { 0 }
 				spaces := tabsize - (tpos % tabsize)
 				ec = ec.replace_once('\t', ' '.repeat(spaces))
 			}
