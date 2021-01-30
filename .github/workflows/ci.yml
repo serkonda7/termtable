@@ -23,7 +23,7 @@ jobs:
       - name: v fmt -verify
         run: |
           cd termtable
-          ../v fmt -verify termtable.v termtable_test.v styles.v styles_test.v
+          ../v fmt -verify .
 
   test:
     runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ jobs:
       - name: Run tests
         run: |
           cd termtable
-          ../v test .
+          ../v -W test .
 
   build:
     runs-on: ubuntu-latest
@@ -59,4 +59,4 @@ jobs:
       - name: Build termtable
         run: |
           cd termtable
-          ../v -shared -W .
+          ../v -prod -shared .
