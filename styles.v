@@ -7,7 +7,7 @@ const (
 		cross: '+'
 		sep: '-'
 	}
-	style_configs = {
+	style_configs = map{
 		'grid':       StyleConfig{
 			topline: gridline
 			headerline: gridline
