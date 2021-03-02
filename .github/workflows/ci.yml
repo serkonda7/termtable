@@ -21,9 +21,7 @@ jobs:
         with:
             path: termtable
       - name: v fmt -verify
-        run: |
-          cd termtable
-          ../v fmt -verify .
+        run: ./v fmt -verify termtable
 
   test:
     runs-on: ubuntu-latest
@@ -39,9 +37,7 @@ jobs:
         with:
             path: termtable
       - name: Run tests
-        run: |
-          cd termtable
-          ../v -W test .
+        run: ./v -W test termtable
 
   build:
     runs-on: ubuntu-latest
@@ -57,6 +53,4 @@ jobs:
         with:
             path: termtable
       - name: Build termtable
-        run: |
-          cd termtable
-          ../v -prod -shared .
+        run: termtable./v -prod -shared termtable

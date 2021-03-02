@@ -26,7 +26,7 @@ fn test_validate_table_properties() {
 	for k, t in tables {
 		validate_table_properties(t) or {
 			errors++
-			assert err == error_suffixes[k]
+			assert err.msg == error_suffixes[k]
 		}
 	}
 	assert errors == tables.len
