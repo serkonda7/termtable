@@ -23,34 +23,34 @@ jobs:
       - name: v fmt -verify
         run: ./v fmt -verify termtable
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout V
-        uses: actions/checkout@v2
-        with:
-          repository: vlang/v
-      - name: Build V
-        run: make
-      - name: Checkout termtable
-        uses: actions/checkout@v2
-        with:
-            path: termtable
-      - name: Run tests
-        run: ./v -W test termtable
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout V
+  #       uses: actions/checkout@v2
+  #       with:
+  #         repository: vlang/v
+  #     - name: Build V
+  #       run: make
+  #     - name: Checkout termtable
+  #       uses: actions/checkout@v2
+  #       with:
+  #           path: termtable
+  #     - name: Run tests
+  #       run: ./v -W test termtable
 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout V
-        uses: actions/checkout@v2
-        with:
-          repository: vlang/v
-      - name: Build V
-        run: make
-      - name: Checkout termtable
-        uses: actions/checkout@v2
-        with:
-            path: termtable
-      - name: Build termtable
-        run: ./v -prod -shared termtable
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout V
+  #       uses: actions/checkout@v2
+  #       with:
+  #         repository: vlang/v
+  #     - name: Build V
+  #       run: make
+  #     - name: Checkout termtable
+  #       uses: actions/checkout@v2
+  #       with:
+  #           path: termtable
+  #     - name: Build termtable
+  #       run: ./v -prod -shared termtable
