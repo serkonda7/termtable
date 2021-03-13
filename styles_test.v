@@ -34,7 +34,7 @@ fn test_table_styles() {
 		if s == .custom {
 			table.custom_style = custom_style
 		}
-		mut exp := os.read_file('$dir/tests/styles/${s.str()}.out') or { panic(err) }
+		mut exp := os.read_file('$termtable.dir/tests/styles/${s.str()}.out') or { panic(err) }
 		exp = exp.trim_suffix('\n')
 		assert table.str() == exp
 	}
@@ -48,7 +48,7 @@ fn test_single_row_tables() {
 		header_style: .plain
 		style: .grid
 	}
-	mut exp := os.read_file('$dir/tests/grid_single_row.out') or { panic(err) }
+	mut exp := os.read_file('$termtable.dir/tests/grid_single_row.out') or { panic(err) }
 	exp = exp.trim_suffix('\n')
 	assert table.str() == exp
 }
@@ -70,7 +70,7 @@ fn test_no_padding() {
 	]
 	for s in styles {
 		table.style = s
-		mut exp := os.read_file('$dir/tests/no_padding/${s.str()}.out') or { panic(err) }
+		mut exp := os.read_file('$termtable.dir/tests/no_padding/${s.str()}.out') or { panic(err) }
 		exp = exp.trim_suffix('\n')
 		assert table.str() == exp
 	}

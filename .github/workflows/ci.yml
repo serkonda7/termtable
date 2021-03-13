@@ -2,6 +2,8 @@ name: CI
 
 on:
   push:
+    branches:
+      - master
   pull_request:
   schedule:
     - cron: '0 0 * * *'
@@ -21,7 +23,9 @@ jobs:
         with:
             path: termtable
       - name: v fmt -verify
-        run: ./v fmt -verify termtable
+        run: |
+          ./v fmt -diff termtable
+          ./v fmt -verify termtable
 
   test:
     runs-on: ubuntu-latest
