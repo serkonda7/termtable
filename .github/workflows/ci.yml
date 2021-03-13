@@ -22,8 +22,9 @@ jobs:
             path: termtable
       - name: v fmt -verify
         run: |
-          ./v fmt -diff termtable
-          ./v fmt -verify termtable
+          cd termtable
+          ../v fmt -diff .
+          ../v fmt -verify .
 
   # test:
   #   runs-on: ubuntu-latest
