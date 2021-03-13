@@ -7,7 +7,7 @@ on:
     - cron: '0 0 * * *'
 
 jobs:
-  fmt-inside-folder:
+  test-inside-folder:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout V
@@ -20,13 +20,13 @@ jobs:
         uses: actions/checkout@v2
         with:
             path: termtable
-      - name: v fmt -verify
+      - name: test
         run: |
           cd termtable
-          ../v fmt -diff .
-          ../v fmt -verify .
+          ../v test .
+          ../v test .
 
-  fmt-outside-folder:
+  test-outside-folder:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout V
@@ -39,10 +39,10 @@ jobs:
         uses: actions/checkout@v2
         with:
             path: termtable
-      - name: v fmt -verify
+      - name: test
         run: |
-          ./v fmt -diff termtable
-          ./v fmt -verify termtable
+          ./v test termtable
+          ./v test termtable
 
   # test:
   #   runs-on: ubuntu-latest
