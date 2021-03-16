@@ -9,7 +9,7 @@ on:
     - cron: '0 0 * * *'
 
 jobs:
-  code-formatting:
+  code-style:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout V
@@ -22,10 +22,12 @@ jobs:
         uses: actions/checkout@v2
         with:
             path: termtable
-      - name: fmt -diff
-        run: ./v fmt -diff termtable/
-      - name: fmt -verify
-        run: ./v fmt -verify termtable/
+      - name: vet
+        run: ./v vet -W termtable/
+      - name: fmt
+        run: |
+          ./v fmt -diff termtable/
+          ./v fmt -verify termtable/
 
   test:
     runs-on: ubuntu-latest
@@ -42,7 +44,7 @@ jobs:
             path: termtable
       - name: Run tests
         run: ./v test termtable/
-      - name: Tests with -W
+      - name: Run tests with warnings as errors
         run: ./v -W test termtable/
 
   build:

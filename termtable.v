@@ -35,6 +35,7 @@ pub mut:
 	custom_style StyleConfig = StyleConfig{}
 }
 
+// str generates the string representation of the table.
 pub fn (t Table) str() string {
 	validate_table_properties(t) or {
 		eprintln('termtable: $err')
