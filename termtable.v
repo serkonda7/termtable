@@ -127,8 +127,8 @@ fn get_row_and_col_data(data [][]string, orient Orientation) ([][]string, [][]st
 fn max_column_sizes(columns [][]string) []int {
 	mut colmaxes := []int{len: columns.len, init: 0}
 	for i, col in columns {
-		for c in col {
-			len := c.len
+		for cell in col {
+			len := utf8_str_visible_length(cell)
 			if len > colmaxes[i] {
 				colmaxes[i] = len
 			}
@@ -152,7 +152,7 @@ fn apply_header_style(row []string, style HeaderStyle, orient Orientation) []str
 fn get_row_spaces(row []string, col_sizes []int) []int {
 	mut rspace := []int{}
 	for i, cell in row {
-		rspace << col_sizes[i] - cell.len
+		rspace << col_sizes[i] - utf8_str_visible_length(cell)
 	}
 	return rspace
 }
