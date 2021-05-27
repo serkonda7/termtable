@@ -53,31 +53,31 @@ Supported values for `style: ...` are:
 
 `.grid` (default):
 
-![](img/grid_preview.png)
+![](img/grid.png)
 
 `.pretty`:
 
-![](img/pretty_preview.png)
+![](img/pretty.png)
 
 `.plain`:
 
-![](img/plain_preview.png)
+![](img/plain.png)
 
 `.simple`:
 
-![](img/simple_preview.png)
+![](img/simple.png)
 
 `.fancy_grid`:
 
-![](img/fancy_grid_preview.png)
+![](img/fancy_grid.png)
 
 `.md` follows the conventions of [Markdown][md-tables]. It does not add alignment colons though:
 
-![](img/md_preview.png)
+![](img/md.png)
 
 `.rst` behaves like the [reStructuredText][rst-tables] simple table format:
 
-![](img/rst_preview.png)
+![](img/rst.png)
 
 
 ### Header Style
@@ -86,7 +86,7 @@ Supported values for `style: ...` are:
 ```
 | `.bold (default)` | `.plain` |
 | :-------: | :-------: |
-| ![](img/headers_bold.png) | ![](img/headers_plain.png) |
+| ![](img/header_bold.png) | ![](img/header_plain.png) |
 
 
 ### Alignment
@@ -131,18 +131,18 @@ Control the count of spaces between the cell border and the item.
 ```v
 t := tt.Table{
 	data: [
-		['\tName', 'Sex\t\t'],
+		['\tName', 'Sex'],
 		['1.\tMax', 'male\t'],
-		['2. \tMoritz', 'male'],
+		['2. \tMoritz', '\tmale'],
 	]
 	// tabsize: ...
 }
 println(t)
 ```
 
-| `4 (default)` | `2` |
-| :-------: | :-------: |
-| ![](img/tabsize_4.png) | ![](img/tabsize_2.png) |
+| `4 (default)` | `2` | `8` |
+| :-------: | :-------: | :-------: |
+| ![](img/tab-4.png) | ![](img/tab-2.png) | ![](img/tab-8.png) |
 
 
 ### Creating Custom Styles
@@ -168,6 +168,10 @@ sep   string
 ```
 
 
+## Acknowledgements
+- Images were made with [carbon][carbon-repo] and optimized with [image-actions][image-actions-repo]
+
+
 ## License
 Licensed under the [MIT License](LICENSE.md)
 
@@ -175,3 +179,5 @@ Licensed under the [MIT License](LICENSE.md)
 <!-- Links -->
 [md-tables]: https://www.markdownguide.org/extended-syntax#tables
 [rst-tables]: https://docutils.sourceforge.io/docs/user/rst/quickref.html#tables
+[carbon-repo]: https://github.com/carbon-app/carbon
+[image-actions-repo]: https://github.com/calibreapp/image-actions
