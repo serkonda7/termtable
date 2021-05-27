@@ -169,7 +169,7 @@ sep   string
 
 
 ## Acknowledgements
-- Readme images were made with [carbon][carbon-repo]
+- Images were made with [carbon][carbon-repo] and optimized with [image-actions][image-actions-repo]
 
 
 ## License
@@ -180,3 +180,4 @@ Licensed under the [MIT License](LICENSE.md)
 [md-tables]: https://www.markdownguide.org/extended-syntax#tables
 [rst-tables]: https://docutils.sourceforge.io/docs/user/rst/quickref.html#tables
 [carbon-repo]: https://github.com/carbon-app/carbon
+[image-actions-repo]: https://github.com/calibreapp/image-actions
