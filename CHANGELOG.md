@@ -1,5 +1,24 @@
 # Changelog
 
+
+## 0.9.0
+_27 May 2021_
+
+**Breaking**
+- `.github` style was renamed to `.md` to clarify it's markdown
+- `StyleConfig.col_sep` got renamed to `StyleConfig.colsep` and has no default value anymore
+
+**Additions**
+- unicode widechars (e.g. chinese chars) are now supported _(somewhat experimental)_
+- predefined `.rst` style for [reStructuredText][rst-docs]
+- `Table`: enforce a value for the `custom_style` field when `style: .custom` is set
+- ci: add a build and vet steps
+
+**Changes**
+- ci: remove dependency on setup-vlang-action
+- ci: more diverse and stricter checks
+- keep up with latest changes in V
+
 ## 0.8.0
 _17 November 2020_
 
@@ -52,7 +71,7 @@ _24 October 2020_
 
 **Additions**
 - Print headers in bold
-- New `orientation` config 
+- New `orientation` config
 
 **Fixes**
 - Use the actual padding value to create the seperator line
@@ -65,7 +84,7 @@ _23 October 2020_
 **Additions**
 - New `align` config to control cell item alignment
 - New `padding` config to set the minimum space between cell separator and item
-- Readme: add description and sections about installation and usage 
+- Readme: add description and sections about installation and usage
 - Add GH Sponsors button
 
 
@@ -84,3 +103,7 @@ _22 October 2020_
 _21 October 2020_
 
 - Just table printing
+
+
+<!-- Links -->
+[rst-docs]: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
