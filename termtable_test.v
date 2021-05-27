@@ -119,11 +119,13 @@ fn test_get_row_spaces() {
 		RowSpacesInput{['a', 'bc', 'def'], [3, 4, 5]},
 		RowSpacesInput{['foo', 'bar', 'baz'], [5, 3, 6]},
 		RowSpacesInput{[''], [0]},
+		RowSpacesInput{['🤨', '💯💯', '✌👍🐞'], [4, 5, 5]},
 	]
 	expected := [
 		[2, 2, 2],
 		[2, 0, 3],
 		[0],
+		[2, 1, 0],
 	]
 	for i, inp in inputs {
 		exp := expected[i]
