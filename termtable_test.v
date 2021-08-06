@@ -1,7 +1,7 @@
 module termtable
 
 fn test_validate_table_properties() {
-	tables := map{
+	tables := {
 		'no_data':             Table{}
 		'small_tab':           Table{
 			data: [['Foo\t']]
@@ -16,7 +16,7 @@ fn test_validate_table_properties() {
 			style: .custom
 		}
 	}
-	error_suffixes := map{
+	error_suffixes := {
 		'no_data':             'Table.data should not be empty.'
 		'small_tab':           'tabsize should be at least 2 (got 1).'
 		'negative_pad':        'cannot use a negative padding (got -1).'
