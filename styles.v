@@ -122,5 +122,5 @@ pub mut:
 }
 
 fn get_style_config(style Style) StyleConfig {
-	return style_configs[style.str()]
+	return .style_configs[style.str()]
 }
