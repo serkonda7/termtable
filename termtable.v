@@ -71,7 +71,7 @@ pub fn (t Table) str() string {
 	return final_str.trim_space()
 }
 
-fn validate_table_properties(t Table) ? {
+fn validate_table_properties(t Table) ! {
 	if t.data == [][]string{} {
 		return error('Table.data should not be empty.')
 	}
