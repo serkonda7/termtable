@@ -26,7 +26,7 @@ fn test_validate_table_properties() {
 	for k, t in tables {
 		validate_table_properties(t) or {
 			errors++
-			assert err.msg == error_suffixes[k]
+			assert err.msg() == error_suffixes[k]
 		}
 	}
 	assert errors == tables.len
@@ -171,7 +171,7 @@ fn test_cell_space() {
 		[3, 0],
 	]
 	for i, inp in inputs {
-		ls, rs := cell_space(inp[0], Alignment(inp[1]))
+		ls, rs := cell_space(inp[0], unsafe { Alignment(inp[1]) } ) 
 		assert ls == expected[i][0]
 		assert rs == expected[i][1]
 	}
