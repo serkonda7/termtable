@@ -1,5 +1,101 @@
 module termtable
 
+import os
+
+const dir = os.dir(@FILE)
+
+const (
+	gridline = Sepline{
+		left: '+'
+		right: '+'
+		cross: '+'
+		sep: '-'
+	}
+	style_configs = {
+		'grid':       StyleConfig{
+			topline: gridline
+			headerline: gridline
+			middleline: gridline
+			bottomline: gridline
+			colsep: '|'
+		}
+		'plain':      StyleConfig{
+			colsep: ' '
+		}
+		'simple':     StyleConfig{
+			headerline: Sepline{
+				cross: ' '
+				sep: '-'
+			}
+			fill_padding: false
+			colsep: ' '
+		}
+		'pretty':     StyleConfig{
+			topline: gridline
+			headerline: gridline
+			bottomline: gridline
+			colsep: '|'
+		}
+		'fancy_grid': StyleConfig{
+			topline: Sepline{
+				left: '╒'
+				right: '╕'
+				cross: '╤'
+				sep: '═'
+			}
+			headerline: Sepline{
+				left: '╞'
+				right: '╡'
+				cross: '╪'
+				sep: '═'
+			}
+			middleline: Sepline{
+				left: '├'
+				right: '┤'
+				cross: '┼'
+				sep: '─'
+			}
+			bottomline: Sepline{
+				left: '╘'
+				right: '╛'
+				cross: '╧'
+				sep: '═'
+			}
+			colsep: '│'
+		}
+		'md':         StyleConfig{
+			headerline: Sepline{
+				left: '|'
+				right: '|'
+				cross: '|'
+				sep: '-'
+			}
+			colsep: '|'
+		}
+		'rst':        StyleConfig{
+			topline: Sepline{
+				left: ''
+				right: ''
+				cross: ''
+				sep: '='
+			}
+			headerline: Sepline{
+				left: ''
+				right: ''
+				cross: ''
+				sep: '='
+			}
+			bottomline: Sepline{
+				left: ''
+				right: ''
+				cross: ''
+				sep: '='
+			}
+			fill_padding: false
+		}
+	}
+)
+
 pub enum HeaderStyle {
 	plain
 	bold
@@ -38,7 +134,7 @@ pub mut:
 // str generates the string representation of the table.
 pub fn (t Table) str() string {
 	validate_table_properties(t) or {
-		eprintln('termtable: $err')
+		eprintln('termtable: ${err}')
 		exit(1)
 	}
 	edata := expand_tabs(t.data, t.tabsize)
@@ -60,7 +156,7 @@ pub fn (t Table) str() string {
 	bottomline := create_sepline(.bottom, colmaxes, t.padding, sc)
 	mut final_str := topline
 	for i, row_str in rowstrings {
-		final_str += '$row_str\n'
+		final_str += '${row_str}\n'
 		if i == 0 && rowstrings.len >= 2 {
 			final_str += headline
 		} else if i < rowstrings.len - 1 {
@@ -76,10 +172,10 @@ fn validate_table_properties(t Table) ! {
 		return error('Table.data should not be empty.')
 	}
 	if t.tabsize < 2 {
-		return error('tabsize should be at least 2 (got $t.tabsize).')
+		return error('tabsize should be at least 2 (got ${t.tabsize}).')
 	}
 	if t.padding < 0 {
-		return error('cannot use a negative padding (got $t.padding).')
+		return error('cannot use a negative padding (got ${t.padding}).')
 	}
 	if t.style == .custom {
 		default_sc := StyleConfig{}
@@ -146,7 +242,7 @@ fn apply_header_style(row []string, style HeaderStyle, orient Orientation) []str
 		r << row[1..]
 		return r
 	}
-	return row.map('\e[1m$it\e[0m')
+	return row.map('\e[1m${it}\e[0m')
 }
 
 fn get_row_spaces(row []string, col_sizes []int) []int {

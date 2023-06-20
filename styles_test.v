@@ -2,10 +2,6 @@ module termtable
 
 import os
 
-const (
-	dir = os.dir(@FILE)
-)
-
 fn test_table_styles() {
 	custom_style := StyleConfig{
 		headerline: Sepline{
