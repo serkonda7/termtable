@@ -2,10 +2,6 @@ module termtable
 
 import os
 
-const (
-	dir = os.dir(@FILE)
-)
-
 fn test_cjk_chars() {
 	table := Table{
 		data: [
@@ -14,7 +10,7 @@ fn test_cjk_chars() {
 		]
 		header_style: .plain
 	}
-	mut exp := os.read_file('${.dir}/tests/unicode/cjk.out') or { panic(err) }
+	mut exp := os.read_file('${dir}/tests/unicode/cjk.out') or { panic(err) }
 	exp = exp.trim_string_right('\n')
 	assert table.str() == exp
 }
